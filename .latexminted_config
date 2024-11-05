@@ -1,0 +1,5 @@
+{
+    "custom_lexers": {
+        "docker-bake-lexer.py": "8a0965628e2b6c9b3e35da43c4517bace7179bb4637f9b244c042be82c885481"
+    }
+}
