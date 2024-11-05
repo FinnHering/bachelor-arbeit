@@ -1,0 +1,321 @@
+% Copyright (c) 2021-2024 Michael Kuhn
+%
+% Permission to use, copy, modify, and/or distribute this software for any
+% purpose with or without fee is hereby granted.
+%
+% THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+% REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+% AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+% INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+% LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+% OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+% PERFORMANCE OF THIS SOFTWARE.
+
+
+\documentclass[
+	12pt,
+	a4paper,
+	printlength,
+	bibliography=totoc,
+	chapterprefix,
+	headings=openright,
+	numbers=endperiod,
+	parskip=half,
+	twoside
+ ]{scrreprt}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+% Enabling caching causes problems with overleaf..
+\usepackage[cache=false]{minted}
+
+
+\setminted{
+linenos=true,
+breaklines=true,
+frame=single,
+stripnl=true,
+numbersep=5px
+}
+
+\usepackage{xcolor}
+
+%\usepackage{ellipsis, ragged2e, marginnote}
+\usepackage{lmodern}
+\usepackage{newtxmath}
+
+
+\usepackage[german]{babel}
+
+% Use less space for the page number
+\usepackage[margin=2.5cm,footskip=36pt]{geometry}
+\usepackage{graphicx}
+%\usepackage[htt]{hyphenat}
+\usepackage{microtype}
+\usepackage{subcaption}
+
+\usepackage[hyphens]{url}
+\usepackage[hidelinks,pagebackref]{hyperref}
+\usepackage[capitalise,noabbrev]{cleveref}
+
+\usepackage[color=ovgu-orange]{todonotes}
+
+
+\usepackage{lipsum}
+
+% Used to get proper quotation style
+\usepackage{csquotes}
+\MakeOuterQuote{"}
+
+\graphicspath{{./figures/}}
+
+\definecolor{ovgu-blue}{HTML}{0068B4}
+\definecolor{ovgu-darkgray}{HTML}{606060}
+\definecolor{ovgu-lightgray}{HTML}{C0C0C0}
+\definecolor{ovgu-orange}{HTML}{F39100}
+\definecolor{ovgu-purple}{HTML}{7A003F}
+\definecolor{ovgu-red}{HTML}{D13F58}
+
+\renewcommand*{\backref}[1]{}
+\renewcommand*{\backrefalt}[4]{%
+\ifcase #1%
+{\color{ovgu-darkgray}(\color{ovgu-red}Not~cited\color{ovgu-darkgray})}%
+\or%
+{\color{ovgu-darkgray}(Cited~on~page~#2)}%
+\else%
+{\color{ovgu-darkgray}(Cited~on~pages~#2)}%
+\fi%
+}
+
+\titlehead{\centering\includegraphics[width=0.66\textwidth]{OVGU-INF}}
+
+\subject{Bachelorarbeit}
+\title{Containerisierte Software-Stacks für Hochleistungsrechner: Ein Vergleich von nativen und containerisierten Installationen}
+
+\author{
+Finn Hering\\
+{\large\href{mailto:finn.hering@st.ovgu.de}{\nolinkurl{finn.hering@st.ovgu.de}}}
+}
+
+\date{\today}
+
+\publishers{
+First Reviewer:\\
+Prof. Dr. Musterfrau
+
+\medskip
+
+Second Reviewer:\\
+Prof. Dr. Mustermann
+
+\medskip
+
+Supervisor:\\
+Dr. Evil
+}
+
+\begin{document}
+
+% \frontmatter
+\pagenumbering{roman}
+
+\maketitle
+
+\begin{abstract}
+\lipsum[1]
+
+
+This thesis template is available at \url{https://github.com/parcio/templates} and consists of \cref{cha:introduction,cha:background,cha:evaluation,cha:conclusion}.
+It also contains \cref{cha:appendix}.
+\end{abstract}
+
+\tableofcontents
+
+% \mainmatter
+\cleardoubleoddpage
+\pagenumbering{arabic}
+
+\chapter{Introduction}
+\label{cha:introduction}
+
+\textit{In this chapter, ...}
+
+\section{Motivation}
+
+\begin{figure}[ht]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.9\textwidth]{OVGU-INF}
+		\caption{Left}
+		\label{fig:left}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.9\textwidth]{OVGU-INF}
+		\caption{Right}
+		\label{fig:right}
+	\end{subfigure}
+	\caption{Caption}
+	\label{fig:both}
+\end{figure}
+
+You can refer to the subfigures (\cref{fig:left,fig:right}) or the figure (\cref{fig:both}).
+
+\section*{Summary}
+
+\lipsum[2]
+
+\chapter{Hintergrund}
+\label{cha:background}
+
+\textit{In diesem Kapitel werden die genutzten Technologien erläutert}
+
+
+\section{Containervirtualisierung}
+
+Containervisualisierung (auch Containerisierung genannt) beschreibt das Bereitstellen einer Applikation, indem die Applikation und alles, was diese zum Laufen benötigt ((System-)Bibliotheken), ausführbare Dateien, (System-)Konfigurationen, etc.) in Form eines Containerimages bereitgestellt wird. Das ermöglicht es, die Applikation isoliert, schnell und zuverlässig auf unterschiedlichen Host-Systemen auszuführen. 
+
+Im Gegensatz zur klassischen Virtualisierung wird nicht die Hardware-Ebene abstrahiert und ein komplett eigenständiges Betriebssystem hochgefahren, sondern lediglich die Betriebssystem-Ebene abstrahiert. 
+
+Das hat zur Folge, dass Containervirtualisierung weniger Speicher verbraucht und performanter im Vergleich zu Hardwarevirtualisierung ist. 
+
+
+\section{Docker}
+
+Docker ist eine freie, weitverbreitete Software um Anwendungen zu containerisieren. Sie ermöglicht es OCI-Container-Images zu erstellen und auszuführen. 
+
+\subsection{Dockerfile}
+
+Eine Dockerfile ist die Definition, welche Docker benötigt, um ein Container-Image zu erstellen. In ihr werden alle nötigen Schritte sowie Metainformation definiert, um einen Container mit einer lauffähigen Applikation zu haben. Die in der Dockerfile definierten Schritte werden isoliert auf einem Basis-Image ausgeführt. Das durch die Dockerfile erstelle Image ist somit das Resultat alle Schritte, aus dem das Basis-Image entsteht und den in der Dockerfile definierten Schritten.
+
+Hier ist ein simples Dockerfile Beispiel für die Containerisierung einer Poetry Anwendung. 
+
+
+\begin{minted}{docker}
+# Setzen des Basis-Image-Containers
+FROM python:3.12
+
+# Befehl in Image-Container ausführen
+RUN pip install poetry
+
+# Arbeitsverzeichnis auf /app setzen
+WORKDIR /app
+
+# Alles vom aktuellen Verzeichnis von der Hostmaschine in das Containerverzeichniss /app kopieren 
+COPY ./src /app
+
+# Befehl in Image-Container ausführen
+RUN poetry install --without dev
+
+# Port 3000 im container als publishbar markieren
+EXPOSE 3000
+
+# Startbefehl des Container-Images setzen
+ENTRYPOINT ["python", "-m", "modul_graph"]
+\end{minted}
+
+
+\subsection{OCI-Containerimage Layer}
+
+
+Ein OCI-Containerimage setzt sich aus Layern zusammen, welche stapelweise angeordnet sind. In jedem Layer werden Änderungen am vorherigen Layer vorgenommen. Jedes OCI-Containerimage hat ein sogenanntes "Base-Image". Dieses kann als erstes Layer betrachtet werden. Ein "Base-Image" ist üblicherweise ein spezifisches Betriebssystem (z.B.: Debian, Ubuntu, Windows, etc.). 
+
+\subsection{Docker Build-Cache}
+
+Docker verfügt über Caching-Mechanismen, welche subsequente Builds beschleunigen. Das Caching funktioniert, indem Docker jedes einzelne "Layer" zwischenspeichert. Wenn sich ein Layer ändert, müssen nur die Layer, welche direkt oder indirekt auf dem Layer aufbauen, neu ausgeführt werden. Um das caching möglichst effektiv zu verwenden, sollte man also sicherstellen, dass Layer, welche besonders lange zum Erstellen brauchen, möglichst nur dann neu erstellt werden, wenn dies auch notwendig ist. 
+
+
+
+\subsection{Docker BuildKit}
+
+Docker BuildKit ist das neue Backend um OCI-Container-Images mit Docker zu erstellen. Ziel von BuildKit ist es, den Docker Legacy Builder zu ersetzen. 
+
+Docker BuildKit hat viele Verbesserungen, um Docker Builds - im Vergleich zum Docker Legacy Builder - performanter zu machen. Dazu zählen: Parallelisierung von Build-Stages, Auslassen von unbenutzten Build-Stages, mehr Caching Möglichkeiten wie z.B. Cache-Mounts, uvm.
+
+\subsubsection{Docker Bake}
+
+\section{Tables}
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{|l|c|r|}
+		\hline
+		\textbf{Header 1} & \textbf{Header 2} & \textbf{Header 3} \\
+		\hline
+		\hline
+		Row 1 & Row 1 & Row 1 \\
+		Row 2 & Row 2 & Row 2 \\
+		\hline
+	\end{tabular}
+	\caption{Caption}
+	\label{tab:table}
+\end{table}
+
+You can also refer to tables (\cref{tab:table}).
+
+\section{Math}
+
+\[
+	E = m c^2
+\]
+
+\section*{Summary}
+
+\lipsum[2]
+
+\chapter{Evaluation}
+\label{cha:evaluation}
+
+\textit{In this chapter, ...}
+
+\section*{Summary}
+
+\lipsum[2]
+
+\chapter{Conclusion}
+\label{cha:conclusion}
+
+\textit{In this chapter, ...}
+
+\section{Todos}
+
+\todo[inline]{FIXME}
+
+\lipsum[1-2]
+\todo{FIXME: remove this}
+
+\section*{Summary}
+
+\lipsum[2]
+
+\bibliographystyle{apalike}
+\bibliography{thesis}
+
+% \backmatter
+
+\appendix
+
+\chapter{Appendix}
+\label{cha:appendix}
+
+\chapter*{}
+
+\section*{Statement of Authorship}
+
+I herewith assure that I wrote the present thesis independently, that the thesis has not been partially or fully submitted as graded academic work and that I have used no other means than the ones indicated.
+I have indicated all parts of the work in which sources are used according to their wording or to their meaning.
+
+I am aware of the fact that violations of copyright can lead to injunctive relief and claims for damages of the author as well as a penalty by the law enforcement agency.
+
+\bigskip
+
+Magdeburg, \today
+
+\bigskip
+\bigskip
+
+\rule{0.5\textwidth}{0.5pt}\\
+\hspace*{0.25em}Signature
+
+\end{document}
