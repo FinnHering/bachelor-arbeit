@@ -1,0 +1,20 @@
+# Setzen des Basis-Image-Containers
+FROM python:3.12
+
+# Befehl in Image-Container ausführen
+RUN pip install poetry
+
+# Arbeitsverzeichnis auf /app setzen
+WORKDIR /app
+
+# Alles vom aktuellen Verzeichnis von der Hostmaschine in das Containerverzeichniss /app kopieren
+COPY ./src /app
+
+# Befehl in Image-Container ausführen
+RUN poetry install --without dev
+
+# Port 3000 im container als publishbar markieren
+EXPOSE 3000
+
+# Startbefehl des Container-Images setzen
+ENTRYPOINT ["python", "-m", "modul_graph"]

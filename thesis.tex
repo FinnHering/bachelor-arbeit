@@ -1,4 +1,4 @@
-% Copyright (c) 2021-2024 Michael Kuhn
+% Copyright (c) 2021-2024 Michael Kuhns
 %
 % Permission to use, copy, modify, and/or distribute this software for any
 % purpose with or without fee is hereby granted.
@@ -11,31 +11,32 @@
 % OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 % PERFORMANCE OF THIS SOFTWARE.
 
-
 \documentclass[
-	12pt,
-	a4paper,
-	printlength,
-	bibliography=totoc,
-	chapterprefix,
-	headings=openright,
-	numbers=endperiod,
-	parskip=half,
-	twoside
- ]{scrreprt}
+  12pt,
+  a4paper,
+  printlength,
+  bibliography=totoc,
+  chapterprefix,
+  headings=openright,
+  numbers=endperiod,
+  parskip=half,
+  twoside
+]{scrreprt}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
 % Enabling caching causes problems with overleaf..
-\usepackage[cache=false]{minted}
-
+\usepackage{minted}
 
 \setminted{
-linenos=true,
-breaklines=true,
-frame=single,
-stripnl=true,
-numbersep=5px
+  linenos=true,
+  breaklines=true,
+  frame=single,
+  stripnl=true,
+  numbersep=5px,
+  breakanywhere=true,
+  breakbefore=.-\,,
+  ignorelexererrors=true,
 }
 
 \usepackage{xcolor}
@@ -43,7 +44,6 @@ numbersep=5px
 %\usepackage{ellipsis, ragged2e, marginnote}
 \usepackage{lmodern}
 \usepackage{newtxmath}
-
 
 \usepackage[german]{babel}
 
@@ -59,7 +59,6 @@ numbersep=5px
 \usepackage[capitalise,noabbrev]{cleveref}
 
 \usepackage[color=ovgu-orange]{todonotes}
-
 
 \usepackage{lipsum}
 
@@ -78,13 +77,13 @@ numbersep=5px
 
 \renewcommand*{\backref}[1]{}
 \renewcommand*{\backrefalt}[4]{%
-\ifcase #1%
-{\color{ovgu-darkgray}(\color{ovgu-red}Not~cited\color{ovgu-darkgray})}%
-\or%
-{\color{ovgu-darkgray}(Cited~on~page~#2)}%
-\else%
-{\color{ovgu-darkgray}(Cited~on~pages~#2)}%
-\fi%
+  \ifcase #1%
+  {\color{ovgu-darkgray}(\color{ovgu-red}Not~cited\color{ovgu-darkgray})}%
+  \or%
+  {\color{ovgu-darkgray}(Cited~on~page~#2)}%
+  \else%
+  {\color{ovgu-darkgray}(Cited~on~pages~#2)}%
+  \fi%
 }
 
 \titlehead{\centering\includegraphics[width=0.66\textwidth]{OVGU-INF}}
@@ -93,25 +92,25 @@ numbersep=5px
 \title{Containerisierte Software-Stacks für Hochleistungsrechner: Ein Vergleich von nativen und containerisierten Installationen}
 
 \author{
-Finn Hering\\
-{\large\href{mailto:finn.hering@st.ovgu.de}{\nolinkurl{finn.hering@st.ovgu.de}}}
+  Finn Hering\\
+  {\large\href{mailto:finn.hering@st.ovgu.de}{\nolinkurl{finn.hering@st.ovgu.de}}}
 }
 
 \date{\today}
 
 \publishers{
-First Reviewer:\\
-Prof. Dr. Musterfrau
+  First Reviewer:\\
+  Prof. Dr. Musterfrau
 
-\medskip
+  \medskip
 
-Second Reviewer:\\
-Prof. Dr. Mustermann
+  Second Reviewer:\\
+  Prof. Dr. Mustermann
 
-\medskip
+  \medskip
 
-Supervisor:\\
-Dr. Evil
+  Supervisor:\\
+  Dr. Evil
 }
 
 \begin{document}
@@ -122,11 +121,10 @@ Dr. Evil
 \maketitle
 
 \begin{abstract}
-\lipsum[1]
+  \lipsum[1]
 
-
-This thesis template is available at \url{https://github.com/parcio/templates} and consists of \cref{cha:introduction,cha:background,cha:evaluation,cha:conclusion}.
-It also contains \cref{cha:appendix}.
+  This thesis template is available at \url{https://github.com/parcio/templates} and consists of \cref{cha:introduction,cha:background,cha:evaluation,cha:conclusion}.
+  It also contains \cref{cha:appendix}.
 \end{abstract}
 
 \tableofcontents
@@ -143,21 +141,21 @@ It also contains \cref{cha:appendix}.
 \section{Motivation}
 
 \begin{figure}[ht]
-	\centering
-	\begin{subfigure}{0.45\textwidth}
-		\centering
-		\includegraphics[width=0.9\textwidth]{OVGU-INF}
-		\caption{Left}
-		\label{fig:left}
-	\end{subfigure}
-	\begin{subfigure}{0.45\textwidth}
-		\centering
-		\includegraphics[width=0.9\textwidth]{OVGU-INF}
-		\caption{Right}
-		\label{fig:right}
-	\end{subfigure}
-	\caption{Caption}
-	\label{fig:both}
+  \centering
+  \begin{subfigure}{0.45\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{OVGU-INF}
+    \caption{Left}
+    \label{fig:left}
+  \end{subfigure}
+  \begin{subfigure}{0.45\textwidth}
+    \centering
+    \includegraphics[width=0.9\textwidth]{OVGU-INF}
+    \caption{Right}
+    \label{fig:right}
+  \end{subfigure}
+  \caption{Caption}
+  \label{fig:both}
 \end{figure}
 
 You can refer to the subfigures (\cref{fig:left,fig:right}) or the figure (\cref{fig:both}).
@@ -171,85 +169,67 @@ You can refer to the subfigures (\cref{fig:left,fig:right}) or the figure (\cref
 
 \textit{In diesem Kapitel werden die genutzten Technologien erläutert}
 
-
 \section{Containervirtualisierung}
 
-Containervisualisierung (auch Containerisierung genannt) beschreibt das Bereitstellen einer Applikation, indem die Applikation und alles, was diese zum Laufen benötigt ((System-)Bibliotheken), ausführbare Dateien, (System-)Konfigurationen, etc.) in Form eines Containerimages bereitgestellt wird. Das ermöglicht es, die Applikation isoliert, schnell und zuverlässig auf unterschiedlichen Host-Systemen auszuführen. 
+Containervisualisierung (auch Containerisierung genannt) beschreibt das Bereitstellen einer Applikation, indem die Applikation und alles, was diese zum Laufen benötigt ((System-)Bibliotheken), ausführbare Dateien, (System-)Konfigurationen, etc.) in Form eines Containerimages bereitgestellt wird. Das ermöglicht es, die Applikation isoliert, schnell und zuverlässig auf unterschiedlichen Host-Systemen auszuführen.
 
-Im Gegensatz zur klassischen Virtualisierung wird nicht die Hardware-Ebene abstrahiert und ein komplett eigenständiges Betriebssystem hochgefahren, sondern lediglich die Betriebssystem-Ebene abstrahiert. 
+Im Gegensatz zur klassischen Virtualisierung wird nicht die Hardware-Ebene abstrahiert und ein komplett eigenständiges Betriebssystem hochgefahren, sondern lediglich die Betriebssystem-Ebene abstrahiert.
 
-Das hat zur Folge, dass Containervirtualisierung weniger Speicher verbraucht und performanter im Vergleich zu Hardwarevirtualisierung ist. 
-
+Das hat zur Folge, dass Containervirtualisierung weniger Speicher verbraucht und performanter im Vergleich zu Hardwarevirtualisierung ist.
 
 \section{Docker}
 
-Docker ist eine freie, weitverbreitete Software um Anwendungen zu containerisieren. Sie ermöglicht es OCI-Container-Images zu erstellen und auszuführen. 
+Docker ist eine freie, weitverbreitete Software um Anwendungen zu containerisieren. Sie ermöglicht es OCI-Container-Images zu erstellen und auszuführen.
 
 \subsection{Dockerfile}
 
 Eine Dockerfile ist die Definition, welche Docker benötigt, um ein Container-Image zu erstellen. In ihr werden alle nötigen Schritte sowie Metainformation definiert, um einen Container mit einer lauffähigen Applikation zu haben. Die in der Dockerfile definierten Schritte werden isoliert auf einem Basis-Image ausgeführt. Das durch die Dockerfile erstelle Image ist somit das Resultat alle Schritte, aus dem das Basis-Image entsteht und den in der Dockerfile definierten Schritten.
 
-Hier ist ein simples Dockerfile Beispiel für die Containerisierung einer Poetry Anwendung. 
+Hier ist ein simples Dockerfile Beispiel für die Containerisierung einer Poetry Anwendung.
 
+\inputminted{docker}{./code-examples/Dockerfile.example}
 
-\begin{minted}{docker}
-# Setzen des Basis-Image-Containers
-FROM python:3.12
+\subsection{OCI-Container-Image Layer}
 
-# Befehl in Image-Container ausführen
-RUN pip install poetry
-
-# Arbeitsverzeichnis auf /app setzen
-WORKDIR /app
-
-# Alles vom aktuellen Verzeichnis von der Hostmaschine in das Containerverzeichniss /app kopieren 
-COPY ./src /app
-
-# Befehl in Image-Container ausführen
-RUN poetry install --without dev
-
-# Port 3000 im container als publishbar markieren
-EXPOSE 3000
-
-# Startbefehl des Container-Images setzen
-ENTRYPOINT ["python", "-m", "modul_graph"]
-\end{minted}
-
-
-\subsection{OCI-Containerimage Layer}
-
-
-Ein OCI-Containerimage setzt sich aus Layern zusammen, welche stapelweise angeordnet sind. In jedem Layer werden Änderungen am vorherigen Layer vorgenommen. Jedes OCI-Containerimage hat ein sogenanntes "Base-Image". Dieses kann als erstes Layer betrachtet werden. Ein "Base-Image" ist üblicherweise ein spezifisches Betriebssystem (z.B.: Debian, Ubuntu, Windows, etc.). 
+Ein OCI-Container-Image setzt sich aus Schichten (Layer) zusammen, welche stapelweise angeordnet sind. In jeder Schicht werden Änderungen an der vorherigen Schicht vorgenommen. Jedes OCI-Container-Image hat ein sogenanntes "Base-Image". Dieses ist die erste Schicht. Ein "Base-Image" ist üblicherweise ein spezifisches Betriebssystem (z. B.: Debian, Ubuntu, Windows, etc.).
 
 \subsection{Docker Build-Cache}
 
-Docker verfügt über Caching-Mechanismen, welche subsequente Builds beschleunigen. Das Caching funktioniert, indem Docker jedes einzelne "Layer" zwischenspeichert. Wenn sich ein Layer ändert, müssen nur die Layer, welche direkt oder indirekt auf dem Layer aufbauen, neu ausgeführt werden. Um das caching möglichst effektiv zu verwenden, sollte man also sicherstellen, dass Layer, welche besonders lange zum Erstellen brauchen, möglichst nur dann neu erstellt werden, wenn dies auch notwendig ist. 
-
-
+Docker verfügt über Caching-Mechanismen, welche subsequente Builds beschleunigen. Das Caching funktioniert, indem Docker jedes einzelne "Layer" zwischenspeichert. Wenn sich ein Layer ändert, müssen nur die Layer, welche direkt oder indirekt auf dem Layer aufbauen, neu ausgeführt werden. Um das caching möglichst effektiv zu verwenden, sollte man also sicherstellen, dass Layer, welche besonders lange zum Erstellen brauchen, möglichst nur dann neu erstellt werden, wenn dies auch notwendig ist.
 
 \subsection{Docker BuildKit}
 
-Docker BuildKit ist das neue Backend um OCI-Container-Images mit Docker zu erstellen. Ziel von BuildKit ist es, den Docker Legacy Builder zu ersetzen. 
+Docker BuildKit ist das neue Backend um OCI-Container-Images mit Docker zu erstellen. Ziel von BuildKit ist es, den Docker Legacy Builder zu ersetzen.
 
-Docker BuildKit hat viele Verbesserungen, um Docker Builds - im Vergleich zum Docker Legacy Builder - performanter zu machen. Dazu zählen: Parallelisierung von Build-Stages, Auslassen von unbenutzten Build-Stages, mehr Caching Möglichkeiten wie z.B. Cache-Mounts, uvm.
+Docker BuildKit hat viele Verbesserungen, um Docker Builds, im Vergleich zum Docker Legacy Builder, performanter zu machen. Dazu zählen: Parallelisierung von Build-Stages, Auslassen von unbenutzten Build-Stages, mehr Caching Möglichkeiten wie z. B. Cache-Mounts, u. v. m.
 
-\subsubsection{Docker Bake}
+Docker BuildKit Backends müssen nicht explizit auf dem Computer installiert werden, auf dem man entwickelt. Docker kann auch BuildKit Backend von Remote-Servern einbinden. Das ermöglicht es, Builds auf leistungsstärkeren Servern, sowie auf Servern mit einer anderen CPU-Architektur auszuführen, um die Build-Zeit zu verkürzen.
+
+\subsubsection{Docker Buildx}
+
+Um das Docker BuildKit Backend mit Docker zu verwenden, nutzt man Docker Buildx. Docker Buildx ist eine offizielle Docker Erweiterung. Docker Buildx hat einige Funktionalitäten um Docker BuildKit Backends einzubinden, sowie festzulegen welche BuildKit Backends man verwenden möchte.
+
+\subsubsection{Docker Buildx Bake}
+
+Eine weitere Funktionalität von Docker Buildx ist Docker Buildx Bake. Docker Buildx Bake ermöglicht es mithilfe einer sog. Bakefile das erstellen und mehrerer OCI-Container-Images zu vereinfachen.
+
+\inputminted{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.example.hcl}
 
 \section{Tables}
 
 \begin{table}[ht]
-	\centering
-	\begin{tabular}{|l|c|r|}
-		\hline
-		\textbf{Header 1} & \textbf{Header 2} & \textbf{Header 3} \\
-		\hline
-		\hline
-		Row 1 & Row 1 & Row 1 \\
-		Row 2 & Row 2 & Row 2 \\
-		\hline
-	\end{tabular}
-	\caption{Caption}
-	\label{tab:table}
+\centering
+\begin{tabular}{|l|c|r|}
+  \hline
+  \textbf{Header 1} & \textbf{Header 2} & \textbf{Header 3} \\
+  \hline
+  \hline
+  Row 1 & Row 1 & Row 1 \\
+  Row 2 & Row 2 & Row 2 \\
+  \hline
+\end{tabular}
+\caption{Caption}
+\label{tab:table}
 \end{table}
 
 You can also refer to tables (\cref{tab:table}).
@@ -257,7 +237,7 @@ You can also refer to tables (\cref{tab:table}).
 \section{Math}
 
 \[
-	E = m c^2
+E = m c^2
 \]
 
 \section*{Summary}
