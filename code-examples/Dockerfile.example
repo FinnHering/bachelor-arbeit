@@ -1,20 +1,36 @@
-# Setzen des Basis-Image-Containers
-FROM python:3.12
+FROM ubuntu:latest AS julea
 
-# Befehl in Image-Container ausführen
-RUN pip install poetry
+# Definiert die Shell für die RUN, CMD und ENTRYPOINT Anweisungen
+SHELL [ "/bin/bash", "-c" ]
 
-# Arbeitsverzeichnis auf /app setzen
+# Setzt argumente, die zur Buildzeit übergeben werden können
+ARG JULEA_SPACK_COMPILER="gcc"
+ARG CC="gcc"
+
+# Set Arbeitsverzeichnis im OCI-Container-Image
 WORKDIR /app
 
-# Alles vom aktuellen Verzeichnis von der Hostmaschine in das Containerverzeichniss /app kopieren
-COPY ./src /app
+# Installiert die benötigten Pakete
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && apt-get -y upgrade
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \ 
+    git \
+    python3 \
+    build-essential \
+    zstd \
+    ca-certificates \
+    git \
+    gnupg \
+    patchelf \
+    unzip \
+    clang 
 
-# Befehl in Image-Container ausführen
-RUN poetry install --without dev
+# Kopiert den "scripts" order vom Host-Rechner in das Arbeitsverzeichnis /app des OCI-Container-Images
+COPY ./scripts/ /app/scripts/
 
-# Port 3000 im container als publishbar markieren
-EXPOSE 3000
+# Installiert die Abhängigkeiten für Julea und Kompiliert Julea
+RUN JULEA_SPACK_COMPILER=${JULEA_SPACK_COMPILER} JULEA_SPACK_DIR="/app/dependencies" /app/scripts/install-dependencies.sh
 
-# Startbefehl des Container-Images setzen
-ENTRYPOINT ["python", "-m", "modul_graph"]
+RUN CC=${CC} . /app/scripts/environment.sh && \
+    meson setup --prefix="/app/julea-install" --buildtype="release" --werror "-Dgdbm_prefix=$(spack location --install-dir gdbm)" bld && \
+    ninja -C bld && \
+    ninja -C bld install 
