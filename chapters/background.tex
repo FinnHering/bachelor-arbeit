@@ -1,0 +1,74 @@
+\chapter{Hintergrund}
+
+\label{cha:background}
+\textit{In diesem Kapitel werden die genutzten Technologien erläutert}
+
+\section{Containervirtualisierung}
+
+Containervisualisierung (auch Containerisierung genannt) beschreibt das Bereitstellen einer Applikation, indem die Applikation und alles, was diese zum Laufen benötigt ((System-)Bibliotheken, ausführbare Dateien, (System-)Konfigurationen, etc.) in Form eines Container-Images bereitgestellt wird. Das ermöglicht es, die Applikation isoliert, schnell und zuverlässig auf unterschiedlichen Host-Systemen auszuführen.
+
+Im Gegensatz zur klassischen Virtualisierung wird nicht die Hardware-Ebene abstrahiert und ein komplett eigenständiges Betriebssystem hochgefahren, sondern lediglich die Betriebssystem-Ebene abstrahiert.
+
+Das hat zur Folge, dass Containervirtualisierung weniger Speicher verbraucht und performanter im Vergleich zu Hardwarevirtualisierung ist.
+
+\section{Docker}
+
+Docker ist eine freie, weitverbreitete Software um Anwendungen zu containerisieren. Sie ermöglicht es OCI-Container-Images zu erstellen und auszuführen.
+
+\subsection{Dockerfile}
+
+Eine Dockerfile ist die Definition, welche Docker benötigt, um ein Container-Image zu erstellen. In ihr werden alle nötigen Schritte sowie Metainformation definiert, um einen Container mit einer lauffähigen Applikation zu haben. Die in der Dockerfile definierten Schritte werden isoliert auf einem Basis-Image ausgeführt. Das durch die Dockerfile erstelle Image ist somit das Resultat alle Schritte, aus dem das Basis-Image entsteht und den in der Dockerfile definierten Schritten.
+
+Hier ist ein simples Dockerfile Beispiel für das Erstellen eines Julea Container-Images:
+
+\inputminted{docker}{./code-examples/Dockerfile.example}
+
+\subsection{OCI-Container-Image Layer}
+
+Ein OCI-Container-Image setzt sich aus Schichten (Layer) zusammen, welche stapelweise angeordnet sind. In jeder Schicht werden Änderungen an der vorherigen Schicht vorgenommen. Jedes OCI-Container-Image hat ein sogenanntes "Base-Image". Dieses ist die erste Schicht. Ein "Base-Image" ist üblicherweise ein spezifisches Betriebssystem (z. B.: Debian, Ubuntu, Windows, etc.).
+
+\subsection{Docker Build-Cache}
+
+Docker verfügt über Caching-Mechanismen, welche subsequente Builds beschleunigen. Das Caching funktioniert, indem Docker jedes einzelne "Layer" zwischenspeichert. Wenn sich ein Layer ändert, müssen nur die Layer, welche direkt oder indirekt auf dem Layer aufbauen, neu ausgeführt werden. Um das caching möglichst effektiv zu verwenden, sollte man also sicherstellen, dass Layer, welche besonders lange zum Erstellen brauchen, möglichst nur dann neu erstellt werden, wenn dies auch notwendig ist.
+
+\subsection{Docker BuildKit}
+
+Docker BuildKit ist das neue Backend um OCI-Container-Images mit Docker zu erstellen. Ziel von BuildKit ist es, den Docker Legacy Builder zu ersetzen.
+
+Docker BuildKit hat viele Verbesserungen, um Docker Builds, im Vergleich zum Docker Legacy Builder, performanter zu machen. Dazu zählen: Parallelisierung von Build-Stages, Auslassen von unbenutzten Build-Stages, mehr Caching Möglichkeiten wie z. B. Cache-Mounts, u. v. m.
+
+Docker BuildKit Backends müssen nicht explizit auf dem Computer installiert werden, auf dem man entwickelt. Docker kann auch BuildKit Backend von Remote-Servern einbinden. Das ermöglicht es, Builds auf leistungsstärkeren Servern, sowie auf Servern mit einer anderen CPU-Architektur auszuführen, um die Build-Zeit zu verkürzen.
+
+\subsubsection{Docker Buildx}
+
+Um das Docker BuildKit Backend mit Docker zu verwenden, nutzt man Docker Buildx. Docker Buildx ist eine offizielle Docker Erweiterung. Docker Buildx hat einige Funktionalitäten um Docker BuildKit Backends einzubinden, sowie festzulegen welche BuildKit Backends man verwenden möchte.
+
+\subsubsection{Docker Buildx Bake}
+
+Eine weitere Funktionalität von Docker Buildx ist Docker Buildx Bake. Docker Buildx Bake ermöglicht es mithilfe einer sog. Bakefile das erstellen und mehrerer OCI-Container-Images zu vereinfachen.
+
+Momentan wird Julea in mehreren Ubuntu-Versionen sowie mit mehreren Compilern kompiliert und getestet. Somit müssten mehrere Dockerfiles ertellt werden, um alle Kombinationen zu testen. Mit Docker Buildx Bake kann man das Erstellen mehrerer Docker-Container-Images vereinfachen.
+
+\inputminted{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.example.hcl}
+
+\section{Devcontainer}
+
+Während sich die "klassische" Containerisierung sich darauf fokussiert eine produktive Applikation zuverlässig auszurollen, fokussieren sich die Devcontainer darauf Entwicklern eine einheitliche Entwicklungsumgebung bereitzustellen. Im Idealfall sollte ein Devcontainer den einstieg in ein Projekt/eine Entwicklungsumgebung erleichtern, indem bereits alles eingerichtet ist, um an einem Projekt zu arbeiten.
+
+Ein Devcontainer sollte alle nötigen Abhängigkeiten die man zum Entwickeln benötigt enthalten. Dazu zählen z. B. Compiler, Interpreter, Bibliotheken, Tools.
+
+Im fall von Julea muss der Devcontainer alle Abhängigkeiten enthalten, die man benötigt, um an Julea zu entwickeln. Diese Abhängigkeiten müssen kompiliert werden. Das Kompilieren ist sehr zeitaufwendig. Darum sollte ein fertiger Julea-Devcontainer bereit diese Abhängigkeiten beinhalten, damit das initiale kompilieren übersprungen werden kann.
+
+\section{Apptainer (früher: Singularity)}
+
+Apptainer ist eine alternative Container-Lösung. Sie nutzt im Gegensatz zu Docker keine OCI-Container-Images, kann diese aber konvertieren. Apptainer wurde explizit für HPC-Systeme entwickelt. Apptainer-Container-Images werden als einzelne Datei gespeichert, das erleitert das Verteilen des Container-Images ohne einen Registry-Server. Außerdem können Apptainer-Container-Images standardmäßig auch ohne Root-Rechte ausgeführt werden.
+
+\section{GitHub-Actions}
+
+GitHub-Actions ist ein Feature von GitHub, welches das Ausführen von CI/CD-Pipelines auf GitHub ermöglicht.
+
+\section{Julea}
+
+In dieser Arbeit wird Julea als Beispiel für eine Applikation verwendet, welche in einem Container-Image bereitgestellt werden soll. Julea ist ein Speicher-Framework, welches mehrere Speicher-Backends wie z. B. Datei-Speicher, MySQL, MongoDB, u. v. m. unterstützt. Julea ist ein Open-Source-Projekt und wird von der Arbeitsgruppe "Parallel Computing and I/O" an der Otto-von-Guericke-Universität Magdeburg entwickelt.
+
+Der Quellcode von Julea wird auf GitHub bereitgestellt: \url{https://github.com/parcio/julea}
