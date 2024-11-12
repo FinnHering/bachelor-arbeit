@@ -1,0 +1,16 @@
+{
+    "build": {
+        "dockerfile": "Dockerfile",
+        "context": "."
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "hashicorp.hcl",
+                "James-Yu.latex-workshop",
+                "valentjn.vscode-ltex",
+                "ms-python.python"
+            ]
+        }
+    }
+}

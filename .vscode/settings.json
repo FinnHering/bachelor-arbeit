@@ -1,0 +1,8 @@
+{
+    "ltex.additionalRules.enablePickyRules": true,
+    "ltex.additionalRules.motherTongue": "de-DE",
+    "ltex.completionEnabled": true,
+    "ltex.language": "de-DE",
+    "latex-workshop.formatting.latex": "latexindent",
+    "latex-workshop.docker.enabled": false
+}
