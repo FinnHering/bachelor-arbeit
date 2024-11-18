@@ -17,5 +17,3 @@ $pdflatex = 'pdflatex -interaction=nonstopmode -synctex=1 %O --shell-escape %S';
 $out_dir = '.out';
 
 @default_files = ('thesis.tex');
-
-set_tex_cmds( '--shell-escape %O %S' );
