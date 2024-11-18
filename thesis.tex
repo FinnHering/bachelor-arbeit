@@ -11,6 +11,7 @@
 % OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 % PERFORMANCE OF THIS SOFTWARE.
 
+
 \documentclass[
   12pt,
   a4paper,
@@ -49,14 +50,19 @@
 
 \usepackage[ngerman]{babel}
 
+% Enable robust externalize for embedding images via url
+\usepackage{robust-externalize}
+\robExtConfigure{enable fallback to manual mode}
+\robExtConfigure{set output directory=build}
+
+
 % Use less space for the page number
-\usepackage[margin=2.5cm,footskip=36pt]{geometry}
+\usepackage[margin=2.5cm,footskip=36pt,showframe, marginparwidth=2cm]{geometry}
 \usepackage{graphicx}
 %\usepackage[htt]{hyphenat}
 \usepackage{microtype}
 \usepackage{subcaption}
-
-\usepackage[color=ovgu-orange]{todonotes}
+\usepackage[color=ovgu-orange,textwidth=\marginparwidth]{todonotes}
 
 \usepackage{lipsum}
 
@@ -120,6 +126,7 @@
 
 \begin{document}
 
+\fussy
 % \frontmatter
 \pagenumbering{roman}
 
@@ -134,19 +141,27 @@
 
 \tableofcontents
 
+
+
 % \mainmatter
 
 \ifdraft{\cleardoubleoddpage}{}
 \pagenumbering{arabic}
 
+% Einleitung
+\include{chapters/01_introduction}
+
 % Hintergrund
-\include{chapters/background}
+\include{chapters/02_background}
 
 % Verwandte Arbeiten Kapitel
-\include{chapters/related-work}
+\include{chapters/03_related-work}
+
+\include{chapters/04_implementation-design}
+
+\include{chapters/05_evaluation}
 
 \chapter{Evaluation}
-\label{cha:evaluation}
 
 \textit{In this chapter, ...}
 

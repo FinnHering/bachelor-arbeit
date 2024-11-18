@@ -10,7 +10,18 @@
                 "James-Yu.latex-workshop",
                 "valentjn.vscode-ltex",
                 "ms-python.python"
-            ]
+            ],
+            "settings": {
+                "ltex.java.path": "/usr/lib/jvm/default-java",
+                "latex-workshop.latex.outDir": "%DIR%/.out",
+            }
         }
-    }
+    },
+    "remoteEnv": {
+        "JAVA_HOME": "/usr/lib/jvm/default-java"
+    },
+    "containerEnv": {
+        "JAVA_HOME": "/usr/lib/jvm/default-java"
+    },
+    "userEnvProbe": "loginShell"
 }

@@ -1,0 +1,74 @@
+\chapter{Implementierung und Design}
+\label{cha:implementation_design}
+
+\textit{In diesem Kapitel wird die Implementierung und das Design der Containerisierung von JULEA erläutert. Zu Beginn wird noch einmal kurz auf den Ist-Zusatand eingegangen.}
+
+\section{Ist-Zustand}
+
+Julea kann als SPACK-Paket ausgerollt werden; Jeder Entwickler muss entweder die nötigen Abhängigkeiten manuell installieren oder mithilfe von bereitgestellen shell-datein kompilieren lassen. Das ist sehr zeitaufwendig und fehleranfällig.
+
+\section{Benötigte Containerimages}
+
+Was für containerimages soll es geben?
+
+\begin{itemize}
+    \item Devcontainer
+    \item Deploymentcontainer
+    \item Test-Container
+\end{itemize}
+
+Welche Tags sollen die Containerimages haben?
+
+Was sollen diese Tags beinhalten?
+
+\begin{itemize}
+    \item Devcontainer: 
+    
+    \begin{itemize}
+        \item latest
+        \item ubuntu-20.04
+        \item ubuntu-22.04
+        \item ubuntu-24.04
+    \end{itemize}
+    
+    \item Deploymentcontainer: 
+    \begin{itemize}
+        \item latest
+        \item ubuntu-20.04
+        \item ubuntu-22.04
+        \item ubuntu-24.04
+    \end{itemize}
+    
+    \item Test-Container 
+    \begin{itemize}
+        \item gcc-ubuntu-20.04
+        \item gcc-ubuntu-22.04
+        \item gcc-ubuntu-24.04
+        \item clang-ubuntu-20.04
+        \item clang-ubuntu-22.04
+        \item clang-ubuntu-24.04
+        \item gcc-spack-ubuntu-20.04
+        \item gcc-spack-ubuntu-22.04
+        \item gcc-spack-ubuntu-24.04
+        \item clang-spack-ubuntu-20.04
+        \item clang-spack-ubuntu-22.04
+        \item clang-spack-ubuntu-24.04
+    \end{itemize}
+    
+
+\end{itemize}
+
+\section{Aufbau der Dockerfiles}
+
+2 Dockefiles: Weil das bauen Spack-Container und Julea-Container fast komplett unterschiedlich ist.
+
+\subsection{Ubuntu Dockerfile}
+
+\subsection{Spack Dockerfile}
+
+\subsection{Zusammenspiel Dockerfile -> Images/Tags}
+Welche Dockerfile generiert welche Images/Tags?
+
+\section{Docker Bakefile}
+
+Vereinfacht das erstellen von mehreren Docker-Images

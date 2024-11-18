@@ -314,4 +314,6 @@ TSWLatexianTemp*
 
 thesis.pdf
 
+!.out/chapters/
+
 # End of https://www.toptal.com/developers/gitignore/api/latex
