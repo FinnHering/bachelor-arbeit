@@ -316,4 +316,6 @@ thesis.pdf
 
 !.out/chapters/
 
+tmp/
+
 # End of https://www.toptal.com/developers/gitignore/api/latex

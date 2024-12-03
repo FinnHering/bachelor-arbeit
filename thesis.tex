@@ -50,10 +50,16 @@
 
 \usepackage[ngerman]{babel}
 
+\usepackage[abspath]{currfile}
+
 % Enable robust externalize for embedding images via url
 \usepackage{robust-externalize}
-\robExtConfigure{enable fallback to manual mode}
-\robExtConfigure{set output directory=.out}
+\robExtConfigure{
+  enable fallback to manual mode,
+  set output directory=\getpwd/.out
+}
+
+\usepackage{nicematrix}
 
 
 % Use less space for the page number

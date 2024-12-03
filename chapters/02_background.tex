@@ -11,14 +11,33 @@ Im Gegensatz zur klassischen Virtualisierung wird nicht die Hardware-Ebene abstr
 
 Das hat zur Folge, dass Containervirtualisierung weniger Speicher verbraucht und performanter im Vergleich zu Hardwarevirtualisierung ist.
 
-ContainerD, eine sehr populäre Containervirtualisierungs-Software, hat eine darstellung der Containervisualiserungs-Architektur mit und um ContainerD erstellt: 
+\section{OCI-Container-Image Spezifikation}
 
-\includegraphicsWeb[width=\linewidth]{https://containerd.io/img/architecture.png}
-\captionof{figure}{ContainerD Architektur: https://containerd.io/img/architecture.png}
+Die Open Container Initiative (OCI) ist eine Organisation, welche sich auf die Standardisierung von Containern spezialisiert hat. Mitglieder dieser Initiative sind u.A. Microsoft, Amazon Web Services, Google und Red Hat. Die von OCI bereitgestellte Spezifikation definiert den aufbau eines Container-Images.
+
+\section{ContainerD}
+
+ContainerD ist ein System-Daemon, welcher die OCI-Image-Spezifikation unterstützt und die verwaltung Containern übernimmt. Docker nutzt ContainerD als Backend für die Containervisualisierung. Das Unternehmen hinter Docker hat ContainerD als Open-Source-Projekt veröffentlicht und arbeitet an diesem.
+
+\begin{figure}[H]
+    \includegraphicsWeb[width=\linewidth]{https://containerd.io/img/architecture.png}
+    \captionof{figure}{ContainerD Architektur: https://containerd.io/img/architecture.png}
+\end{figure}
+
+
+ContainerD selber ist in mehrere Komponenten aufgeteilt. Diese beinhalten unter anderem:
+
+Eine API um mit unterschiedlichen ContainerD-Clients (Frontends) zu kommunizieren. Hierzu zählen CRI und die native ContainerD-Schnistelle. CRI ist selber nur ein Wrapper um die native ContainerD-Schnistelle. Die CRI-Schnistelle wird größtenteils von Kzbernetes genutzt, um ContainerD zu steuern. Die native ContainerD-Schnistelle wird unter anderem von Docker genutzt.
+
+Der ContainerD-Core, welcher alle nötigen Metadaten und funktionalitäten bereitstellt, um Container zu verwalten. Dieser kommuniziert wiederrum mit dem ContainerD-Backend.
+
+Das ContainerD-Backend ist wiederrum für die eigentliche Ausführung der Container zuständig. Es abstrahiert die dafür nötigen OS-Funktionalitäten für den ContainerD-Core.
+
+ContainerD benötigt erweiterte rechte auf dem Host-System. Aus diesem Grund läuft ContainerD standardmäßig als Root-Prozess. Es ist mlglich diesen ohne Root-Rechte zu verwenden, allerdings nur mit einem deutlichen Mehraufwand.
 
 \section{Docker}
 
-Docker ist eine freie, weitverbreitete Software um Anwendungen zu containerisieren. Sie ermöglicht es OCI-Container-Images zu erstellen und auszuführen.
+Docker ist eine der bekanntesten Containervisualisierungs-Lösungen. Sie beinhaltet eine Reihe von Werkzeugen zum Erstellen, verwalten und ausführen von Containern. Docker ist ein Frontend für ContainerD.
 
 \subsection{Dockerfile}
 
@@ -64,26 +83,78 @@ Solche Container-Images sollten alle nötigen Abhängigkeiten, welche man zum En
 
 Im fall von Julea muss ein solcher Entwicklungs-Container alle Abhängigkeiten enthalten, um an oder mit Julea zu entwickeln. Diese Abhängigkeiten müssen kompiliert werden. Das Kompilieren ist sehr zeitaufwendig. Darum sollte ein fertiges Container-Image diese Abhängigkeiten beinhalten, sodass das initiale Kompilieren der Abhängigkeiten übersprungen werden kann.
 
-Ein Container-Image alleine müsste allerdings immernoch vom Entwickler selber in den Editor/IDE integriert werden, da das Denutzen des Containers sonst sehr aufwändig wär. Um die integration in den Editor/IDE zu vereinfachen, bietet Microsoft eine offene Spezifikation ("Development Container") an. Wenn ein Editor/IDE diese Spezifikation unterstützt, kann der Entwickler mit einem Klick den Container in den Editor/IDE integrieren. 
+Ein Container-Image alleine müsste allerdings immernoch vom Entwickler selber in den Editor/IDE integriert werden, da das Denutzen des Containers sonst sehr aufwändig wär. Um die integration in den Editor/IDE zu vereinfachen, bietet Microsoft eine offene Spezifikation ("Development Container") an. Wenn ein Editor/IDE diese Spezifikation unterstützt, kann der Entwickler mit einem Klick den Container in den Editor/IDE integrieren.
 
 Neben der einfachen Integration in den Editor/IDE ermöglicht die Spezifikation eine reihe an einstellungsmöglichkeiten. So kann der Entwickler z. B. festlegen, welche Extensions installiert werden sollen, welche Umgebungsvariablen gesetzt werden sollen, welche Ports nach außen freigegeben werden sollen, welche Editor/IDE-Einstellungen gesetzt werden sollen, u. v. m.
 
 
 \subsection{Editor/IDE-Unterstützung}
 
+\begin{table}[H]
+    \begin{NiceTabular}{X|X|X[4]}[hlines]
+        IDE/Editor Name    & Unterstützung & Anmerkung \\
+        Visual Studio Code & Ja            & Vollständige Unterstützung                                                                                                                                                                                              \\
+        CLI                & Ja            & Es existiert ein offizielles CLI in form eines NPM-Paketes @devcontainer/cli. Dadurch ist es auch möglich \(Neo-\)VIM und andere Terminal-Texteditoren mit Devcontainern zu verwenden                                   \\
+        Visual Studio      & Ja*           & Stand 01.12.2024: Eigeschränkte unterstützung. Aktuell sind nur C++-Projekte mit CMake unterstützt                                                                                                                      \\
+        JetBrains IDEs     & Ja*           & Stand 01.12.2024 ist die unterstützung in der Beta-Phase und unvollständig.                                                                                                                                             \\
+        VIM                & Ja*           & Stand 01.12.2024 gibt es ein community plugin für Neo-VIM welches devcontainer integration ermöglicht. Die vollständigkeit dieses Plugins wurde nicht überprüft. Siehe: https://codeberg.org/esensar/nvim-dev-container \\
+        Sublime Text       & Nein          & Stand 01.12.2024: Es gibt keine offizielle Aussage, ob oder wann es eine Devcontainer unterstzüng geben soll                                                                                                            \\
+        Eclipse            & Nein          & Stand 01.12.2024: Es gibt keine offizielle Aussage, ob oder wann es eine Devcontainer unterstzüng geben soll                                                                                                            \\
+        Netbeans           & Nein          & Stand 01.12.2024: Es gibt keine offizielle Aussage, ob oder wann es eine Devcontainer unterstzüng geben soll                                                                                                            \\
+        Code::Blocks       & Nein          & Stand 01.12.2024: Es gibt keine offizielle Aussage, ob oder wann es eine Devcontainer unterstzüng geben soll                                                                                                            \\
+        Notepad++          & Nein          & Stand 01.12.2024: Es gibt keine offizielle Aussage, ob oder wann es eine Devcontainer unterstzüng geben soll                                                                                                            \\
+        Emacs              & Nein          & Stand 01.12.2024: Es gibt keine offizielle Aussage, ob oder wann es eine Devcontainer unterstzüng geben soll                                                                                                            \\
+    \end{NiceTabular}
+\end{table}
+
 \section{Apptainer (früher: Singularity)}
 
-Apptainer ist eine alternative Container-Lösung. Sie nutzt im Gegensatz zu Docker keine OCI-Container-Images, kann diese aber konvertieren. Apptainer wurde explizit für HPC-Systeme entwickelt. Apptainer-Container-Images werden als einzelne Datei gespeichert, das erleitert das Verteilen des Container-Images ohne einen Registry-Server. Außerdem können Apptainer-Container-Images standardmäßig auch ohne Root-Rechte ausgeführt werden.
+Apptainer ist eine alternative Container-Lösung. Sie nutzt im Gegensatz zu Docker keine OCI-Container-Images, kann diese aber konvertieren. Apptainer-Container-Images werden als einzelne Datei gespeichert, das erleitert das Verteilen des Container-Images ohne einen Registry-Server. Es werden keine erweiterten Berechtigungen durch Apptainer benötigt, um Container auszuführen. Dies ist insbesondere für HPC-Umgebungen relevant, da das Ausführen von Applikationen als root-Benutzer hier ungewöhnlich ist.
+
+\section{CI/CD}
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{julea-ci-cd-full.png}
+    \caption{CI/CD-Pipeline von Julea. \newline
+        Siehe: https://github.com/parcio/julea/actions/runs/8318540808}
+\end{figure}
+
+CI/CD, auch CI/CD-Pipeline genannt, ist die Kombination von Contiguous Integration (CI) und Contiguous Deployment/Contiguous Delivery (CD). Eine CI/CD-Pipeline ist eine automatisierte Abfolge von Schritten, welche das Testen, Kompilieren, Bereitstellen und Ausrollen von Artefakten automatisiert. Oftmals sind solche CI/CD-Pipelines direkt teil einer modernen Versiom-Control-System-Plattform wie z. B. GitHub, GitLab, BitBucket, etc. und regieren somit vollautomatisch auf Code-Änderungen.
+
+\section{Contiguous Integration (CI)}
+
+Unter Contiguous Integration (CI) versteht man unter anderem das automatisierte testen und/oder kompilieren von Code.  Dieser automatismus dient dazu den Software-Entwickern Zeit zu erspaaren, wodurch sie sich auf das eigentliche entwickeln fokussieren können.
+
+Im gezeigten Beispiel gehören alle bis auf den letzten Schritt "Publish" zur Contiguous Integration (CI).
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{julea-ci-cd-ci-focus.png}
+    \caption{CI/CD-Pipeline von Julea. \newline
+        Siehe: https://github.com/parcio/julea/actions/runs/8318540808}
+\end{figure}
+
+\section{Contiguous Delivery (CD)}
+
+Unter Contiguous Deployment (CD) versteht man das automatisierte bereitstellen von Artefakt. Üblicherweise sind Artefakte Container-Images, ausführbare Dataien, Archive, etc.
+
+Im gezeigten Beispiel gehört nur der letzte Schritt "Publish" zu Contiguous Delivery (CD). In diesem Schritt wird die Dokumentation von Julea automatisch veröffentlicht.
+
+\begin{figure}[H]
+    \includegraphics[width=\textwidth]{julea-ci-cd-cd-focus.png}
+    \caption{CI/CD-Pipeline von Julea. \newline
+        Siehe: https://github.com/parcio/julea/actions/runs/8318540808}
+\end{figure}
+
+\section{Contiguous Deployment (CD)}
+
+Unter Contiguous Deployment (CD) nimmt das konzept von Contiguous Delivery (CD) auf und rollt das bereitgestellte Artefakt automatisiert aus. In der regel wird das paket auf eine Testumgebung ausgerollt, um sicherzustellen, dass das Artefakt auch tatsächlich stabil lauffähig ist. In der umgebung werden in der Regel automatisierte und/order manuelle Integrationtests durchgeführt. Sollten die tests erfolgreich sein, wird das artefakt sofort oder zu einem release-zeitpunkt auf die Produktivumgebung ausgerollt.
 
 
-\section{CI/CD-Pipelines}
+\section{GitHub-Actions}
 
-\todo[inline]{Erklären was CI/CD-Pipelines generell sind}
+Github-Actions (GHA) ist die GitHub-eigene CI/CD-Pipeline-Lösung. GitHub-Actions ermöglicht es mithilfe einer YML-Datei CI/CD-Pipelines zu definieren. Diese YML-Datei wird im Repository abgelegt und von GitHub-Actions ausgeführt. GitHub-Actions bietet eine Vielzahl von Funktionsbausteinen, welche häufig in CI/CD-Pipelines benötigt werden in einer abstrahierten Form an. Diese bausteine werden entweder von GitHub oder Dritten zur verfügung gestellt. Die bausteine werden in einer isolierten Container-Umgebung ausgeführt, um möglichst reproduzierbare Ergebnisse zu erzielen.
 
-
-\subsection{GitHub-Actions}
-
-\todo[inline]{Nochmal genauer auf GHA eingehen -> Wird ja in der Arbeit verwendet}
+GitHub-Actions werden als teil dieser Arbeit genutzt, um automatisiert die Julea-Container-Images zu erstellen und zu veröffentlichen.
 
 \section{Julea}
 
@@ -92,5 +163,6 @@ In dieser Arbeit wird Julea als Beispiel für eine Applikation verwendet, welche
 Der Quellcode von Julea wird auf GitHub bereitgestellt: \url{https://github.com/parcio/julea}
 
 \section{HPC}
-\todo{HPC erklären}
+
+HPC steht für High Performance Computing. HPC-Systeme sind spezielle Computer-Systeme, welche besonders leistungsstark sind. HPC-Systeme werden für berechgnungen mit besonders hohen CPU oder Speicheranforderungen genutzt. HPC-Systeme werden oft in Forschungseinrichtungen, Universitäten, oder in der Industrie genutzt.
 
