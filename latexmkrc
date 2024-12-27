@@ -13,4 +13,6 @@ $log_file = 'latexmk.log';
 # Zusätzliche Optionen für pdflatex
 $pdflatex = 'pdflatex -interaction=nonstopmode -synctex=1 %O --shell-escape %S';
 
+$out_dir = '.out';
+
 @default_files = ('thesis.tex');

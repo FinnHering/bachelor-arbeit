@@ -318,4 +318,8 @@ thesis.pdf
 
 tmp/
 
+robustExternalize/
+
+*robExt*
+
 # End of https://www.toptal.com/developers/gitignore/api/latex

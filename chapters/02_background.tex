@@ -121,7 +121,7 @@ Apptainer ist eine alternative Container-Lösung. Sie nutzt im Gegensatz zu Dock
 
 CI/CD, auch CI/CD-Pipeline genannt, ist die Kombination von Contiguous Integration (CI) und Contiguous Deployment/Contiguous Delivery (CD). Eine CI/CD-Pipeline ist eine automatisierte Abfolge von Schritten, welche das Testen, Kompilieren, Bereitstellen und Ausrollen von Artefakten automatisiert. Oftmals sind solche CI/CD-Pipelines direkt teil einer modernen Versiom-Control-System-Plattform wie z. B. GitHub, GitLab, BitBucket, etc. und regieren somit vollautomatisch auf Code-Änderungen.
 
-\section{Contiguous Integration (CI)}
+\subsection{Contiguous Integration (CI)}
 
 Unter Contiguous Integration (CI) versteht man unter anderem das automatisierte testen und/oder kompilieren von Code.  Dieser automatismus dient dazu den Software-Entwickern Zeit zu erspaaren, wodurch sie sich auf das eigentliche entwickeln fokussieren können.
 
@@ -133,7 +133,7 @@ Im gezeigten Beispiel gehören alle bis auf den letzten Schritt "Publish" zur Co
         Siehe: https://github.com/parcio/julea/actions/runs/8318540808}
 \end{figure}
 
-\section{Contiguous Delivery (CD)}
+\subsection{Contiguous Delivery (CD)}
 
 Unter Contiguous Deployment (CD) versteht man das automatisierte bereitstellen von Artefakt. Üblicherweise sind Artefakte Container-Images, ausführbare Dataien, Archive, etc.
 
@@ -145,16 +145,18 @@ Im gezeigten Beispiel gehört nur der letzte Schritt "Publish" zu Contiguous Del
         Siehe: https://github.com/parcio/julea/actions/runs/8318540808}
 \end{figure}
 
-\section{Contiguous Deployment (CD)}
+\subsection{Contiguous Deployment (CD)}
 
 Unter Contiguous Deployment (CD) nimmt das konzept von Contiguous Delivery (CD) auf und rollt das bereitgestellte Artefakt automatisiert aus. In der regel wird das paket auf eine Testumgebung ausgerollt, um sicherzustellen, dass das Artefakt auch tatsächlich stabil lauffähig ist. In der umgebung werden in der Regel automatisierte und/order manuelle Integrationtests durchgeführt. Sollten die tests erfolgreich sein, wird das artefakt sofort oder zu einem release-zeitpunkt auf die Produktivumgebung ausgerollt.
 
-
-\section{GitHub-Actions}
+\subsection{GitHub-Actions}
 
 Github-Actions (GHA) ist die GitHub-eigene CI/CD-Pipeline-Lösung. GitHub-Actions ermöglicht es mithilfe einer YML-Datei CI/CD-Pipelines zu definieren. Diese YML-Datei wird im Repository abgelegt und von GitHub-Actions ausgeführt. GitHub-Actions bietet eine Vielzahl von Funktionsbausteinen, welche häufig in CI/CD-Pipelines benötigt werden in einer abstrahierten Form an. Diese bausteine werden entweder von GitHub oder Dritten zur verfügung gestellt. Die bausteine werden in einer isolierten Container-Umgebung ausgeführt, um möglichst reproduzierbare Ergebnisse zu erzielen.
 
 GitHub-Actions werden als teil dieser Arbeit genutzt, um automatisiert die Julea-Container-Images zu erstellen und zu veröffentlichen.
+
+Diese pipeline baut und veröffentlicht ein Dockerimage, immer wenn ein neuer commit in die "master" Branch gepusht wurde:
+\inputminted{yaml}{./code-examples/gha.yml} 
 
 \section{Julea}
 
@@ -164,5 +166,51 @@ Der Quellcode von Julea wird auf GitHub bereitgestellt: \url{https://github.com/
 
 \section{HPC}
 
-HPC steht für High Performance Computing. HPC-Systeme sind spezielle Computer-Systeme, welche besonders leistungsstark sind. HPC-Systeme werden für berechgnungen mit besonders hohen CPU oder Speicheranforderungen genutzt. HPC-Systeme werden oft in Forschungseinrichtungen, Universitäten, oder in der Industrie genutzt.
+HPC steht für High Performance Computing. HPC-Systeme sind spezielle Computer-Systeme, welche besonders leistungsstark sind. HPC-Systeme werden für berechgnungen mit besonders hohen CPU oder Speicheranforderungen genutzt. Oft werden HPC-Systeme in Forschungseinrichtungen, Universitäten, oder in der Industrie genutzt. HPC-Applikationen sind häufig hochkomplex und greifein auf große mengen von Abhängigkeiten zurück, welche entweder zur Kompilierungszeit, oder zur Laufzeit benötigt werden. Eine hohe anzahl an Abhängigkeiten erschwert das Erstellen von reproduzierbaren Laufzeit-, sowie Kompilierungsergebnissen, da die mögliche kombination von Abhängigkeiten, welche zur Laufzeit und/oder zur Kompilierzeit benötigt werden. 
 
+Die Komplexität von Abhängigkeiten in einer Applikation lässt sich folgendermaßen moddellieren:
+\begin{flalign*}
+    &\text{Sei } D_a = (x_0,\dots, x_n), x_i \in \mathbb{N} \\&
+    \text{und } x_i \text{ die Anzahl der akzeptierten Variationen der }i\text{-ten Abhängigkeit der Applikation } a&
+\end{flalign*}
+Dann ist die Anzahl der unterschiedlichen Umgebunden, in der die Applikation $a$ funktionieren sollte: 
+\begin{align*}
+   \prod_{i=0}^{|D_a|} x_i
+\end{align*}
+
+Angenommen, es gibt eine Applikation $b$, welche 3 Abhängigkeiten mit jeweils 3 akzeptierten varianten hat ($D_b = (3, 3, 3)$), dann ist: 
+\begin{align*}
+    \prod_{i=0}^{|D_b|} x_i &= \prod_{i=0}^{3} x_i\\
+    &= 3 \cdot 3 \cdot 3 \\
+    &= 27
+\end{align*}
+
+Seien:
+\begin{align*}
+    f(n) &= (x_i)_{i=0}^{n}, \text{wobei } n \in \mathbb{N} \text{ und } x_i = 3 \\
+    g(n) &= \prod_{i=0}^{|f(n)|} f(n)
+\end{align*}
+
+Dann stellt $g(n)$ die Anzahl der unterschiedlichen Umgebungen für $n$ Abhängigkeiten mit jeweils 3 akzeptierten Variationen je Abhängigkeit dar:
+
+\begin{tikzpicture}
+    \begin{axis}[
+        axis lines = left,
+        xlabel = \(n\),
+        ylabel = {\(g(n)\)},
+    ]
+    %Below the red parabola is defined
+    \addplot [
+        domain=0:6,
+        samples=100, 
+        color=red,
+    ]
+    {3^x};
+    \addlegendentry{\(\prod_{i=0}^{|f(n)|} f(n)\)}
+    
+    \end{axis}
+\end{tikzpicture}
+
+Es wird ersichtlich, dass die Anzahl der unterschiedlichen Umgebungen exponentiell mit der Anzahl der akzeptierten Variationen wächst. 
+
+Dies bedeutet, dass Applikationen, welche sehr viele Abhängigkeiten haben, und diese Abhängigkeiten selbst mehrere variationen (Versionen, Kompilierung-Flags, etc.) haben ist es unmöglich jede mögliche Umgebung zu testen. Es ist in diesen Fall einfacher eine möglich konsistente Umgebung zu schaffen. Übliche mechanismen eine solche konsistente Umgebung zu schaffen ist Virtualisierung oder das Eliminieren von mehreren akzeptierten Abhängigkeitsvariationen durch Version-Pinning. Hierbei ist allerdings zu beachten, dass Version-Pinning nicht indirekte Abhängigkeiten konsistent hält. Dies ist bei der Virtualisierung anders. Die Hardwarevirtualisierung stellt sicher, dass alles bis zur Hardware-Ebende konsistent gehalten werden kann, dies kommt üblicherweise mit performance-einbußen einher und einem großen Paket, welches ausgerollt werden müsste. Hier bietet die Containervisualisierung einen mittelweg, indem es alles bis zum Betriebssystem konsistent hält und somit kaum bis garkein Performanceoverhead, sowie eine – im Vergleich zur Hardwarevirtualisierung – kleinere Paketgröße.

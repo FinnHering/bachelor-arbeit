@@ -5,60 +5,54 @@
 
 \section{Ist-Zustand}
 
-Julea kann als SPACK-Paket ausgerollt werden; Jeder Entwickler muss entweder die nötigen Abhängigkeiten manuell installieren oder mithilfe von bereitgestellen shell-datein kompilieren lassen. Das ist sehr zeitaufwendig und fehleranfällig.
+Eine Julea-Entwicklungsumgebung kann aktuell in zweierlei Formen aufgesetzt werden:
+
+Zum einen kann man die nötigen Abhängigkeiten manuell über das Betriebssystem installieren. Dies bring den vorteil mit sich, dass diese automatisiert korrekt installiert werden und man diese üblicherweise auch bereits fertig kompiliert bereitgestellt bekommt. Der Nachteil ist, dass man nur ein begrenztes spektrum an Versionen zur Verfügung hat und man nicht entscheiden kann, welche Features bei der Abhängigkeit aktiviert oder deaktiviert seien sollen. Des Weiteren ist es durchaus möglich, dass die benötigte Abhängigkeiten nicht in der Paketrepository des Betriebssystems vorhanden sind. 
+
+Zum anderen kann man die Abhängigkeiten über ein mitgeliefertes Skript installieren ("install-dependencies.sh"). Dieses Skript nutzt den Paketmanager "spack" um die Abhängigkeiten zu installieren. Dadurch ist man nicht mehr auf das Paketrepository des Betriebssystems angewiesen und könnte auch spezifische Versionen der Abhängigkeiten installieren. Der Nachteil ist, dass diese Abhängigkeizen kompiliert werden müssen. Dies benötigt Zeit und Rechenleistung. 
+
+\todo[inline]{Vergleich von Compilezeiten zwischen unterschiedlichen maschinen}
+
+Um die Entwicklung von Julea zu erleichtern wäre es sinnvoll eine Betriebssystemagnostische Entwicklungsumgebung zu haben, wo die Abhängigkeiten bereits vorinstalliert sind. Nachfolgend wird erleutert wie dies umgesetzt wurde und welche Containervisualisierungssoftware dafür verwendet wurde.
 
 \section{Benötigte Containerimages}
 
-Was für containerimages soll es geben?
+Um die Containerimages möglichst effizient zu gestalten, ist es sinnvoller mehrere domainspezifische Containerimages zu erstellen, als ein großes Containerimage, welches dann ggf. Komponenten beinhaltet, welche man nicht benötigt.
+
+Bei betrachtung der Julea-Repository fallen zwei Domainen auf. Zu einem ist es eine Entwicklungsumgebung, welche alle optionalen und nicht-optionalen Abhängigkeiten von Julea zum Kompilieren benötigt, sowie eine Testumgebung, um Julea zu testen. Außerdem sollte man eine Deploymentumgebung haben, worin eine bereits kompilierte version Julea mit den benötigten laufzeitabhängigkeiten enthalten ist.
+
+Nun könnte man für jede Domain ein eigenes Containerimage erstellen. Dies ist allerdings im Falle von der Testumgebung und der Entwicklungsumgebung nicht unbedingt notwendig, da es durchaus üblich ist, dass man während der Entwicklung auch tests schreibt und diese ausführt. Aus diesem Grund und um nicht zu viele verschiedene Versionen von Containerimages zu haben, wird für die Entwicklungsumgebung und die Testumgebung ein Containerimage erstellt.
+
+Außerdem wird Julea gegen verschiedene Kompiler und Betriebssysteme kompiliert und getestet. Somit muss jeder Entwicklungs- und Produktivcontainer in jeder Kombination von Kompiler und Betriebssystem vorhanden sein. 
+
+Aktuell wird Julea mit CLang und GCC kompiliert und auf Ubuntu 20.04, Ubuntu 22.04 und Ubuntu 24.04 kompiliert und getestet.
+
+Außerdem gibt es 2 möglichkeiten um die benötigten Abhängigkeiten, welche Julea zum Kompilierungszeitpunkt benötigt, zu installieren. Entweder nutzt man das mitgelieferte Skript "install-dependencies.sh", oder man stellt die Abhängigkeiten über das Betriebssystem bereit. Somit muss der Entwicklungs- sowie der Produktivcontainer in jeder Kombination von Betriebssystem, Kompiler und Abhängigkeits-Installationsmethode vorhanden sein.
+
+Grundlegend gibt es somit 2 Containerimages: julea-dev und julea-prod. Beide diese Containerimages haben jeweils 12 varianten.
+
+Das Namensschema der Containerimages ist wie folgt: julea-{dev, prod}:{kompiler}-{abhängigkeitsquelle}-{betriebssystem(version)}
+Somit gibt es folgende Containerimages:
 
 \begin{itemize}
-    \item Devcontainer
-    \item Deploymentcontainer
-    \item Test-Container
-\end{itemize}
-
-Welche Tags sollen die Containerimages haben?
-
-Was sollen diese Tags beinhalten?
-
-\begin{itemize}
-    \item Devcontainer: 
-    
-    \begin{itemize}
-        \item latest
-        \item ubuntu-20.04
-        \item ubuntu-22.04
-        \item ubuntu-24.04
-    \end{itemize}
-    
-    \item Deploymentcontainer: 
-    \begin{itemize}
-        \item latest
-        \item ubuntu-20.04
-        \item ubuntu-22.04
-        \item ubuntu-24.04
-    \end{itemize}
-    
-    \item Test-Container 
-    \begin{itemize}
-        \item gcc-ubuntu-20.04
-        \item gcc-ubuntu-22.04
-        \item gcc-ubuntu-24.04
-        \item clang-ubuntu-20.04
-        \item clang-ubuntu-22.04
-        \item clang-ubuntu-24.04
-        \item gcc-spack-ubuntu-20.04
-        \item gcc-spack-ubuntu-22.04
-        \item gcc-spack-ubuntu-24.04
-        \item clang-spack-ubuntu-20.04
-        \item clang-spack-ubuntu-22.04
-        \item clang-spack-ubuntu-24.04
-    \end{itemize}
-    
-
+    \item gcc-system-ubuntu-20.04  
+    \item gcc-system-ubuntu-22.04  
+    \item gcc-system-ubuntu-24.04  
+    \item clang-system-ubuntu-20.04
+    \item clang-system-ubuntu-22.04
+    \item clang-system-ubuntu-24.04
+    \item gcc-spack-ubuntu-20.04   
+    \item gcc-spack-ubuntu-22.04   
+    \item gcc-spack-ubuntu-24.04   
+    \item clang-spack-ubuntu-20.04 
+    \item clang-spack-ubuntu-22.04 
+    \item clang-spack-ubuntu-24.04 
 \end{itemize}
 
 \section{Aufbau der Dockerfiles}
+
+Der de-facto standard um Containerimages zu bauen, ist das Erstellen einer Containerfile (umgansprachlich Dockerfile). Diese werden von verschiedenen OCI-Containervisualisierungssoftwares, wie Docker, Podman, Buildah unterstützt. Ein alternatives Format stellt Apptainer dar, dass sogennante "Apptainer definition file" Dateiformat. Von der benutzung wird abgesehen, da dieses Format nicht sehr weit verbreitet ist und Apptainer die aus der Containerfile herforgehenden OCI-Containerimages unterstützt. Somit erzieht man mit der Containerfile die bestmögliche Kompatibilität. 
+
 
 2 Dockefiles: Weil das bauen Spack-Container und Julea-Container fast komplett unterschiedlich ist.
 
