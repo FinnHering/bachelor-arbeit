@@ -1,0 +1,136 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.5 Chrome/126.0.6478.183 Electron/31.3.0 Safari/537.36" version="24.7.5">
+  <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
+    <mxGraphModel dx="4375" dy="2460" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
+        <mxCell id="78geTzPeZMI0ztwPiqvb-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" target="78geTzPeZMI0ztwPiqvb-3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="260" y="239" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-1" target="78geTzPeZMI0ztwPiqvb-3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="260" y="239" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-1" target="78geTzPeZMI0ztwPiqvb-9" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="490" y="349" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-1" value="Stage 1: Compiler installieren" style="rounded=1;whiteSpace=wrap;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="350" y="209" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-3" target="78geTzPeZMI0ztwPiqvb-10" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-3" value="Stage 2.1a: Abhängigkeiten für &quot;install-dependencies.sh&quot; installieren" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="-30" y="349" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-9" target="78geTzPeZMI0ztwPiqvb-11" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-9" value="Stage 2.1b: Abhängigkeiten für Julea installieren" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="620" y="349" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-10" target="78geTzPeZMI0ztwPiqvb-14" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-10" value="Stage 2.2a: &quot;install-dependencies.sh&quot; ausführen" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="-30" y="529" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-11" target="78geTzPeZMI0ztwPiqvb-21" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-11" target="78geTzPeZMI0ztwPiqvb-22" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-11" value="2.3b: Julea Kompilieren" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="620" y="709" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-14" target="78geTzPeZMI0ztwPiqvb-17" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-14" target="78geTzPeZMI0ztwPiqvb-18" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-14" value="Stage 2.3a: Julea Kompilieren&amp;nbsp;" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="-30" y="709" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="zp4V2_EaAILMSw2vBRc9-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-17" target="zp4V2_EaAILMSw2vBRc9-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-17" value="Stage 3a: Test-Komponenten installieren" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="-190" y="889" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-18" target="78geTzPeZMI0ztwPiqvb-28" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-18" value="Stage 3.1b: Julea Laufzeitabhängigkeiten installieren&amp;nbsp;" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="100" y="889" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="zp4V2_EaAILMSw2vBRc9-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-21" target="zp4V2_EaAILMSw2vBRc9-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-21" value="Stage 3c: Test-Komponenten installieren" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="450" y="889" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-22" target="78geTzPeZMI0ztwPiqvb-25" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-22" value="Stage 3.1d: Julea Laufzeitabhängigkeiten installieren&amp;nbsp;" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="780" y="889" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="zp4V2_EaAILMSw2vBRc9-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-25" target="zp4V2_EaAILMSw2vBRc9-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-25" value="Stage 3.2d: Julea-Kompilat von Stage 2.3b kopieren&amp;nbsp;" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="780" y="1069" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="zp4V2_EaAILMSw2vBRc9-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="78geTzPeZMI0ztwPiqvb-28" target="zp4V2_EaAILMSw2vBRc9-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-28" value="Stage 3.2b: Julea-Kompilat von Stage 2.3a kopieren&amp;nbsp;" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="100" y="1069" width="230" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-30" value="" style="endArrow=classic;html=1;rounded=0;dashed=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="901" y="112" as="sourcePoint" />
+            <mxPoint x="981" y="112" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-31" value="" style="endArrow=classic;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="901" y="67" as="sourcePoint" />
+            <mxPoint x="981" y="67.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-32" value="Hängt vollständig von vorgänger ab&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="981" y="52.5" width="200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="78geTzPeZMI0ztwPiqvb-33" value="Hägt von einzelnen Dateien des vorgängers ab&amp;nbsp;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="981" y="97.5" width="260" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="zp4V2_EaAILMSw2vBRc9-0" value="Stage 0: Basis-Layer (Ubuntu version X)" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="354" y="60" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zp4V2_EaAILMSw2vBRc9-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.535;entryY=0.048;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="zp4V2_EaAILMSw2vBRc9-0" target="78geTzPeZMI0ztwPiqvb-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="zp4V2_EaAILMSw2vBRc9-2" value="julea-dev-&amp;lt;compiler&amp;gt;-spack-ubuntu-X" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-190" y="1089" width="230" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zp4V2_EaAILMSw2vBRc9-4" value="julea-prod-&amp;lt;compiler&amp;gt;-spack-ubuntu-X" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="100" y="1250" width="230" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zp4V2_EaAILMSw2vBRc9-6" value="julea-dev-&amp;lt;compiler&amp;gt;-system-ubuntu-X" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="450" y="1089" width="230" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zp4V2_EaAILMSw2vBRc9-8" value="julea-prod-&amp;lt;compiler&amp;gt;-system-ubuntu-X" style="whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="780" y="1250" width="230" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

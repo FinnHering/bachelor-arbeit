@@ -1,8 +1,52 @@
-FROM registry.gitlab.com/islandoftex/images/texlive:TL2024-2024-11-10-full-doc-src
+FROM registry.gitlab.com/islandoftex/images/texlive:TL2024-2024-12-22-full-doc-src
 
-RUN apt update
-RUN apt install -y python3 python3-pip git openssh-client wget
-
+RUN apt update \
+    && apt upgrade -y \
+    && apt install -y \ 
+        python3 \ 
+        python3-pip \ 
+        git \ 
+        openssh-client \ 
+        wget \
+        apt-utils \
+        openssh-client \
+        gnupg2 \
+        dirmngr \
+        iproute2 \
+        procps \
+        lsof \
+        htop \
+        net-tools \
+        psmisc \
+        curl \
+        wget \
+        rsync \
+        ca-certificates \
+        unzip \
+        zip \
+        nano \
+        vim-tiny \
+        less \
+        jq \
+        lsb-release \
+        apt-transport-https \
+        dialog \
+        libc6 \
+        libgcc1 \
+        libkrb5-3 \
+        libgssapi-krb5-2 \
+        libicu* \
+        liblttng-ust* \
+        libstdc++6 \
+        zlib1g \
+        locales \
+        sudo \
+        ncdu \
+        man-db \
+        strace \
+        manpages \
+        manpages-dev \
+        init-system-helpers
 
 # tlmgr runs in usermode on debian, so we need to setup a usertree
 RUN tlmgr init-usertree

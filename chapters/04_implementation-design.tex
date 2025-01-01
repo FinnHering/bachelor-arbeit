@@ -31,34 +31,58 @@ Außerdem gibt es 2 möglichkeiten um die benötigten Abhängigkeiten, welche Ju
 
 Grundlegend gibt es somit 2 Containerimages: julea-dev und julea-prod. Beide diese Containerimages haben jeweils 12 varianten.
 
-Das Namensschema der Containerimages ist wie folgt: julea-{dev, prod}:{kompiler}-{abhängigkeitsquelle}-{betriebssystem(version)}
+Das Namensschema der Containerimages ist wie folgt: \\
+julea-\{dev, prod\}:\{kompiler\}-\{abhängigkeitsquelle\}-\{betriebssystem(version)\}
 Somit gibt es folgende Containerimages:
 
-\begin{itemize}
-    \item gcc-system-ubuntu-20.04  
-    \item gcc-system-ubuntu-22.04  
-    \item gcc-system-ubuntu-24.04  
-    \item clang-system-ubuntu-20.04
-    \item clang-system-ubuntu-22.04
-    \item clang-system-ubuntu-24.04
-    \item gcc-spack-ubuntu-20.04   
-    \item gcc-spack-ubuntu-22.04   
-    \item gcc-spack-ubuntu-24.04   
-    \item clang-spack-ubuntu-20.04 
-    \item clang-spack-ubuntu-22.04 
-    \item clang-spack-ubuntu-24.04 
-\end{itemize}
+\begin{multicols}{2}
+    \begin{itemize}
+        \item julea-dev-gcc-system-ubuntu-20.04  
+        \item julea-prod-gcc-system-ubuntu-20.04  
+        \item julea-dev-gcc-system-ubuntu-22.04  
+        \item julea-prod-gcc-system-ubuntu-22.04  
+        \item julea-dev-gcc-system-ubuntu-24.04  
+        \item julea-prod-gcc-system-ubuntu-24.04  
+        \item julea-dev-clang-system-ubuntu-20.04
+        \item julea-prod-clang-system-ubuntu-20.04
+        \item julea-dev-clang-system-ubuntu-22.04
+        \item julea-prod-clang-system-ubuntu-22.04
+        \item julea-dev-clang-system-ubuntu-24.04
+        \item julea-prod-clang-system-ubuntu-24.04
+        \item julea-dev-gcc-spack-ubuntu-20.04   
+        \item julea-prod-gcc-spack-ubuntu-20.04   
+        \item julea-dev-gcc-spack-ubuntu-22.04   
+        \item julea-prod-gcc-spack-ubuntu-22.04   
+        \item julea-dev-gcc-spack-ubuntu-24.04   
+        \item julea-prod-gcc-spack-ubuntu-24.04   
+        \item julea-dev-clang-spack-ubuntu-20.04 
+        \item julea-prod-clang-spack-ubuntu-20.04 
+        \item julea-dev-clang-spack-ubuntu-22.04 
+        \item julea-prod-clang-spack-ubuntu-22.04 
+        \item julea-dev-clang-spack-ubuntu-24.04 
+        \item julea-prod-clang-spack-ubuntu-24.04 
+    \end{itemize} 
+\end{multicols}
 
 \section{Aufbau der Dockerfiles}
 
-Der de-facto standard um Containerimages zu bauen, ist das Erstellen einer Containerfile (umgansprachlich Dockerfile). Diese werden von verschiedenen OCI-Containervisualisierungssoftwares, wie Docker, Podman, Buildah unterstützt. Ein alternatives Format stellt Apptainer dar, dass sogennante "Apptainer definition file" Dateiformat. Von der benutzung wird abgesehen, da dieses Format nicht sehr weit verbreitet ist und Apptainer die aus der Containerfile herforgehenden OCI-Containerimages unterstützt. Somit erzieht man mit der Containerfile die bestmögliche Kompatibilität. 
+Der de-facto standard um Containerimages zu bauen, ist das Erstellen einer Containerfile (umgansprachlich Dockerfile). Diese werden von verschiedenen OCI-Containervisualisierungssoftwares, wie Docker, Podman, Buildah unterstützt. Ein alternatives Format stellt Apptainer dar, dass sogennante "Apptainer definition file" Dateiformat. Von der benutzung wird abgesehen, da dieses Format nicht sehr weit verbreitet ist und Apptainer die aus der Containerfile herforgehenden OCI-Containerimages unterstützt. Somit erzieht man mit der Containerfile eine hohe Kompatibilität innerhalb der Containerisierungslandschaft, währenddessen man Apptainer unterstützt welche eine weitverbreitete Containerlösung innerhalb des HPC darstellt. 
+
+Der Aufbau der Containerfile ist wie folgt:
+
+\begin{figure}[!htbp]
+    \centering
+    \includesvg[width=400pt]{./figures/modell-containerfile.drawio.svg}
+    \caption{Containerfile Layer-Graf}
+\end{figure}
+
+Der Layer-Graf zeigt auf, dass die pfade von Spack, sowie System sehr früh schon voneinander abweichen. Dadurch ist es sinnvoll zwei Containerfiles für Spack und System zu erstellen, um die beiden Dateien übersichtlicher zu halten. 
+
+\subsection{"System" Dockerfile}
 
 
-2 Dockefiles: Weil das bauen Spack-Container und Julea-Container fast komplett unterschiedlich ist.
 
-\subsection{Ubuntu Dockerfile}
-
-\subsection{Spack Dockerfile}
+\subsection{"Spack" Dockerfile}
 
 \subsection{Zusammenspiel Dockerfile -> Images/Tags}
 Welche Dockerfile generiert welche Images/Tags?
