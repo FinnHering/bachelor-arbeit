@@ -9,7 +9,8 @@
                 "hashicorp.hcl",
                 "James-Yu.latex-workshop",
                 "valentjn.vscode-ltex",
-                "ms-python.python"
+                "ms-python.python",
+                "ms-azuretools.vscode-docker"
             ],
             "settings": {
                 "ltex.java.path": "/usr/lib/jvm/default-java",

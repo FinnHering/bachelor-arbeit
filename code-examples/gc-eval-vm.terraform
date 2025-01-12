@@ -1,0 +1,85 @@
+# Dieser Code ist mit Terraform 4.25.0 und Versionen kompatibel, die mit 4.25.0 abwärtskompatibel sind.
+# Informationen zum Validieren dieses Terraform-Codes finden Sie unter https://developer.hashicorp.com/terraform/tutorials/gcp-get-started/google-cloud-platform-build#format-and-validate-the-configuration.
+
+resource "google_compute_instance" "instance-20250112-104825" {
+  boot_disk {
+    auto_delete = true
+    device_name = "instance-20250112-104825"
+
+    initialize_params {
+      image = "projects/debian-cloud/global/images/debian-11-bullseye-v20241210"
+      size  = 10
+      type  = "hyperdisk-balanced"
+    }
+
+    mode = "READ_WRITE"
+  }
+
+  can_ip_forward      = false
+  deletion_protection = false
+  enable_display      = false
+
+  labels = {
+    goog-ec-src           = "vm_add-tf"
+    goog-ops-agent-policy = "v2-x86-template-1-4-0"
+  }
+
+  machine_type = "c4-highcpu-8"
+
+  metadata = {
+    enable-osconfig = "TRUE"
+  }
+
+  min_cpu_platform = "Intel Emerald Rapids"
+  name             = "instance-20250112-104825"
+
+  network_interface {
+    access_config {
+      network_tier = "PREMIUM"
+    }
+
+    nic_type    = "GVNIC"
+    queue_count = 0
+    stack_type  = "IPV4_ONLY"
+    subnetwork  = "projects/bachelorarbeit-447610/regions/europe-west3/subnetworks/default"
+  }
+
+  scheduling {
+    automatic_restart   = true
+    on_host_maintenance = "MIGRATE"
+    preemptible         = false
+    provisioning_model  = "STANDARD"
+  }
+
+  service_account {
+    email  = "701581418183-compute@developer.gserviceaccount.com"
+    scopes = ["https://www.googleapis.com/auth/devstorage.read_only", "https://www.googleapis.com/auth/logging.write", "https://www.googleapis.com/auth/monitoring.write", "https://www.googleapis.com/auth/service.management.readonly", "https://www.googleapis.com/auth/servicecontrol", "https://www.googleapis.com/auth/trace.append"]
+  }
+
+  shielded_instance_config {
+    enable_integrity_monitoring = true
+    enable_secure_boot          = false
+    enable_vtpm                 = true
+  }
+
+  zone = "europe-west3-c"
+}
+
+module "ops_agent_policy" {
+  source          = "github.com/terraform-google-modules/terraform-google-cloud-operations/modules/ops-agent-policy"
+  project         = "bachelorarbeit-447610"
+  zone            = "europe-west3-c"
+  assignment_id   = "goog-ops-agent-v2-x86-template-1-4-0-europe-west3-c"
+  agents_rule = {
+    package_state = "installed"
+    version = "latest"
+  }
+  instance_filter = {
+    all = false
+    inclusion_labels = [{
+      labels = {
+        goog-ops-agent-policy = "v2-x86-template-1-4-0"
+      }
+    }]
+  }
+}

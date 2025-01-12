@@ -11,6 +11,8 @@ Zum einen kann man die nötigen Abhängigkeiten manuell über das Betriebssystem
 
 Zum anderen kann man die Abhängigkeiten über ein mitgeliefertes Skript installieren ("install-dependencies.sh"). Dieses Skript nutzt den Paketmanager "spack" um die Abhängigkeiten zu installieren. Dadurch ist man nicht mehr auf das Paketrepository des Betriebssystems angewiesen und könnte auch spezifische Versionen der Abhängigkeiten installieren. Der Nachteil ist, dass diese Abhängigkeizen kompiliert werden müssen. Dies benötigt Zeit und Rechenleistung. 
 
+Julea wird bereits mit Github-Actions automatisiert kompiliert und getestet. Es gibt bereits eine Pipeline, welche Ubuntu-Container mit den benötigten Abhängigkeiten für Julea erstellt. Momentan finden dies Container keine Verwendung, in den nachgelagerten CI-Pipelines. 
+
 \todo[inline]{Vergleich von Compilezeiten zwischen unterschiedlichen maschinen}
 
 Um die Entwicklung von Julea zu erleichtern wäre es sinnvoll eine Betriebssystemagnostische Entwicklungsumgebung zu haben, wo die Abhängigkeiten bereits vorinstalliert sind. Nachfolgend wird erleutert wie dies umgesetzt wurde und welche Containervisualisierungssoftware dafür verwendet wurde.
@@ -76,17 +78,53 @@ Der Aufbau der Containerfile ist wie folgt:
     \caption{Containerfile Layer-Graf}
 \end{figure}
 
-Der Layer-Graf zeigt auf, dass die pfade von Spack, sowie System sehr früh schon voneinander abweichen. Dadurch ist es sinnvoll zwei Containerfiles für Spack und System zu erstellen, um die beiden Dateien übersichtlicher zu halten. 
+Der Layer-Graf zeigt auf, dass die Pfade von Spack, sowie System sehr früh schon voneinander abweichen. Dadurch ist es sinnvoll zwei Containerfiles für Spack und System zu erstellen, um die beiden Dateien übersichtlicher zu halten. 
 
-\subsection{"System" Dockerfile}
+\subsection{"System" Containerfile}
 
+Der Layer-Graf für das Containerfile "System" sieht wie folgt aus. 
+\begin{figure}[!htbp]
+    \centering
+    \includesvg[width=400pt]{./figures/modell-system-containerfile.drawio.svg}
+    \caption{Containerfile "System" Layer-Graf}
+\end{figure}
 
+Die dazugehörigen Dockerfile sieht wie folgt aus: 
 
-\subsection{"Spack" Dockerfile}
+\inputminted{dockerfile}{./code-examples/Dockerfile.system}
+
+\subsection{"Spack" Containerfile}
+Der Layer-Graf für das Containerfile "Spack" sieht wie folgt aus.
+\begin{figure}[!htbp]
+    \centering
+    \includesvg[width=400pt]{./figures/modell-spack-containerfile.drawio.svg}
+    \caption{Containerfile "Spack" Layer-Graf}
+\end{figure}
+
+Die dazugehörige Dockerfile hat folgenden aufbau.
+
+\inputminted{dockerfile}{./code-examples/Dockerfile.spack}
 
 \subsection{Zusammenspiel Dockerfile -> Images/Tags}
+
 Welche Dockerfile generiert welche Images/Tags?
 
 \section{Docker Bakefile}
 
-Vereinfacht das erstellen von mehreren Docker-Images
+Das Erstellen mehrerer Containerimages aus einer Containerfiles ohne einen automatismus, kann sehr aufwendig werden, da man jedes Image einzeln erstellen lassen muss. Insbesondere bei der erstellung einer großen Menge von Containerimages wie es hier der Fall ist, wäre das manuell Erstellen der Containerimages mit einem zu hohen aufwand verbunden. 
+
+Es gibt eine große Anzahl an Build-Automatisierungs-Tools. Ein sehr bekanntes Programm ist GNU-Make. Eine weitere möglichkeit wäre auch ein einfaches Shell-Skript, welche die erstellung automatisiert. Das Erstellen kann außerdem mithilfe von CI-Pipelines verinfacht werden. Github-Actions hat explizite Aktionen, um Containerimages zu erstellen. Mithilfe einer Matrix könnte man somit bei Github-Actions alle Containerimages unkompliziert erstellen. Eine weitere option ist, das Benutzen einer "Bakefile", dies ist ein spezieller dialekt der Hashicorp Configuration Language (HCL). Bakefiles sind ein feature von Docker Buildx, um mehrere Containerimages vordefiniert zu erstellen. Es löst also genau das oben beschriebene Problem in einem standardisierten und einfachen Weg. Außerdem hat Github-Actions auch eine Action für Docker-Bakefiles, somit lässt es sich auch in die existierende CI/CD-Pipeline integrieren. 
+
+Die Docker-Bakefile sieht wie folgt aus: 
+
+\inputminted{dockerfile}{./code-examples/docker-bake.hcl}
+
+\section{CI}
+
+Um das Erstellen der Container noch komfortabler zu machen, werden diese mithilfe einer CI-Pipeline erstellt und automatisch in ein Container-Repository geladen. Da das Julea-Projekt auf Github gehostet wird und bereits Github-Actions als CI-/CD-Lösung verwendet, wird auf diese Pipeline aufgebaut und Github-Actions verwendet.
+
+Hierbei wird die Pipeline um die Funktionalität des Container-Erstellens sowie veröffentlichen erweitert. Des weiteren werden in den nachgelagerten Test-Pipelines auch die erstellten Container verwendet.
+
+Die CI-Pipeline wird außerdem die erstellten OCI-Containerimages in Apptainer-Images umwandeln und diese als artefakte bereitstellen.
+
+
