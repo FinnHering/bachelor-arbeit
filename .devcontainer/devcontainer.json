@@ -13,8 +13,7 @@
                 "ms-azuretools.vscode-docker"
             ],
             "settings": {
-                "ltex.java.path": "/usr/lib/jvm/default-java",
-                "latex-workshop.latex.outDir": "%DIR%/.out",
+                "ltex.java.path": "/usr/lib/jvm/default-java"
             }
         }
     },

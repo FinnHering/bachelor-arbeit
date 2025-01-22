@@ -6,8 +6,13 @@ Der Performance-Test wird auf einer L1 Cloud-VM von Google-Cloud ausgeführt.
 Die VM hat folgende Spezifikationen:
 
 \begin{itemize}
-    \item 4 Intel-Emerald-Rapids (3,1GHz konstant, 1 vCPU = 1 Kern)
-    \item 16GB RAM
+    \item 4 vCPU-Kerne Intel-Emerald-Rapids (3,1GHz konstant, 1 vCPU = 1 Kern)
+    \item 16 GB RAM
     \item 64 GB Speicher (3000 IOPS, 236 MB/s)
 \end{itemize}
+
+Für den Benchmark wird ein bereits existierendes Skript "benchmark.sh" verwendet, welches die Performance von allen möglichen Operationne, welche JULEA hat, getestet. Um das benchmark möglichst von externen faktoren abhängig zu machen, wird der Benchmark auf einer Node eines Clusters als einziges Programm ausgeführt. Das benchmark wird 10 mal nacheinander ausgeführt, um die Konfidenz der Messergebnisse zu erhöhen (Siehe: \cite{kaliberaRigorousBenchmarkingReasonable2013}).   
+
+
+TEST
 
