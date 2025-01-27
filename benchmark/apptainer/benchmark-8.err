@@ -1,0 +1,7 @@
+Dependencies have already been loaded, skipping.
+Dependencies have already been loaded, skipping.
+JULEA-Message: 23:57:33.293: Daemon started as process 332.
+JULEA-Message: 23:57:33.294: Log messages will be redirected to journald if possible. To view them, use journalctl GLIB_DOMAIN=JULEA.
+Dependencies have already been loaded, skipping.
+Dependencies have already been loaded, skipping.
+/app/scripts/setup: line 193: killall: command not found
