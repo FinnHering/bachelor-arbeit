@@ -1,7 +1,6 @@
 Dependencies have already been loaded, skipping.
 Dependencies have already been loaded, skipping.
-JULEA-Message: 22:38:15.373: Daemon started as process 162557.
-JULEA-Message: 22:38:15.373: Log messages will be redirected to journald if possible. To view them, use journalctl GLIB_DOMAIN=JULEA.
+JULEA-Message: 02:56:07.168: Daemon started as process 182622.
+JULEA-Message: 02:56:07.168: Log messages will be redirected to journald if possible. To view them, use journalctl GLIB_DOMAIN=JULEA.
 Dependencies have already been loaded, skipping.
 Dependencies have already been loaded, skipping.
-julea-server(162557) mit Signal 15 beendet
