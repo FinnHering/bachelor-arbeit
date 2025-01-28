@@ -41,7 +41,7 @@ Docker ist eine der bekanntesten Containervisualisierungs-Lösungen. Sie beinhal
 
 \subsection{Dockerfile}
 
-Eine Dockerfile ist die Definition, welche Docker benötigt, um ein Container-Image zu erstellen. In ihr werden alle nötigen Schritte sowie Metainformation definiert, um einen Container mit einer lauffähigen Applikation zu haben. Die in der Dockerfile definierten Schritte werden isoliert auf einem Basis-Image ausgeführt. Das durch die Dockerfile erstelle Image ist somit das Resultat alle Schritte, aus dem das Basis-Image entsteht und den in der Dockerfile definierten Schritten.
+Eine Dockerfile ist die Definition, welche Docker benötigt, um ein Container-Image zu erstellen . In ihr werden alle nötigen Schritte sowie Metainformation definiert, um einen Container mit einer lauffähigen Applikation zu haben. Die in der Dockerfile definierten Schritte werden isoliert auf einem Basis-Image ausgeführt. Das durch die Dockerfile erstelle Image ist somit das Resultat alle Schritte, aus dem das Basis-Image entsteht und den in der Dockerfile definierten Schritten \cite{DockerfileOverview0200}.
 
 Hier ist ein simples Dockerfile Beispiel für das Erstellen eines Julea Container-Images:
 
@@ -53,11 +53,11 @@ Ein OCI-Container-Image setzt sich aus Schichten (Layer) zusammen, welche stapel
 
 \subsection{Docker Build-Cache}
 
-Docker verfügt über Caching-Mechanismen, welche subsequente Builds beschleunigen. Das Caching funktioniert, indem Docker jedes einzelne "Layer" zwischenspeichert. Wenn sich ein Layer ändert, müssen nur die Layer, welche direkt oder indirekt auf dem Layer aufbauen, neu ausgeführt werden. Um das caching möglichst effektiv zu verwenden, sollte man also sicherstellen, dass Layer, welche besonders lange zum Erstellen brauchen, möglichst nur dann neu erstellt werden, wenn dies auch notwendig ist.
+Docker verfügt über Caching-Mechanismen, welche subsequente Builds beschleunigen \cite{Cache0200}. Das Caching funktioniert, indem Docker jedes einzelne "Layer" zwischenspeichert. Wenn sich ein Layer ändert, müssen nur die Layer, welche direkt oder indirekt auf dem Layer aufbauen, neu ausgeführt werden. Um das caching möglichst effektiv zu verwenden, sollte man also sicherstellen, dass Layer, welche besonders lange zum Erstellen brauchen, möglichst nur dann neu erstellt werden, wenn dies auch notwendig ist.
 
 \subsection{Docker BuildKit}
 
-Docker BuildKit ist das neue Backend um OCI-Container-Images mit Docker zu erstellen. Ziel von BuildKit ist es, den Docker Legacy Builder zu ersetzen.
+Docker BuildKit ist das neue Backend um OCI-Container-Images mit Docker zu erstellen. Ziel von BuildKit ist es, den Docker Legacy Builder zu ersetzen \cite{BuildKit0100}.
 
 Docker BuildKit hat viele Verbesserungen, um Docker Builds, im Vergleich zum Docker Legacy Builder, performanter zu machen. Dazu zählen: Parallelisierung von Build-Stages, Auslassen von unbenutzten Build-Stages, mehr Caching Möglichkeiten wie z. B. Cache-Mounts, u. v. m.
 
@@ -65,11 +65,11 @@ Docker BuildKit Backends müssen nicht explizit auf dem Computer installiert wer
 
 \subsubsection{Docker Buildx}
 
-Um das Docker BuildKit Backend mit Docker zu verwenden, nutzt man Docker Buildx. Docker Buildx ist eine offizielle Docker Erweiterung. Docker Buildx hat einige Funktionalitäten um Docker BuildKit Backends einzubinden, sowie festzulegen welche BuildKit Backends man verwenden möchte.
+Um das Docker BuildKit Backend mit Docker zu verwenden, nutzt man Docker Buildx \cite{DockerBuildx0100}. Docker Buildx ist eine offizielle Docker Erweiterung. Docker Buildx hat einige Funktionalitäten um Docker BuildKit Backends einzubinden, sowie festzulegen welche BuildKit Backends man verwenden möchte.
 
 \subsubsection{Docker Buildx Bake}
 
-Eine weitere Funktionalität von Docker Buildx ist Docker Buildx Bake. Docker Buildx Bake ermöglicht es mithilfe einer sog. Bakefile das erstellen und mehrerer OCI-Container-Images zu vereinfachen.
+Eine weitere Funktionalität von Docker Buildx ist Docker Buildx Bake \cite{Bake0800}. Docker Buildx Bake ermöglicht es mithilfe einer sog. Bakefile das erstellen und mehrerer OCI-Container-Images zu vereinfachen.
 
 Momentan wird Julea in mehreren Ubuntu-Versionen sowie mit mehreren Compilern kompiliert und getestet. Somit müssten mehrere Dockerfiles ertellt werden, um alle Kombinationen zu testen. Mit Docker Buildx Bake kann man das Erstellen mehrerer Docker-Container-Images vereinfachen.
 
@@ -109,7 +109,7 @@ Neben der einfachen Integration in den Editor/IDE ermöglicht die Spezifikation 
 
 \section{Apptainer (früher: Singularity)}
 
-Apptainer ist eine alternative Container-Lösung. Sie nutzt im Gegensatz zu Docker keine OCI-Container-Images, kann diese aber konvertieren. Apptainer-Container-Images werden als einzelne Datei gespeichert, das erleitert das Verteilen des Container-Images ohne einen Registry-Server. Es werden keine erweiterten Berechtigungen durch Apptainer benötigt, um Container auszuführen. Dies ist insbesondere für HPC-Umgebungen relevant, da das Ausführen von Applikationen als root-Benutzer hier ungewöhnlich ist.
+Apptainer ist eine alternative Container-Lösung. Sie nutzt im Gegensatz zu Docker keine OCI-Container-Images, kann diese aber konvertieren. Apptainer-Container-Images werden als einzelne Datei gespeichert, das erleitert das Verteilen des Container-Images ohne einen Registry-Server. Es werden keine erweiterten Berechtigungen durch Apptainer benötigt, um Container auszuführen. Dies ist insbesondere für HPC-Umgebungen relevant, da das Ausführen von Applikationen als root-Benutzer hier ungewöhnlich ist \cite{ApptainerPortableReproducible2024}.
 
 \section{CI/CD}
 
@@ -151,7 +151,7 @@ Unter Contiguous Deployment (CD) nimmt das konzept von Contiguous Delivery (CD) 
 
 \subsection{GitHub-Actions}
 
-Github-Actions (GHA) ist die GitHub-eigene CI/CD-Pipeline-Lösung. GitHub-Actions ermöglicht es mithilfe einer YML-Datei CI/CD-Pipelines zu definieren. Diese YML-Datei wird im Repository abgelegt und von GitHub-Actions ausgeführt. GitHub-Actions bietet eine Vielzahl von Funktionsbausteinen, welche häufig in CI/CD-Pipelines benötigt werden in einer abstrahierten Form an. Diese bausteine werden entweder von GitHub oder Dritten zur verfügung gestellt. Die bausteine werden in einer isolierten Container-Umgebung ausgeführt, um möglichst reproduzierbare Ergebnisse zu erzielen.
+Github-Actions (GHA) ist die GitHub-eigene CI/CD-Pipeline-Lösung. GitHub-Actions ermöglicht es mithilfe einer YML-Datei CI/CD-Pipelines zu definieren. Diese YML-Datei wird im Repository abgelegt und von GitHub-Actions ausgeführt. GitHub-Actions bietet eine Vielzahl von Funktionsbausteinen, welche häufig in CI/CD-Pipelines benötigt werden in einer abstrahierten Form an. Diese bausteine werden entweder von GitHub oder Dritten zur verfügung gestellt. Die bausteine werden in einer isolierten Container-Umgebung ausgeführt, um möglichst reproduzierbare Ergebnisse zu erzielen \cite{GitHubActions2025}.
 
 GitHub-Actions werden als teil dieser Arbeit genutzt, um automatisiert die Julea-Container-Images zu erstellen und zu veröffentlichen.
 
@@ -160,7 +160,7 @@ Diese pipeline baut und veröffentlicht ein Dockerimage, immer wenn ein neuer co
 
 \section{Julea}
 
-In dieser Arbeit wird Julea als Beispiel für eine Applikation verwendet, welche in einem Container-Image bereitgestellt werden soll. Julea ist ein Speicher-Framework, welches mehrere Speicher-Backends wie z. B. Datei-Speicher, MySQL, MongoDB, u. v. m. unterstützt. Julea ist ein Open-Source-Projekt und wird von der Arbeitsgruppe "Parallel Computing and I/O" an der Otto-von-Guericke-Universität Magdeburg entwickelt.
+In dieser Arbeit wird Julea als Beispiel für eine Applikation verwendet, welche in einem Container-Image bereitgestellt werden soll. Julea ist ein Speicher-Framework, welches mehrere Speicher-Backends wie z. B. Datei-Speicher, MySQL, MongoDB, u. v. m. unterstützt. Julea ist ein Open-Source-Projekt und wird von der Arbeitsgruppe "Parallel Computing and I/O" an der Otto-von-Guericke-Universität Magdeburg entwickelt \cite{kuhnJULEAFlexibleStorage2017}.
 
 Der Quellcode von Julea wird auf GitHub bereitgestellt: \url{https://github.com/parcio/julea}
 

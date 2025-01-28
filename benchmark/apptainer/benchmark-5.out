@@ -1,97 +1,96 @@
-Name                                                      Duration (Operations/s) (Throughput/s) [Total Duration]
------------------------------------------------------------------------------------------------------------------
-/background-operation/new:                                1.222 seconds (245516/s) [1.222 seconds]
-/cache/get-release:                                       1.001 seconds (50364443/s) [1.001 seconds]
-/memory-chunk/get-reset:                                  1.012 seconds (444494052/s) [1.012 seconds]
-/message/new:                                             1.002 seconds (25439124/s) [1.002 seconds]
-/message/new-append:                                      1.013 seconds (3454354/s) [1.013 seconds]
-/message/add-operation-small:                             1.007 seconds (983077/s) (786.5 MB/s) [1.007 seconds]
-/message/add-operation-large:                             1.000 seconds (16293/s) (1.3 GB/s) [1.000 seconds]
-/kv/put:                                                  1.008 seconds (26773/s) [2.006 seconds]
-/kv/put-batch:                                            1.014 seconds (26619/s) [2.032 seconds]
-/kv/get:                                                  1.019 seconds (38271/s) [1.082 seconds]
-/kv/get-batch:                                            1.009 seconds (39644/s) [1.071 seconds]
-/kv/delete:                                               1.020 seconds (31388/s) [2.006 seconds]
-/kv/delete-batch:                                         1.019 seconds (32391/s) [2.020 seconds]
-/kv/unordered-put-delete:                                 1.018 seconds (33384/s) [1.018 seconds]
-/kv/unordered-put-delete-batch:                           1.002 seconds (33917/s) [1.002 seconds]
-/object/distributed-object/create:                        1.022 seconds (25443/s) [1.925 seconds]
-/object/distributed-object/create-batch:                  1.002 seconds (25938/s) [1.906 seconds]
-/object/distributed-object/delete:                        1.032 seconds (28111/s) [2.151 seconds]
-/object/distributed-object/delete-batch:                  1.013 seconds (28634/s) [2.138 seconds]
-/object/distributed-object/status:                        1.010 seconds (32668/s) [1.010 seconds]
-/object/distributed-object/status-batch:                  1.001 seconds (249808/s) [1.001 seconds]
-/object/distributed-object/read:                          1.015 seconds (27588/s) (113.0 MB/s) [1.020 seconds]
-/object/distributed-object/read-batch:                    1.033 seconds (222636/s) (911.9 MB/s) [1.075 seconds]
-/object/distributed-object/write:                         1.007 seconds (28788/s) (117.9 MB/s) [1.009 seconds]
-/object/distributed-object/write-batch:                   1.017 seconds (363833/s) (1.5 GB/s) [1.022 seconds]
-/object/distributed-object/unordered-create-delete:       1.058 seconds (26470/s) [1.058 seconds]
-/object/distributed-object/unordered-create-delete-batch: 1.045 seconds (26783/s) [1.045 seconds]
-/object/object/create:                                    1.007 seconds (25811/s) [1.898 seconds]
-/object/object/create-batch:                              1.027 seconds (26293/s) [1.954 seconds]
-/object/object/delete:                                    1.024 seconds (28312/s) [2.139 seconds]
-/object/object/delete-batch:                              1.007 seconds (28805/s) [2.122 seconds]
-/object/object/status:                                    1.023 seconds (33234/s) [1.023 seconds]
-/object/object/status-batch:                              1.021 seconds (254667/s) [1.021 seconds]
-/object/object/read:                                      1.035 seconds (28022/s) (114.8 MB/s) [1.040 seconds]
-/object/object/read-batch:                                1.003 seconds (229343/s) (939.4 MB/s) [1.044 seconds]
-/object/object/write:                                     1.033 seconds (29029/s) (118.9 MB/s) [1.034 seconds]
-/object/object/write-batch:                               1.003 seconds (378777/s) (1.6 GB/s) [1.009 seconds]
-/object/object/unordered-create-delete:                   1.062 seconds (26365/s) [1.062 seconds]
-/object/object/unordered-create-delete-batch:             1.046 seconds (26768/s) [1.046 seconds]
-/db/entry/insert:                                         1.365 seconds (6003/s) [1.368 seconds]
-/db/entry/insert-batch:                                   1.094 seconds (11234/s) [1.094 seconds]
-/db/entry/insert-index-single:                            1.109 seconds (3694/s) [1.111 seconds]
-/db/entry/insert-batch-index-single:                      1.176 seconds (6965/s) [1.177 seconds]
-/db/entry/insert-index-all:                               1.452 seconds (5642/s) [1.453 seconds]
-/db/entry/insert-batch-index-all:                         1.235 seconds (9953/s) [1.235 seconds]
-/db/entry/insert-index-mixed:                             1.156 seconds (3542/s) [1.158 seconds]
-/db/entry/insert-batch-index-mixed:                       1.248 seconds (6562/s) [1.249 seconds]
-/db/entry/delete:                                         1.081 seconds (1658/s) [2.954 seconds]
-/db/entry/delete-batch:                                   1.001 seconds (1789/s) [2.865 seconds]
-/db/entry/delete-index-single:                            1.095 seconds (7482/s) [1.843 seconds]
-/db/entry/delete-batch-index-single:                      1.111 seconds (11060/s) [2.236 seconds]
-/db/entry/delete-index-all:                               1.452 seconds (8463/s) [2.370 seconds]
-/db/entry/delete-batch-index-all:                         1.248 seconds (13123/s) [2.508 seconds]
-/db/entry/delete-index-mixed:                             1.147 seconds (7144/s) [1.959 seconds]
-/db/entry/delete-batch-index-mixed:                       1.197 seconds (10270/s) [2.422 seconds]
-/db/entry/update:                                         1.047 seconds (5137/s) [1.314 seconds]
-/db/entry/update-batch:                                   1.009 seconds (6344/s) [1.277 seconds]
-/db/entry/update-index-single:                            1.467 seconds (8374/s) [1.848 seconds]
-/db/entry/update-batch-index-single:                      1.216 seconds (13474/s) [1.585 seconds]
-/db/entry/update-index-all:                               1.435 seconds (8564/s) [1.743 seconds]
-/db/entry/update-batch-index-all:                         1.194 seconds (13727/s) [1.501 seconds]
-/db/entry/update-index-mixed:                             1.016 seconds (8063/s) [1.427 seconds]
-/db/entry/update-batch-index-mixed:                       1.001 seconds (12279/s) [1.405 seconds]
-/db/iterator/get-simple:                                  1.018 seconds (5032/s) [1.288 seconds]
-/db/iterator/get-simple-index-single:                     1.141 seconds (14358/s) [1.519 seconds]
-/db/iterator/get-simple-index-all:                        1.117 seconds (14667/s) [1.419 seconds]
-/db/iterator/get-simple-index-mixed:                      1.128 seconds (14527/s) [1.552 seconds]
-/db/iterator/get-range:                                   1.024 seconds (500/s) [1.295 seconds]
-/db/iterator/get-range-index-single:                      1.017 seconds (504/s) [1.404 seconds]
-/db/iterator/get-range-index-all:                         1.028 seconds (483/s) [1.326 seconds]
-/db/iterator/get-range-index-mixed:                       1.024 seconds (500/s) [1.422 seconds]
-/db/schema/create:                                        1.058 seconds (1228/s) [1.394 seconds]
-/db/schema/create-batch:                                  1.056 seconds (1231/s) [1.391 seconds]
-/db/schema/delete:                                        1.010 seconds (3862/s) [4.167 seconds]
-/db/schema/delete-batch:                                  1.009 seconds (3867/s) [4.176 seconds]
-/item/collection/create:                                  1.032 seconds (30052/s) [1.996 seconds]
-/item/collection/create-batch:                            1.021 seconds (31354/s) [2.011 seconds]
-/item/collection/delete:                                  1.052 seconds (17103/s) [1.627 seconds]
-/item/collection/delete-batch:                            1.049 seconds (17159/s) [1.621 seconds]
-/item/collection/delete-batch-without-get:                1.027 seconds (32132/s) [2.083 seconds]
-/item/collection/unordered-create-delete:                 1.041 seconds (32657/s) [1.041 seconds]
-/item/collection/unordered-create-delete-batch:           1.017 seconds (33436/s) [1.017 seconds]
-/item/item/create:                                        1.036 seconds (12547/s) [1.958 seconds]
-/item/item/create-batch:                                  1.022 seconds (13704/s) [1.968 seconds]
-/item/item/delete:                                        1.006 seconds (9936/s) [1.746 seconds]
-/item/item/delete-batch:                                  1.074 seconds (10246/s) [1.888 seconds]
-/item/item/delete-batch-without-get:                      1.042 seconds (14399/s) [2.157 seconds]
-/item/item/get-status:                                    1.018 seconds (32409/s) [1.019 seconds]
-/item/item/get-status-batch:                              1.038 seconds (240892/s) [1.038 seconds]
-/item/item/read:                                          1.031 seconds (27166/s) (111.3 MB/s) [1.036 seconds]
-/item/item/read-batch:                                    1.045 seconds (220171/s) (901.8 MB/s) [1.087 seconds]
-/item/item/write:                                         1.027 seconds (28229/s) (115.6 MB/s) [1.029 seconds]
-/item/item/write-batch:                                   1.012 seconds (355658/s) (1.5 GB/s) [1.018 seconds]
-/item/item/unordered-create-delete:                       1.135 seconds (14099/s) [1.135 seconds]
-/item/item/unordered-create-delete-batch:                 1.115 seconds (14350/s) [1.115 seconds]
+name	elapsed	operations	bytes	total_elapsed
+/background-operation/new	1.383629	216821.127629	-	1.383629
+/cache/get-release	1.002390	47286984.107982	-	1.002399
+/memory-chunk/get-reset	1.010224	415749378.355691	-	1.010300
+/message/new	1.003567	23316828.871416	-	1.003567
+/message/new-append	1.024144	3222203.127685	-	1.024144
+/message/add-operation-small	1.003134	927094.485881	741675588.704999	1.003134
+/message/add-operation-large	1.001113	14983.323561	1198665884.870140	1.001114
+/kv/put	1.024769	26347.401219	-	2.038460
+/kv/put-batch	1.014010	22682.222069	-	2.032147
+/kv/get	1.014829	38430.119754	-	1.077842
+/kv/get-batch	1.023746	39072.191735	-	1.086582
+/kv/delete	1.016021	31495.412004	-	2.010409
+/kv/delete-batch	1.008196	31739.860107	-	2.003311
+/kv/unordered-put-delete	1.002291	31926.855574	-	1.002292
+/kv/unordered-put-delete-batch	1.043478	32583.341479	-	1.043480
+/object/distributed-object/create	1.020891	24488.412573	-	1.920567
+/object/distributed-object/create-batch	1.021887	24464.544514	-	1.930851
+/object/distributed-object/delete	1.018077	27502.831318	-	2.139849
+/object/distributed-object/delete-batch	1.021621	27407.424084	-	2.161745
+/object/distributed-object/status	1.025178	32189.531964	-	1.025359
+/object/distributed-object/status-batch	1.015900	236243.724776	-	1.016092
+/object/distributed-object/read	1.036533	27013.129346	110645777.799646	1.041505
+/object/distributed-object/read-batch	1.036239	212306.234373	869606335.990056	1.081567
+/object/distributed-object/write	1.001257	27964.848186	114544018.169161	1.002575
+/object/distributed-object/write-batch	1.008628	366834.948068	1502555947.286809	1.014167
+/object/distributed-object/unordered-create-delete	1.031052	25216.962869	-	1.031054
+/object/distributed-object/unordered-create-delete-batch	1.022120	25437.326341	-	1.022122
+/object/object/create	1.015892	24608.915121	-	1.907670
+/object/object/create-batch	1.000719	24982.037915	-	1.890811
+/object/object/delete	1.007870	27781.360691	-	2.125677
+/object/object/delete-batch	1.006096	27830.346210	-	2.135264
+/object/object/status	1.012323	32598.291257	-	1.012473
+/object/object/status-batch	1.016541	236094.756631	-	1.016709
+/object/object/read	1.024272	26360.185576	107971320.118094	1.029128
+/object/object/read-batch	1.018989	215900.269777	884327505.007414	1.063555
+/object/object/write	1.017177	28510.278939	116778102.532794	1.018108
+/object/object/write-batch	1.011478	375687.854803	1538817453.271351	1.016835
+/object/object/unordered-create-delete	1.024501	25378.208513	-	1.024502
+/object/object/unordered-create-delete-batch	1.010979	25717.645965	-	1.010981
+/db/entry/insert	1.411019	5805.733303	-	1.414220
+/db/entry/insert-batch	1.152227	10664.565229	-	1.152682
+/db/entry/insert-index-single	1.166100	3512.563245	-	1.167979
+/db/entry/insert-batch-index-single	1.198844	6833.249364	-	1.199589
+/db/entry/insert-index-all	1.011839	4048.074842	-	1.013105
+/db/entry/insert-batch-index-all	1.291638	9513.501461	-	1.292173
+/db/entry/insert-index-mixed	1.231508	3326.003566	-	1.233423
+/db/entry/insert-batch-index-mixed	1.296762	6317.273332	-	1.297705
+/db/entry/delete	1.160856	1543.688451	-	3.185642
+/db/entry/delete-batch	1.071796	1671.959963	-	3.098318
+/db/entry/delete-index-single	1.158256	7072.702408	-	1.949539
+/db/entry/delete-batch-index-single	1.215607	10108.530142	-	2.400123
+/db/entry/delete-index-all	1.013832	8080.234201	-	1.655405
+/db/entry/delete-batch-index-all	1.289833	12702.419616	-	2.575288
+/db/entry/delete-index-mixed	1.231293	6653.168661	-	2.097313
+/db/entry/delete-batch-index-mixed	1.257978	9768.056357	-	2.535412
+/db/entry/update	1.035096	4699.081051	-	1.325185
+/db/entry/update-batch	1.036484	5927.732604	-	1.324329
+/db/entry/update-index-single	1.047239	7822.474144	-	1.442383
+/db/entry/update-batch-index-single	1.288937	12711.249658	-	1.683949
+/db/entry/update-index-all	1.013216	8085.146701	-	1.334377
+/db/entry/update-batch-index-all	1.271579	12884.767679	-	1.592154
+/db/entry/update-index-mixed	1.087708	7531.433068	-	1.520198
+/db/entry/update-batch-index-mixed	1.051803	11682.796113	-	1.476889
+/db/iterator/get-simple	1.032345	4711.603195	-	1.319439
+/db/iterator/get-simple-index-single	1.190018	13767.858974	-	1.584948
+/db/iterator/get-simple-index-all	1.169576	14008.495386	-	1.501815
+/db/iterator/get-simple-index-mixed	1.182300	13857.734923	-	1.608180
+/db/iterator/get-range	1.014058	473.345706	-	1.301493
+/db/iterator/get-range-index-single	1.003303	462.472453	-	1.396692
+/db/iterator/get-range-index-all	1.028412	451.181044	-	1.346750
+/db/iterator/get-range-index-mixed	1.018670	471.202647	-	1.441970
+/db/schema/create	1.028931	1166.258962	-	1.354291
+/db/schema/create-batch	1.026023	1169.564425	-	1.351996
+/db/schema/delete	1.006529	3675.999400	-	4.163717
+/db/schema/delete-batch	1.004629	3682.951617	-	4.164207
+/item/collection/create	1.010507	29688.067475	-	1.951886
+/item/collection/create-batch	1.004562	30859.220237	-	1.976009
+/item/collection/delete	1.006923	16883.118173	-	1.558211
+/item/collection/delete-batch	1.018460	16691.868115	-	1.576128
+/item/collection/delete-batch-without-get	1.008698	31724.064091	-	2.051531
+/item/collection/unordered-create-delete	1.051046	32348.726887	-	1.051047
+/item/collection/unordered-create-delete-batch	1.061247	30153.206558	-	1.061247
+/item/item/create	1.017294	11795.999976	-	1.906035
+/item/item/create-batch	1.041539	12481.529736	-	2.007677
+/item/item/delete	1.102968	9066.446171	-	1.898487
+/item/item/delete-batch	1.080390	9255.916845	-	1.882426
+/item/item/delete-batch-without-get	1.037881	13489.022345	-	2.157749
+/item/item/get-status	1.020948	32322.899893	-	1.021319
+/item/item/get-status-batch	1.005365	228772.634814	-	1.005779
+/item/item/read	1.033727	26119.081730	106983758.768031	1.038841
+/item/item/read-batch	1.017995	196464.619178	804719080.152653	1.063250
+/item/item/write	1.027917	28212.394580	115557968.201713	1.029239
+/item/item/write-batch	1.024192	371024.182966	1519715053.427482	1.029905
+/item/item/unordered-create-delete	1.089929	12844.873382	-	1.090099
+/item/item/unordered-create-delete-batch	1.070260	13080.933605	-	1.070339
