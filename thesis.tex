@@ -1,4 +1,4 @@
-% Copyright (c) 2021-2024 Michael Kuhns
+% Copyright (c) 2021-2024 Michael Kuhn
 %
 % Permission to use, copy, modify, and/or distribute this software for any
 % purpose with or without fee is hereby granted.
@@ -27,6 +27,8 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 
+\usepackage[ngerman]{babel}
+
 % Enabling caching causes problems with overleaf..
 \usepackage{minted}
 
@@ -48,7 +50,8 @@
 
 \usepackage{placeins}
 
-\usepackage{natbib}
+\usepackage[citestyle=alphabetic,bibstyle=authortitle,hyperref=true,backref=true]{biblatex}
+\addbibresource{thesis.bib}
 
 %\usepackage{ellipsis, ragged2e, marginnote}
 \usepackage{lmodern}
@@ -59,9 +62,6 @@
 \usepackage{multicol}
 
 \usepackage{microtype}
-
-\usepackage[ngerman]{babel}
-
 \usepackage[abspath]{currfile}
 
 % Enable robust externalize for embedding images via url
@@ -89,9 +89,8 @@
 \usepackage{csquotes}
 \MakeOuterQuote{"}
 
-\usepackage[hidelinks,pagebackref]{hyperref}
+\usepackage[hidelinks]{hyperref}
 \usepackage[capitalise,noabbrev]{cleveref}
-\backrefgerman
 
 \graphicspath{{./figures/}}
 
@@ -101,17 +100,6 @@
 \definecolor{ovgu-orange}{HTML}{F39100}
 \definecolor{ovgu-purple}{HTML}{7A003F}
 \definecolor{ovgu-red}{HTML}{D13F58}
-
-\renewcommand*{\backref}[1]{}
-\renewcommand*{\backrefalt}[4]{%
-  \ifcase #1%
-  {\color{ovgu-darkgray}(\color{ovgu-red}Not~cited\color{ovgu-darkgray})}%
-  \or%
-  {\color{ovgu-darkgray}(Zitiert~auf~den~Seiten~#2)}%
-  \else%
-  {\color{ovgu-darkgray}(Zitiert~auf~den~Seiten~#2)}%
-  \fi%
-}
 
 \titlehead{\centering\includegraphics[width=0.66\textwidth]{OVGU-INF}}
 
@@ -200,8 +188,7 @@
 
 \lipsum[2]
 
-\bibliographystyle{apalike-german}
-\bibliography{thesis}
+\printbibliography
 
 %\backmatter
 

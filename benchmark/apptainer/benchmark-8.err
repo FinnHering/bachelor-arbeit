@@ -1,8 +1,9 @@
 Dependencies have already been loaded, skipping.
 Dependencies have already been loaded, skipping.
-JULEA-Message: 03:04:41.919: Daemon started as process 210960.
-JULEA-Message: 03:04:41.920: Log messages will be redirected to journald if possible. To view them, use journalctl GLIB_DOMAIN=JULEA.
+JULEA-Message: 17:45:39.727: Daemon started as process 289315.
+JULEA-Message: 17:45:39.727: Log messages will be redirected to journald if possible. To view them, use journalctl GLIB_DOMAIN=JULEA.
 Dependencies have already been loaded, skipping.
 Dependencies have already been loaded, skipping.
+/app/scripts/setup: line 193: killall: command not found
 INFO:    Terminating squashfuse_ll after timeout
 INFO:    Timeouts can be caused by a running background process

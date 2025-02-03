@@ -1,63 +1,40 @@
 \chapter{Evaluation}
 
-\section{Native vs Containerized vs Virtualized}
+\section{Vor-Auswertung der Benchmarkergenisse}
 
-Der Performance-Test wird auf einer Node eines Compute-Clusters ausgeführt. Die Node hat folgende Spezifikationen:
-
-\begin{itemize}
-    \item CPU: AMD Epyc 7443, 2,85 GHz, 24 Core (48 Threads)
-    \item RAM: 16 GB
-    \item Speicher: NFS?
-\end{itemize}
-
-Für den Benchmark wird ein bereits existierendes Skript "benchmark.sh" verwendet, welches die Performance von allen möglichen Operationen, welche JULEA hat, getestet. Um das benchmark möglichst von externen Faktoren abhängig zu machen, wird der Benchmark auf einer Node eines Clusters als einziges Programm ausgeführt (exklusiv). Das benchmark wird 10-mal nacheinander ausgeführt, um die Konfidenz der Messergebnisse zu erhöhen (Vgl. \cite{kaliberaRigorousBenchmarkingReasonable2013} S. 11ff). 
+Um die Benchmarkergebinsse effektiv auswerten zu können ist im ersten Schritt wichtig sich die Verteilung der Messwerte anzusehen. Um Schlüsse aus den Messwerten ziehen zu können, ist es wichtig die Verteilung der Messwerte zu kennen. Ein Boxplot, ist eine populäre Möglichkeit Verteilungen zu analysieren \cite[Vgl. 1]{majawExploringDataDistributions2023}. Nachfolgend werden die Verteilungen der nativen sowie containerisierten Benchmarkergebnisse betrachtet. Um die Boxplots übersichtlich zu gestalten, werden für jede unterkategorie der Benchmarkergebnisse (z.B. /db, /kv, etc.) ein Boxplot erstellt. 
 
 \subsection{Native}
 
-Die Messergebnisse des Benchmarks, welche Nativ auf dem Host-System ausgeführt wurden, lassen sich aus der folgenden Grafik entnehmen:
+Die Verteilung der Messwerte des Benchmarks, welche Nativ auf dem Host-System ausgeführt wurden, lassen sich aus der folgenden Grafik entnehmen:
 
 \begin{figure}[!h]
     \centering
-    \includegraphics[width=0.8\textwidth]{benchmark/vis/system/elapsed.png}
-    \caption{Performance-Test auf dem Host-System}
-    \label{fig:native}
+    \includesvg[width=\textwidth]{benchmark/vis/system_boxplot.svg}
+    \caption{Boxplot der Messwerte auf dem Host-System}
+    \label{fig:boxplot_native}
 \end{figure}
+
 \FloatBarrier
+
+Es ist erkenntlich, dass mit steigender durchschnittlichen Laufzeit einer Benchmark Metrik sich auch in den meisten Fällen die Varianz der Messwerte erhöht. Außerdem ist erkenntlich, dass kaum eine der Messwertverteilungen normalverteilt ist. Diese Erkenntnis schließt die Verwendung des durchschnittlichen Messwertes als aussagekräftige Metrik aus. Insbesondere bei der Metrik "/db/entry/delete" oder /kv/put fallen besonders große Ausreißer auf, welche die durchschnittliche Laufzeit stark verzerren würden. Bei der Benchmarkbetrachtung welche hier getätigt wird, Soll keine genauere Betrachtung von solchen Ausreißern getätigt werden. Darum ist die Betrachtung des Medianwertes als statistisches Mittel hier Sinnvoller \cite[Vgl. 15f.]{stengelStatistikUndAufbereitung2011}. 
+
+Desweiteren liegen die gemittelten Messwerte der einzelnen Messwerte relativ weit auseinander, was zur Folge hat, dass der Vergleich zwischen den verschiedenen Ausführungsarten des Benchmarks mit absoluten werten nicht sehr stark aussagekräftig. Darum wird der Vergleich der verschiedenen Ausführungsarten des Benchmarks mit relativen werten durchgeführt.
 
 \subsection{Containerized}
 
-Die Messergebnisse des Benchmarks, welche in einem Apptainer-Container ausgeführt wurden, lassen sich aus der folgenden Grafik entnehmen:
+Die Schlüsse, welche bei der Betrachtung der nativen Ausführung des Benchmarks gezogen wurden, lassen sich auch auf die Containerized-Ausführung des Benchmarks übertragen. Die Messergebnisse des Benchmarks, welche in einem Apptainer-Container ausgeführt wurden, lassen sich aus der folgenden Grafik entnehmen:
 
-\begin{figure}[h!]
+\begin{figure}[!h]
     \centering
-    \includegraphics[width=0.8\textwidth]{benchmark/vis/apptainer/elapsed.png}
-    \caption{Performance-Test in einem Apptainer-Container}
-    \label{fig:apptainer}
+    \includesvg[width=0.8\textwidth]{benchmark/vis/apptainer_boxplot.svg}
+    \caption{Boxplot der Messwerte in einem Apptainer-Container}
+    \label{fig:boxplot_apptainer}
 \end{figure}
 \FloatBarrier
 
-\subsection{Virtualized}
+\section{Vergleich der Benchmarkergebnisse}
 
-\todo[inline]{Wie virtualisiert man auf dem Cluster?}
-
-\subsection{Vergleich}
-
-Die Performancedifferenz zwischen der Native- und Containerized-Ausführung des Benchmarks lässt sich aus der folgenden Grafik entnehmen. Ein negativer Wert bedeutet, dass die Containerized-Ausführung schneller war als die Native-Ausführung. Ein positiver Wert bedeutet, dass die Containerized-Ausführung langsamer war als die Native-Ausführung.
-
-\begin{figure}[h!]
-    \centering
-    \includegraphics[width=0.8\textwidth]{benchmark/vis/differences/difference_elapsed.png}
-    \caption{Vergleich der Performance}
-    \label{fig:comparison}
-\end{figure}
-
-\todo[inline]{Add relative difference diagramm}
-
-Die Performance-Differenzen zwischen Containerisierten und Nativen Ausführungen sind relativ betrachtet gering 
-
-\todo[inline]{Größe des Diagramms anpassen}
-\FloatBarrier
-
-
+...
 
 

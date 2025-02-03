@@ -1,0 +1,418 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{nty/global//global/global/global}
+    \entry{dockerDockerBuildx2024}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=c5fd214cdd0d2b3b4272e73b022ba5c2}{%
+           family={Docker},
+           familyi={D\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Docker Documentation}%
+      }
+      \strng{namehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{fullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{fullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{bibnamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorbibnamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authornamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorfullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorfullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \field{extraname}{1}
+      \field{labelalpha}{Doc24}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extraalpha}{1}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{Docker Buildx}
+      \field{urlday}{28}
+      \field{urlmonth}{1}
+      \field{urlyear}{2025}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/HQXMSQR2/buildx.html
+      \endverb
+      \verb{urlraw}
+      \verb https://docs.docker.com/reference/cli/docker/buildx/
+      \endverb
+      \verb{url}
+      \verb https://docs.docker.com/reference/cli/docker/buildx/
+      \endverb
+    \endentry
+    \entry{dockerDockerfileOverview2024}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=c5fd214cdd0d2b3b4272e73b022ba5c2}{%
+           family={Docker},
+           familyi={D\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Docker Documentation}%
+      }
+      \strng{namehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{fullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{fullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{bibnamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorbibnamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authornamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorfullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorfullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \field{extraname}{2}
+      \field{labelalpha}{Doc24}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extraalpha}{2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Learn about Dockerfiles and how to use them with Docker Images to build and package your software}
+      \field{langid}{english}
+      \field{title}{Dockerfile Overview}
+      \field{urlday}{28}
+      \field{urlmonth}{1}
+      \field{urlyear}{2025}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/BSFP8ARI/dockerfile.html
+      \endverb
+      \verb{urlraw}
+      \verb https://docs.docker.com/build/concepts/dockerfile/
+      \endverb
+      \verb{url}
+      \verb https://docs.docker.com/build/concepts/dockerfile/
+      \endverb
+    \endentry
+    \entry{ermakovTestingDockerPerformance2017}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=e80c333549fc0d3ab1afc28cde0fb8d6}{%
+           family={Ermakov},
+           familyi={E\bibinitperiod},
+           given={Alexey},
+           giveni={A\bibinitperiod}}}%
+        {{hash=1f53a1354cf65e80124e217f667b92c7}{%
+           family={Vasyukov},
+           familyi={V\bibinitperiod},
+           given={Alexey},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{5638b7a4d7097585b0f86e242f87f5de}
+      \strng{fullhash}{5638b7a4d7097585b0f86e242f87f5de}
+      \strng{fullhashraw}{5638b7a4d7097585b0f86e242f87f5de}
+      \strng{bibnamehash}{5638b7a4d7097585b0f86e242f87f5de}
+      \strng{authorbibnamehash}{5638b7a4d7097585b0f86e242f87f5de}
+      \strng{authornamehash}{5638b7a4d7097585b0f86e242f87f5de}
+      \strng{authorfullhash}{5638b7a4d7097585b0f86e242f87f5de}
+      \strng{authorfullhashraw}{5638b7a4d7097585b0f86e242f87f5de}
+      \field{labelalpha}{EV17}
+      \field{sortinit}{E}
+      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The main goal for this article is to compare performance penalties when using KVM virtualization and Docker containers for creating isolated environments for HPC applications. The article provides both data obtained using commonly accepted synthetic tests (High Performance Linpack) and real life applications (OpenFOAM). The article highlights the influence on resulting application performance of major infrastructure configuration options: CPU type presented to VM, networking connection type used.}
+      \field{day}{18}
+      \field{month}{4}
+      \field{title}{Testing {{Docker Performance}} for {{HPC Applications}}}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.1704.05592
+      \endverb
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/SZNYLCVW/Ermakov und Vasyukov - 2017 - Testing Docker Performance for HPC Applications.pdf
+      \endverb
+    \endentry
+    \entry{kaliberaRigorousBenchmarkingReasonable2013}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=9aeaaaffd9b9f0bfa8dcc11c4c98813b}{%
+           family={Kalibera},
+           familyi={K\bibinitperiod},
+           given={Tomas},
+           giveni={T\bibinitperiod}}}%
+        {{hash=686f63784177f089204782d110bd55f1}{%
+           family={Jones},
+           familyi={J\bibinitperiod},
+           given={Richard},
+           giveni={R\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{fullhash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{fullhashraw}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{bibnamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{authorbibnamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{authornamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{authorfullhash}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \strng{authorfullhashraw}{d8b20a11f935fcb80a3b833e3fe31ad2}
+      \field{labelalpha}{KJ13}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Experimental evaluation is key to systems research. Because modern systems are complex and non-deterministic, good experimental methodology demands that researchers account for uncertainty. To obtain valid results, they are expected to run many iterations of benchmarks, invoke virtual machines (VMs) several times, or even rebuild VM or benchmark binaries more than once. All this repetition costs time to complete experiments. Currently, many evaluations give up on sufficient repetition or rigorous statistical methods, or even run benchmarks only in training sizes. The results reported often lack proper variation estimates and, when a small difference between two systems is reported, some are simply unreliable.In contrast, we provide a statistically rigorous methodology for repetition and summarising results that makes efficient use of experimentation time. Time efficiency comes from two key observations. First, a given benchmark on a given platform is typically prone to much less non-determinism than the common worst-case of published corner-case studies. Second, repetition is most needed where most uncertainty arises (whether between builds, between executions or between iterations). We capture experimentation cost with a novel mathematical model, which we use to identify the number of repetitions at each level of an experiment necessary and sufficient to obtain a given level of precision.We present our methodology as a cookbook that guides researchers on the number of repetitions they should run to obtain reliable results. We also show how to present results with an effect size confidence interval. As an example, we show how to use our methodology to conduct throughput experiments with the DaCapo and SPEC CPU benchmarks on three recent platforms.}
+      \field{booktitle}{Proceedings of the 2013 International Symposium on Memory Management}
+      \field{day}{20}
+      \field{isbn}{978-1-4503-2100-6}
+      \field{month}{6}
+      \field{series}{{{ISMM}} '13}
+      \field{title}{Rigorous Benchmarking in Reasonable Time}
+      \field{urlday}{22}
+      \field{urlmonth}{1}
+      \field{urlyear}{2025}
+      \field{year}{2013}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{63\bibrangedash 74}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1145/2491894.2464160
+      \endverb
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/2S9FIJD8/Kalibera und Jones - 2013 - Rigorous benchmarking in reasonable time.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://dl.acm.org/doi/10.1145/2491894.2464160
+      \endverb
+      \verb{url}
+      \verb https://dl.acm.org/doi/10.1145/2491894.2464160
+      \endverb
+    \endentry
+    \entry{kuhnJULEAFlexibleStorage2017}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=cff0fe131efbf43165f9a85118eaf63f}{%
+           family={Kuhn},
+           familyi={K\bibinitperiod},
+           given={Michael},
+           giveni={M\bibinitperiod}}}%
+      }
+      \name{editor}{4}{}{%
+        {{hash=e3023e3f5444909ad130e78eec478508}{%
+           family={Kunkel},
+           familyi={K\bibinitperiod},
+           given={Julian\bibnamedelima M.},
+           giveni={J\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=a640cd9ddbd9cbba723bcfd9963dfea1}{%
+           family={Yokota},
+           familyi={Y\bibinitperiod},
+           given={Rio},
+           giveni={R\bibinitperiod}}}%
+        {{hash=9b4b772c7c929bc2395b0271b15c9a16}{%
+           family={Taufer},
+           familyi={T\bibinitperiod},
+           given={Michela},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8411e32c5282692ec8fb33ae8efc7b3a}{%
+           family={Shalf},
+           familyi={S\bibinitperiod},
+           given={John},
+           giveni={J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Cham}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{cff0fe131efbf43165f9a85118eaf63f}
+      \strng{fullhash}{cff0fe131efbf43165f9a85118eaf63f}
+      \strng{fullhashraw}{cff0fe131efbf43165f9a85118eaf63f}
+      \strng{bibnamehash}{cff0fe131efbf43165f9a85118eaf63f}
+      \strng{authorbibnamehash}{cff0fe131efbf43165f9a85118eaf63f}
+      \strng{authornamehash}{cff0fe131efbf43165f9a85118eaf63f}
+      \strng{authorfullhash}{cff0fe131efbf43165f9a85118eaf63f}
+      \strng{authorfullhashraw}{cff0fe131efbf43165f9a85118eaf63f}
+      \strng{editorbibnamehash}{4d2fc0900eaad29fd7182081a8b17b35}
+      \strng{editornamehash}{4d2fc0900eaad29fd7182081a8b17b35}
+      \strng{editorfullhash}{dff80a5a6a582cb26d69ee55c40641df}
+      \strng{editorfullhashraw}{dff80a5a6a582cb26d69ee55c40641df}
+      \field{labelalpha}{Kuh17}
+      \field{sortinit}{K}
+      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{JULEA is a flexible storage framework that allows offering arbitrary client interfaces to applications. To be able to rapidly prototype new approaches, it offers data and metadata backends that can either be client-side or server-side; backends for popular storage technologies such as POSIX, LevelDB and MongoDB have already been implemented. Additionally, JULEA allows dynamically adapting the I/O operations’ semantics and can thus be adjusted to different use-cases. It runs completely in user space, which eases development and debugging. Its goal is to provide a solid foundation for storage research and teaching.}
+      \field{booktitle}{High {{Performance Computing}}}
+      \field{isbn}{978-3-319-67630-2}
+      \field{langid}{english}
+      \field{shorttitle}{{{JULEA}}}
+      \field{title}{{{JULEA}}: {{A Flexible Storage Framework}} for {{HPC}}}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{pages}{712\bibrangedash 723}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1007/978-3-319-67630-2_51
+      \endverb
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/ZV63H426/Kuhn - 2017 - JULEA A Flexible Storage Framework for HPC.pdf
+      \endverb
+      \keyw{Flexible storage framework,High performance computing,Key-value store,Object store,Parallel file system}
+    \endentry
+    \entry{malanContainerizingCS50Standardizing2024}{inproceedings}{}{}
+      \name{author}{1}{}{%
+        {{hash=44cdaec3ccb4f770462a3c0f71885896}{%
+           family={Malan},
+           familyi={M\bibinitperiod},
+           given={David\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Milan Italy}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{44cdaec3ccb4f770462a3c0f71885896}
+      \strng{fullhash}{44cdaec3ccb4f770462a3c0f71885896}
+      \strng{fullhashraw}{44cdaec3ccb4f770462a3c0f71885896}
+      \strng{bibnamehash}{44cdaec3ccb4f770462a3c0f71885896}
+      \strng{authorbibnamehash}{44cdaec3ccb4f770462a3c0f71885896}
+      \strng{authornamehash}{44cdaec3ccb4f770462a3c0f71885896}
+      \strng{authorfullhash}{44cdaec3ccb4f770462a3c0f71885896}
+      \strng{authorfullhashraw}{44cdaec3ccb4f770462a3c0f71885896}
+      \field{labelalpha}{Mal24}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{We argue in favor of Docker containers as alternatives to clusters of servers or virtual machines for students in introductory programming courses. We present our experience with the same since 2015 in CS50 at Harvard University as well as the pedagogical and operational motivations therefor. We present, too, the evolution of our environments for students over the years, from an on-campus cluster, to an off-campus cloud, to client-side virtual machines, to Docker containers, discussing the trade-offs of each. Not only do containers provide students with a standardized environment, reducing technical difficulties and frequently asked questions at term’s start, they also provide instructors with full control over the software in use and versions thereof, additionally allowing instructors to deploy updates mid-semester. Particularly for large courses with hundreds or even thousands of students, containers allow staff to focus more of their time on teaching than on technical support. And, coupled with text editors that support extensions or plugins, containers allow instructors to optimize students’ environment for learning, while still acquainting students with industry-standard tools. Most recently implemented atop GitHub Codespaces, a cloud-based version of Visual Studio Code, our own container-based solutions have since been used by more than 700,000 students and teachers, both on campus and off, and are also freely available to any teacher or student outside of our own university.}
+      \field{booktitle}{Proceedings of the 2024 on {{Innovation}} and {{Technology}} in {{Computer Science Education V}}. 1}
+      \field{day}{3}
+      \field{eventtitle}{{{ITiCSE}} 2024: {{Innovation}} and {{Technology}} in {{Computer Science Education}}}
+      \field{isbn}{9798400706004}
+      \field{langid}{english}
+      \field{month}{7}
+      \field{shorttitle}{Containerizing {{CS50}}}
+      \field{title}{Containerizing {{CS50}}: {{Standardizing Students}}' {{Programming Environments}}}
+      \field{urlday}{31}
+      \field{urlmonth}{10}
+      \field{urlyear}{2024}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{534\bibrangedash 540}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1145/3649217.3653567
+      \endverb
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/SR6UYDT5/Malan - 2024 - Containerizing CS50 Standardizing Students' Programming Environments.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://dl.acm.org/doi/10.1145/3649217.3653567
+      \endverb
+      \verb{url}
+      \verb https://dl.acm.org/doi/10.1145/3649217.3653567
+      \endverb
+    \endentry
+    \entry{shudlerSpackMeetsSingularity2019}{inproceedings}{}{}
+      \name{author}{5}{}{%
+        {{hash=32aee5eaaca43c9154263bde15fdc49c}{%
+           family={Shudler},
+           familyi={S\bibinitperiod},
+           given={Sergei},
+           giveni={S\bibinitperiod}}}%
+        {{hash=1279cefa12b624bee4a3b09423cd5edd}{%
+           family={Ferrier},
+           familyi={F\bibinitperiod},
+           given={Nicola},
+           giveni={N\bibinitperiod}}}%
+        {{hash=967c8ec8eced02f1958ce47369e2461d}{%
+           family={Insley},
+           familyi={I\bibinitperiod},
+           given={Joseph},
+           giveni={J\bibinitperiod}}}%
+        {{hash=40004a2252db0d08567098b4d192b87f}{%
+           family={Papka},
+           familyi={P\bibinitperiod},
+           given={Michael\bibnamedelima E.},
+           giveni={M\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
+        {{hash=18bcf5f59147089e40689262834c766b}{%
+           family={Rizzi},
+           familyi={R\bibinitperiod},
+           given={Silvio},
+           giveni={S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY, USA}%
+      }
+      \list{publisher}{1}{%
+        {Association for Computing Machinery}%
+      }
+      \strng{namehash}{194f295c3068c26d5ee58133887b3b0c}
+      \strng{fullhash}{46ca89c829b14b03dd64b724f592db74}
+      \strng{fullhashraw}{46ca89c829b14b03dd64b724f592db74}
+      \strng{bibnamehash}{194f295c3068c26d5ee58133887b3b0c}
+      \strng{authorbibnamehash}{194f295c3068c26d5ee58133887b3b0c}
+      \strng{authornamehash}{194f295c3068c26d5ee58133887b3b0c}
+      \strng{authorfullhash}{46ca89c829b14b03dd64b724f592db74}
+      \strng{authorfullhashraw}{46ca89c829b14b03dd64b724f592db74}
+      \field{labelalpha}{Shu+19}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{shorttitle}
+      \field{abstract}{In-situ data analysis and visualization is a promising technique to handle the enormous amount of data an extreme-scale application produces. One challenge users often face in adopting in-situ techniques is setting the right environment on a target machine. Platforms such as SENSEI require complex software stacks that consist of various analysis packages and visualization applications. The user has to make sure all these prerequisites exist on the target machine, which often involves compiling and setting them up from scratch. In this paper, we leverage the containers technology (e.g., light-weight virtualization images) and provide users with Singularity containers that encapsulate ready-to-use, movable in-situ software stacks. Moreover, we make use of Spack to ease the process of creating these containers. Finally, we evaluate this solution by running in-situ analysis from within a container on an HPC system.}
+      \field{booktitle}{Proceedings of the {{Workshop}} on {{In Situ Infrastructures}} for {{Enabling Extreme-Scale Analysis}} and {{Visualization}}}
+      \field{day}{18}
+      \field{isbn}{978-1-4503-7723-2}
+      \field{month}{11}
+      \field{series}{{{ISAV}} '19}
+      \field{shorttitle}{Spack Meets Singularity}
+      \field{title}{Spack Meets Singularity: Creating Movable in-Situ Analysis Stacks with Ease}
+      \field{urlday}{31}
+      \field{urlmonth}{10}
+      \field{urlyear}{2024}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{34\bibrangedash 38}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1145/3364228.3364682
+      \endverb
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/CJDSSMG2/Shudler et al. - 2019 - Spack meets singularity creating movable in-situ analysis stacks with ease.pdf
+      \endverb
+      \verb{urlraw}
+      \verb https://dl.acm.org/doi/10.1145/3364228.3364682
+      \endverb
+      \verb{url}
+      \verb https://dl.acm.org/doi/10.1145/3364228.3364682
+      \endverb
+    \endentry
+  \enddatalist
+  \missing{ApptainerPortableReproducible2024}
+  \missing{GitHubActions2025}
+  \missing{dockerBake2024}
+  \missing{dockerBuildKit2024}
+  \missing{dockerCache2024}
+\endrefsection
+\endinput
+

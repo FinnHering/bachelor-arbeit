@@ -4,5 +4,8 @@
     "ltex.completionEnabled": true,
     "ltex.language": "de-DE",
     "latex-workshop.formatting.latex": "latexindent",
-    "latex-workshop.docker.enabled": false
+    "latex-workshop.docker.enabled": false,
+    "cSpell.words": [
+        "Benchmarkergenisse"
+    ]
 }

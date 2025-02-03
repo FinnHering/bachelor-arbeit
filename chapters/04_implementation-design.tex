@@ -78,6 +78,8 @@ Der Aufbau der Containerfile ist wie folgt:
     \caption{Containerfile Layer-Graf}
 \end{figure}
 
+\FloatBarrier
+
 Der Layer-Graf zeigt auf, dass die Pfade von Spack, sowie System sehr früh schon voneinander abweichen. Dadurch ist es sinnvoll zwei Containerfiles für Spack und System zu erstellen, um die beiden Dateien übersichtlicher zu halten. 
 
 \subsection{"System" Containerfile}
@@ -104,6 +106,8 @@ Der Layer-Graf für das Containerfile "Spack" sieht wie folgt aus.
 Die dazugehörige Dockerfile hat folgenden aufbau.
 
 \inputminted{dockerfile}{./code-examples/Dockerfile.spack}
+
+Bei beiden Dockerfiles fällt auf, dass apt-get update und apt-get install stets im selben "RUN" befehl ausgeführt werden. Dies gilt nicht nur für apt-get, sondern auch für andere Paketmanager, welche vor der installation vorgelagerte Schritte ähnlich wie apt-get update benötigen. Sollte man die vorgelagerten schritte in einzelne "RUN" befehle ausführen, hätte das für das erste ausführen von docker build keine implikationen, da dort der cache noch nicht befüllt wurde. Bei allen folgenden ausführungen von docker build, kann es nach Anpassung der apt-get install Zeile zu Problemen führen. Dies liegt daran, dass alle vorgelagerten Schritte immernoch im cache liegen, bei dem apt-get install schritt kommt es allerdings zu einem cache-miss und dieser muss neu evaluiert werden. Wenn nun die paketinformationen, welche für apt-get update im layer cache liegen nicht mehr aktuell sind, wird apt-get install fehlschlagen, da es die Pakete, welche beim Mirror angefragt werden nicht mehr gibt. Um dieses Problem zu beheben, sollte man stets apt-get update und apt-get install im selben "RUN" befehl ausführen. Dadurch wird bei jeder anpassung der benötigten Pakete automatisch auch apt-get update ausgeführt und es kann zu keinen veralteten Paketinformationen kommen. 
 
 \subsection{Zusammenspiel Dockerfile -> Images/Tags}
 
