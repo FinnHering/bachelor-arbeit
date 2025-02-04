@@ -2,18 +2,27 @@
 
 \section{Vor-Auswertung der Benchmarkergenisse}
 
-Um die Benchmarkergebinsse effektiv auswerten zu können ist im ersten Schritt wichtig sich die Verteilung der Messwerte anzusehen. Um Schlüsse aus den Messwerten ziehen zu können, ist es wichtig die Verteilung der Messwerte zu kennen. Ein Boxplot, ist eine populäre Möglichkeit Verteilungen zu analysieren \cite[Vgl. 1]{majawExploringDataDistributions2023}. Nachfolgend werden die Verteilungen der nativen sowie containerisierten Benchmarkergebnisse betrachtet. Um die Boxplots übersichtlich zu gestalten, werden für jede unterkategorie der Benchmarkergebnisse (z.B. /db, /kv, etc.) ein Boxplot erstellt. 
+Um die Benchmarkergebinsse effektiv auswerten zu können ist im ersten Schritt wichtig sich die Verteilung der Messwerte anzusehen. Um Schlüsse aus den Messwerten ziehen zu können, ist es wichtig die Verteilung der Messwerte zu kennen. Ein Boxplot, ist eine populäre Möglichkeit Verteilungen zu analysieren \cite[Vgl. 1]{majawExploringDataDistributions2023}. Nachfolgend werden die Verteilungen der nativen sowie containerisierten Benchmarkergebnisse betrachtet. Um die Boxplots übersichtlich zu gestalten, werden für jede unterkategorie der Benchmarkergebnisse (z.B. /db, /kv, etc.) ein Boxplot erstellt. Desweiteren werden messwerte, welche sich beim verglich von nativen und containerisierten Benchmarkergebnissen gleich verhalten und in der gleichen Kategorie liegen, in einem Boxplot zusammengefasst. Die vollständige Auswertung ist im Appendix zu finden. 
+\todo[inline]{Hier nochmal auf die Appendix verweisen und vollständige Auswertung im Appendix anhängen}
 
 \subsection{Native}
 
 Die Verteilung der Messwerte des Benchmarks, welche Nativ auf dem Host-System ausgeführt wurden, lassen sich aus der folgenden Grafik entnehmen:
 
-\begin{figure}[!h]
+\begin{table}
     \centering
-    \includesvg[width=\textwidth]{benchmark/vis/system_boxplot.svg}
-    \caption{Boxplot der Messwerte auf dem Host-System}
-    \label{fig:boxplot_native}
-\end{figure}
+    \caption{Picture grid.\label{tab:picturegrid}}
+        \begin{tabular}{c c}
+            \includesvg[width=0.5\linewidth]{benchmark/vis/boxplots/system/background-operation/boxplot.svg}
+            & \includesvg[width=0.5\linewidth]{benchmark/vis/boxplots/system/cache/boxplot.svg} \\
+             \includesvg[width=0.5\linewidth]{benchmark/vis/boxplots/system/db/boxplot.svg} 
+            & \includesvg[width=0.5\linewidth]{benchmark/vis/boxplots/system/item/boxplot.svg} \\
+             \includesvg[width=0.5\linewidth]{benchmark/vis/boxplots/system/kv/boxplot.svg}
+            & \includesvg[width=0.5\linewidth]{benchmark/vis/boxplots/system/memory-chunk/boxplot.svg} \\
+             \includesvg[width=0.5\linewidth]{benchmark/vis/boxplots/system/message/boxplot.svg}
+            & \includesvg[width=0.5\linewidth]{benchmark/vis/boxplots/system/object/boxplot.svg}
+        \end{tabular}%
+\end{table}
 
 \FloatBarrier
 

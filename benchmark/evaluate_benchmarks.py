@@ -9,6 +9,13 @@ import matplotlib.pyplot as plt
 benchmark_folder_names = {"system", "apptainer"}
 
 
+def compress_benchmark(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Remove rows whose 'name' contains 'batch' (or other similar results).
+    """
+    df = df[~df["name"].str.contains("batch", case=False, na=False)]
+    return df   
+
 
 def parse_file(file: Path) -> pd.DataFrame:
     with open(file, "r") as f:
@@ -63,7 +70,7 @@ def plot_barchart(performance: pd.DataFrame, name: str):
     performance.plot(kind="barh", x="name", y="operations", title="Operations", logx=True, ax=axs)
     fig.tight_layout()
     
-    plt.savefig(p / "operations.png")
+    plt.savefig(p / "operations.svg")
 
 
 def plot_benchmarks():
@@ -145,7 +152,7 @@ def plot_benchmark_differences():
         ax.xaxis.set_major_locator(MultipleLocator(1))
         ax.xaxis.set_minor_locator(MultipleLocator(0.1))
         plt.tight_layout()
-        plt.savefig(p / f"difference_{metric}.png")
+        plt.savefig(p / f"difference_{metric}.svg")
 
 
 def plot_subname_differences():
@@ -188,7 +195,7 @@ def plot_subname_differences():
             ax.xaxis.set_major_locator(MultipleLocator(1))
             ax.xaxis.set_minor_locator(MultipleLocator(0.1))
             plt.tight_layout()
-            plt.savefig(p / f"difference_{metric}.png")
+            plt.savefig(p / f"difference_{metric}.svg")
 
 
 def export_boxplot(dir: Path):
@@ -211,7 +218,48 @@ def export_boxplots():
         export_boxplot(dir)
 
 
+def plot_subname_boxplots_raw():
+    system_files = parse_all_files(Path("benchmark/system"))
+    df_system = pd.concat(system_files, ignore_index=True)
 
+    apptainer_files = parse_all_files(Path("benchmark/apptainer"))
+    df_apptainer = pd.concat(apptainer_files, ignore_index=True)
+
+    # Process system data
+    subnames_system = df_system['name'].str.extract(r'^/([^/]+)/')[0].dropna().unique()
+
+    for sub in subnames_system:
+        sub_data_sys = df_system[df_system['name'].str.startswith(f"/{sub}/")]
+        if sub_data_sys.empty:
+            continue
+
+        p = Path(f"benchmark/vis/boxplots/system/{sub.strip('/')}")
+        p.mkdir(parents=True, exist_ok=True)
+
+        plt.figure(figsize=(20, 10))
+        sns.set_theme(style="whitegrid")
+        ax = sns.boxplot(data=sub_data_sys, x="operations", y="name")
+        ax.title.set_text(f"System - {sub.strip('/')}")
+        plt.tight_layout()
+        plt.savefig(p / "boxplot.svg")
+
+    # Process apptainer data
+    subnames_appt = df_apptainer['name'].str.extract(r'^/([^/]+)/')[0].dropna().unique()
+    print(subnames_appt)
+    for sub in subnames_appt:
+        sub_data_app = df_apptainer[df_apptainer['name'].str.startswith(f"/{sub}/")]
+        if sub_data_app.empty:
+            continue
+
+        p = Path(f"benchmark/vis/boxplots/apptainer/{sub.strip('/')}")
+        p.mkdir(parents=True, exist_ok=True)
+
+        plt.figure()
+        sns.set_theme(style="whitegrid")
+        ax = sns.boxplot(data=sub_data_app, x="operations", y="name")
+        ax.title.set_text(f"Apptainer - {sub.strip('/')}")
+        plt.tight_layout()
+        plt.savefig(p / "boxplot.svg")
 
 if __name__ == "__main__":
 
@@ -220,6 +268,7 @@ if __name__ == "__main__":
     plot_benchmark_differences()
     plot_subname_differences()
     plot_benchmarks()
+    plot_subname_boxplots_raw()
     #export_boxplots()
 
 
