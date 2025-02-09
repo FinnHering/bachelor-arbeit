@@ -1,7 +1,23 @@
+ant13
+Dependency "meson" loaded: YES
+Dependency "pkgconf" loaded: YES
+Dependency "glib" loaded: YES
+Dependency "libbson" loaded: YES
+Dependency "libfabric fabrics=sockets,tcp,udp,verbs,rxd,rxm" loaded: YES
+Dependency "hdf5~mpi@1.14" loaded: YES
+Dependency "libfuse~utils" loaded: YES
+Dependency "lmdb" loaded: YES
+Dependency "sqlite" loaded: YES
+Dependency "gdbm" loaded: YES
+Dependency "leveldb" loaded: YES
+Dependency "mariadb-c-client" loaded: YES
+Dependency "mongo-c-driver" loaded: YES
+Dependency "otf" loaded: YES
+Dependency "rocksdb~static" loaded: YES
 Dependencies have already been loaded, skipping.
 Dependencies have already been loaded, skipping.
-JULEA-Message: 17:45:39.796: Daemon started as process 233250.
-JULEA-Message: 17:45:39.797: Log messages will be redirected to journald if possible. To view them, use journalctl GLIB_DOMAIN=JULEA.
+JULEA-Message: 12:50:22.896: Daemon started as process 52244.
+JULEA-Message: 12:50:22.896: Log messages will be redirected to journald if possible. To view them, use journalctl GLIB_DOMAIN=JULEA.
 Dependencies have already been loaded, skipping.
 Dependencies have already been loaded, skipping.
 /app/scripts/setup: line 193: killall: command not found

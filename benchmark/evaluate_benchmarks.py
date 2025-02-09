@@ -14,6 +14,8 @@ def compress_benchmark(df: pd.DataFrame) -> pd.DataFrame:
     Remove rows whose 'name' contains 'batch' (or other similar results).
     """
     df = df[~df["name"].str.contains("batch", case=False, na=False)]
+    df = df[~df["name"].str.contains("index-single", case=False, na=False)]
+    df = df[~df["name"].str.contains("index-mixed", case=False, na=False)]
     return df   
 
 
@@ -22,17 +24,11 @@ def parse_file(file: Path) -> pd.DataFrame:
         lines = f.readlines()
 
     
-    
     header = lines[0].strip().split("\t")
-
-    print(header)
-
     performance = pd.DataFrame(columns=header)
-    print("done")
 
     for line in lines[1:]:
         values = line.strip().split("\t")
-        print(values)
         performance = pd.concat([performance, pd.DataFrame([values], columns=header)], ignore_index=True)
 
     performance = performance.infer_objects()
@@ -73,7 +69,7 @@ def plot_barchart(performance: pd.DataFrame, name: str):
     plt.savefig(p / "operations.svg")
 
 
-def plot_benchmarks():
+def plot_full_benchmarks():
     # get all subfolders except vis
     dirs = [d for d in Path("benchmark").iterdir() if d.is_dir() and d.name in benchmark_folder_names]
 
@@ -105,8 +101,89 @@ def compare_benchmarks(base_folder: Path = Path("benchmark")) -> pd.DataFrame:
 
     return res
 
+def plot_run_to_run_differences():
 
-def plot_benchmark_differences():
+    # Apptainer results
+    performances_apptainer = parse_all_files(Path("benchmark/apptainer"))
+    pfs_apptainer = compress_benchmark(pd.concat(performances_apptainer, ignore_index=True).reset_index())
+
+    # System results
+    performances_system = parse_all_files(Path("benchmark/system"))
+    pfs_system = compress_benchmark(pd.concat(performances_system, ignore_index=True).reset_index())
+
+    pfs_total = pd.merge(pfs_apptainer, pfs_system, on="name")
+
+    pfs_total["difference_operations"] = (pfs_total["operations_x"] / pfs_total["operations_y"]) - 1
+
+
+    p = Path("benchmark/vis/compressed/differences/")
+
+    p.mkdir(parents=True, exist_ok=True)
+
+    plt.figure(figsize=(30, 10))
+    ax = sns.boxplot(data=pfs_total, x="difference_operations", y="name")
+    ax.title.set_text(f"Verteilung der Laufzeitunterschiede zwischen Apptainer und System")
+
+    ax.tick_params(which='major', width=0.01)
+    ax.tick_params(axis="x", rotation=-90)
+    ax.xaxis.set_major_locator(MultipleLocator(0.01))
+
+    ax.set_xlim(-0.5, 0.6)
+
+    plt.tight_layout()
+    plt.savefig(p / "run_to_run_distribution.svg")
+
+
+
+def plot_compressed_benchmark_differences():
+
+    # Load the benchmark results
+    res = compress_benchmark(compare_benchmarks())
+
+    # Get the system benchmark
+    system = res[res["dir"] == "system"]
+
+    # Remove the system benchmark from the results
+    res = res[res["dir"] == "apptainer"]
+
+    res = pd.merge(res, system, on="name")
+    # Calculate the difference in performance
+    metrics = ["operations"]
+
+
+    # create relative differences
+
+
+    for metric in metrics:
+        res[f"difference_{metric}"] = (res[f"{metric}_x"] / res[f"{metric}_y"]) - 1
+
+
+    # Plot the differences
+    p = Path("benchmark/vis/compressed/differences")
+    p.mkdir(parents=True, exist_ok=True)
+
+
+    for metric in metrics:
+        # use seaborn to plot
+        plt.subplots_adjust(left=0.5)
+        
+        fig, ax = plt.subplots(figsize=(20, 30))
+
+        ax = sns.barplot(data=res, x=f"difference_{metric}", y="name", orient="h") 
+        ax.xaxis.set_ticks_position('bottom')
+        ax.tick_params(which='major', width=0.01)
+        ax.tick_params(which='minor', width=0.001)
+        ax.tick_params(axis="x", rotation=-90)
+        ax.xaxis.set_major_locator(MultipleLocator(0.01))
+        ax.xaxis.set_minor_locator(MultipleLocator(0.001))
+        
+        # set x boundaries to -0.3, 0.3
+        ax.set_xlim(-0.25, 0.25)
+
+        plt.tight_layout()
+        plt.savefig(p / f"difference_{metric}.svg")
+
+def plot_full_benchmark_differences():
 
     # Load the benchmark results
     res = compare_benchmarks()
@@ -116,9 +193,6 @@ def plot_benchmark_differences():
 
     # Remove the system benchmark from the results
     res = res[res["dir"] != "system"]
-
-    print(res)
-
 
     res = pd.merge(res, system, on="name")
     # Calculate the difference in performance
@@ -140,9 +214,10 @@ def plot_benchmark_differences():
     for metric in metrics:
         # use seaborn to plot
         plt.subplots_adjust(left=0.5)
-        sns.set_theme(style="whitegrid")
         fig, ax = plt.subplots(figsize=(30, 40))
 
+
+        sns.set_theme(rc={"xtick.bottom" : True, "ytick.left" : True}, font_scale=1)
         ax = sns.barplot(data=res, x=f"difference_{metric}", y="name", orient="h") 
         ax.xaxis.set_ticks_position('bottom')
         ax.tick_params(which='major', width=1.00)
@@ -155,38 +230,39 @@ def plot_benchmark_differences():
         plt.savefig(p / f"difference_{metric}.svg")
 
 
-def plot_subname_differences():
-    res = compare_benchmarks()
+def plot_compressed_subname_differences():
+    res = compress_benchmark(compare_benchmarks())
+
     # Only capture the highest category before the first slash
-    subnames = res['name'].str.extract(r'^([^/]+)/')[0].dropna().unique()
+    subnames = res['name'].str.extract(r'^/([^/]+)/')[0].dropna().unique()
 
     for sub in subnames:
         # Filter by names that start with the highest category
-        subres = res[res['name'].str.startswith(f"{sub}/")]
-        if subres.empty:
+        apptainer = res[res['name'].str.startswith(f"/{sub}/")]
+        if apptainer.empty:
+            print(f"Empty: {sub}")
             continue
 
-        system = subres[subres["dir"] == "system"]
-        subres = subres[subres["dir"] != "system"]
-        if system.empty or subres.empty:
+        system = apptainer[apptainer["dir"] == "system"]
+        apptainer = apptainer[apptainer["dir"] != "system"]
+        if system.empty or apptainer.empty:
             continue
 
-        subres = pd.merge(subres, system, on="name")
+        full = pd.merge(apptainer, system, on="name")
         metrics = ["operations", "total_elapsed"]
 
         for metric in metrics:
-            subres[f"difference_{metric}"] = subres[f"{metric}_x"] / subres[f"{metric}_y"]
+            full[f"difference_{metric}"] = (full[f"{metric}_x"] / full[f"{metric}_y"]) - 1
 
         sub_dir_name = sub.strip("/")
-        p = Path(f"benchmark/vis/differences/{sub_dir_name}")
+        p = Path(f"benchmark/vis/compressed/differences/{sub_dir_name}")
         p.mkdir(parents=True, exist_ok=True)
 
         for metric in metrics:
             plt.subplots_adjust(left=0.5)
-            sns.set_theme(style="whitegrid")
             fig, ax = plt.subplots(figsize=(30, 40))
 
-            ax = sns.barplot(data=subres, x=f"difference_{metric}", y="name", orient="h")
+            ax = sns.barplot(data=full, x=f"difference_{metric}", y="name", orient="h")
             ax.xaxis.set_ticks_position('bottom')
             ax.tick_params(which='major', width=1.00)
             ax.tick_params(which='major', length=5)
@@ -198,27 +274,136 @@ def plot_subname_differences():
             plt.savefig(p / f"difference_{metric}.svg")
 
 
-def export_boxplot(dir: Path):
-    performances = parse_all_files(Path(dir))
-    pfs = pd.concat(performances, ignore_index=True).reset_index()
+def plot_full_subname_differences():
+    res = compare_benchmarks()
+    # Only capture the highest category before the first slash
+    subnames = res['name'].str.extract(r'^/([^/]+)/')[0].dropna().unique()
+
+    for sub in subnames:
+        # Filter by names that start with the highest category
+        apptainer = res[res['name'].str.startswith(f"/{sub}/")]
+        if apptainer.empty:
+            continue
+
+        system = apptainer[apptainer["dir"] == "system"]
+        apptainer = apptainer[apptainer["dir"] == "apptainer"]
+        if system.empty or apptainer.empty:
+            continue
+
+        full = pd.merge(apptainer, system, on="name")
+        metrics = ["operations", "total_elapsed"]
+
+        for metric in metrics:
+            full[f"difference_{metric}"] = (full[f"{metric}_x"] / full[f"{metric}_y"]) - 1 
+
+        sub_dir_name = sub.strip("/")
+        p = Path(f"benchmark/vis/differences/{sub_dir_name}")
+        p.mkdir(parents=True, exist_ok=True)
+
+        for metric in metrics:
+            plt.subplots_adjust(left=0.5)
+            fig, ax = plt.subplots(figsize=(30, 40))
+
+            ax = sns.barplot(data=full, x=f"difference_{metric}", y="name", orient="h")
+            ax.xaxis.set_ticks_position('bottom')
+            ax.tick_params(which='major', width=1.00)
+            ax.tick_params(which='major', length=5)
+            ax.tick_params(which='minor', width=0.75)
+            ax.tick_params(which='minor', length=2.5)
+            ax.xaxis.set_major_locator(MultipleLocator(1))
+            ax.xaxis.set_minor_locator(MultipleLocator(0.1))
+            plt.tight_layout()
+            plt.savefig(p / f"difference_{metric}.svg")
+
+def plot_compressed_boxplots_raw():
+    system_files = parse_all_files(Path("benchmark/system"))
+    df_system = compress_benchmark(pd.concat(system_files, ignore_index=True))
+
+    apptainer_files = parse_all_files(Path("benchmark/apptainer"))
+    df_apptainer = compress_benchmark(pd.concat(apptainer_files, ignore_index=True))
+
+    p = Path(f"benchmark/vis/compressed/boxplots/system/")
+    p.mkdir(parents=True, exist_ok=True)
+
+    plt.figure(figsize=(30, 30))
+    ax = sns.boxplot(data=df_system, x="operations", y="name")
+    ax.set_xscale("log")
+    ax.title.set_text(f"Nativ")
+    plt.tight_layout()
+    plt.savefig(p / "boxplot.svg")
+
+    p = Path(f"benchmark/vis/compressed/boxplots/apptainer/")
+    p.mkdir(parents=True, exist_ok=True)
+
+    plt.figure(figsize=(30, 30))
+    ax = sns.boxplot(data=df_apptainer, x="operations", y="name")
+    ax.set_xscale("log")
+    ax.title.set_text(f"Apptainer")
+    plt.tight_layout()
+    plt.savefig(p / "boxplot.svg")
+
+def plot_compressed_subname_boxplots_raw():
+    system_files = parse_all_files(Path("benchmark/system"))
+    df_system = compress_benchmark(pd.concat(system_files, ignore_index=True))
+
+    apptainer_files = parse_all_files(Path("benchmark/apptainer"))
+    df_apptainer = compress_benchmark(pd.concat(apptainer_files, ignore_index=True))
+
+    # Process system data
+    subnames_system = df_system['name'].str.extract(r'^/([^/]+)/')[0].dropna().unique()
+
+    for sub in subnames_system:
+        sub_data_sys = df_system[df_system['name'].str.startswith(f"/{sub}/")]
+        if sub_data_sys.empty:
+            continue
+
+        p = Path(f"benchmark/vis/compressed/boxplots/system/{sub.strip('/')}")
+        p.mkdir(parents=True, exist_ok=True)
+
+        plt.figure(figsize=(30, 10))
+        ax = sns.boxplot(data=sub_data_sys, x="operations", y="name")
+        ax.title.set_text(f"System - {sub.strip('/')}")
+        plt.tight_layout()
+        plt.savefig(p / "boxplot.svg")
+
+    # Process apptainer data
+    subnames_appt = df_apptainer['name'].str.extract(r'^/([^/]+)/')[0].dropna().unique()
+    for sub in subnames_appt:
+        sub_data_app = df_apptainer[df_apptainer['name'].str.startswith(f"/{sub}/")]
+        if sub_data_app.empty:
+            continue
+
+        p = Path(f"benchmark/vis/compressed/boxplots/apptainer/{sub.strip('/')}")
+        p.mkdir(parents=True, exist_ok=True)
+
+        plt.figure(figsize=(30, 10))
+        
+        should_log = sub == "message"
+
+        ax = sns.boxplot(data=sub_data_app, x="operations", y="name")
+        ax.title.set_text(f"Apptainer - {sub.strip('/')}")
+        if should_log:
+            ax.set_xscale("log")
+        plt.tight_layout()
+        plt.savefig(p / "boxplot.svg")
 
 
-    plt.figure(figsize=(20, 30))
-    sns.set_theme(style="whitegrid")
-    ax = sns.boxplot(data=pfs, y="name", x="total_elapsed")
-    ax.xaxis.set_major_locator(MultipleLocator(0.5))
-    ax.title.set_text(f"Total Elapsed Time ({dir.name})")
+def draw_broken_boxplot(data: pd.DataFrame, x: str, y: str, title: str, path: Path, *breakpoints: tuple[int, int]):
 
-    plt.savefig(f"benchmark/vis/{dir.name}_boxplot.svg")
+    new_data = data.iloc[0:0] 
 
-def export_boxplots():
-    dirs = [d for d in Path("benchmark").iterdir() if d.is_dir() and d.name in benchmark_folder_names]
+    for breakpoint in sorted(breakpoints, key=lambda x: x[0], reverse=True):
+        new_data = new_data.append(data.where(~data[x].between(*breakpoint), None))
 
-    for dir in dirs:
-        export_boxplot(dir)
+    
+    num_breakpoints = len(breakpoints)
 
+    fig, axs = plt.subplots(num_breakpoints + 1, 1, figsize=(30, 10 * (num_breakpoints + 1)))
 
-def plot_subname_boxplots_raw():
+    for i, ax in enumerate(axs):
+        sns.boxplot(data=new_data, x=x, y=y, ax=ax)
+
+def plot_full_subname_boxplots_raw():
     system_files = parse_all_files(Path("benchmark/system"))
     df_system = pd.concat(system_files, ignore_index=True)
 
@@ -237,7 +422,7 @@ def plot_subname_boxplots_raw():
         p.mkdir(parents=True, exist_ok=True)
 
         plt.figure(figsize=(20, 10))
-        sns.set_theme(style="whitegrid")
+        
         ax = sns.boxplot(data=sub_data_sys, x="operations", y="name")
         ax.title.set_text(f"System - {sub.strip('/')}")
         plt.tight_layout()
@@ -245,7 +430,6 @@ def plot_subname_boxplots_raw():
 
     # Process apptainer data
     subnames_appt = df_apptainer['name'].str.extract(r'^/([^/]+)/')[0].dropna().unique()
-    print(subnames_appt)
     for sub in subnames_appt:
         sub_data_app = df_apptainer[df_apptainer['name'].str.startswith(f"/{sub}/")]
         if sub_data_app.empty:
@@ -255,7 +439,7 @@ def plot_subname_boxplots_raw():
         p.mkdir(parents=True, exist_ok=True)
 
         plt.figure()
-        sns.set_theme(style="whitegrid")
+        
         ax = sns.boxplot(data=sub_data_app, x="operations", y="name")
         ax.title.set_text(f"Apptainer - {sub.strip('/')}")
         plt.tight_layout()
@@ -263,12 +447,35 @@ def plot_subname_boxplots_raw():
 
 if __name__ == "__main__":
 
-    sns.set_theme(rc={"xtick.bottom" : True, "ytick.left" : True})
+
+    sns.set_theme(rc={"xtick.bottom" : True, "ytick.left" : True}, font_scale=2.5)
     # Call the function to generate the plots
-    plot_benchmark_differences()
-    plot_subname_differences()
-    plot_benchmarks()
-    plot_subname_boxplots_raw()
+    plot_full_benchmark_differences()
+    plt.close('all')
+
+    plot_full_subname_differences()
+    plt.close('all')
+
+    plot_full_benchmarks()
+    plt.close('all')
+
+    plot_full_subname_boxplots_raw()
+    plt.close('all')
+
+    plot_compressed_subname_differences()
+    plt.close('all')
+
+    plot_compressed_subname_boxplots_raw()
+    plt.close('all')
+
+    plot_compressed_benchmark_differences()
+    plt.close('all')
+
+    plot_compressed_boxplots_raw()
+    plt.close('all')
+
+    plot_run_to_run_differences()
+    plt.close('all')
     #export_boxplots()
 
 

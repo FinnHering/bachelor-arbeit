@@ -1,7 +1,23 @@
+ant20
+Dependency "meson" loaded: YES
+Dependency "pkgconf" loaded: YES
+Dependency "glib" loaded: YES
+Dependency "libbson" loaded: YES
+Dependency "libfabric fabrics=sockets,tcp,udp,verbs,rxd,rxm" loaded: YES
+Dependency "hdf5~mpi@1.14" loaded: YES
+Dependency "libfuse~utils" loaded: YES
+Dependency "lmdb" loaded: YES
+Dependency "sqlite" loaded: YES
+Dependency "gdbm" loaded: YES
+Dependency "leveldb" loaded: YES
+Dependency "mariadb-c-client" loaded: YES
+Dependency "mongo-c-driver" loaded: YES
+Dependency "otf" loaded: YES
+Dependency "rocksdb~static" loaded: YES
 Dependencies have already been loaded, skipping.
 Dependencies have already been loaded, skipping.
-JULEA-Message: 21:47:27.491: Daemon started as process 401651.
-JULEA-Message: 21:47:27.491: Log messages will be redirected to journald if possible. To view them, use journalctl GLIB_DOMAIN=JULEA.
+JULEA-Message: 13:22:17.156: Daemon started as process 37107.
+JULEA-Message: 13:22:17.156: Log messages will be redirected to journald if possible. To view them, use journalctl GLIB_DOMAIN=JULEA.
 Dependencies have already been loaded, skipping.
 Dependencies have already been loaded, skipping.
-julea-server(401651) mit Signal 15 beendet
+julea-server(37107) mit Signal 15 beendet

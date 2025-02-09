@@ -1,68 +1,68 @@
 \chapter{Implementierung und Design}
 \label{cha:implementation_design}
 
-\textit{In diesem Kapitel wird die Implementierung und das Design der Containerisierung von JULEA erläutert. Zu Beginn wird noch einmal kurz auf den Ist-Zusatand eingegangen.}
+\textit{In diesem Kapitel wird die Implementierung und das Design der Containerisierung von JULEA erläutert. Zu Beginn wird noch einmal kurz auf den Ist-Zustand eingegangen.}
 
 \section{Ist-Zustand}
 
-Eine Julea-Entwicklungsumgebung kann aktuell in zweierlei Formen aufgesetzt werden:
+Eine JULEA-Entwicklungsumgebung kann aktuell in zweierlei Formen aufgesetzt werden:
 
-Zum einen kann man die nötigen Abhängigkeiten manuell über das Betriebssystem installieren. Dies bring den vorteil mit sich, dass diese automatisiert korrekt installiert werden und man diese üblicherweise auch bereits fertig kompiliert bereitgestellt bekommt. Der Nachteil ist, dass man nur ein begrenztes spektrum an Versionen zur Verfügung hat und man nicht entscheiden kann, welche Features bei der Abhängigkeit aktiviert oder deaktiviert seien sollen. Des Weiteren ist es durchaus möglich, dass die benötigte Abhängigkeiten nicht in der Paketrepository des Betriebssystems vorhanden sind. 
+Zum einen kann man die nötigen Abhängigkeiten manuell über das Betriebssystem installieren. Dies bring den vorteil mit sich, dass diese automatisiert korrekt installiert werden und man diese üblicherweise auch bereits fertig kompiliert bereitgestellt bekommt. Der Nachteil ist, dass man nur ein begrenztes Spektrum an Versionen zur Verfügung hat und man nicht entscheiden kann, welche Features bei der Abhängigkeit aktiviert oder deaktiviert seien sollen. Des Weiteren ist es durchaus möglich, dass die benötigte Abhängigkeiten nicht in der Paketrepository des Betriebssystems vorhanden sind. 
 
-Zum anderen kann man die Abhängigkeiten über ein mitgeliefertes Skript installieren ("install-dependencies.sh"). Dieses Skript nutzt den Paketmanager "spack" um die Abhängigkeiten zu installieren. Dadurch ist man nicht mehr auf das Paketrepository des Betriebssystems angewiesen und könnte auch spezifische Versionen der Abhängigkeiten installieren. Der Nachteil ist, dass diese Abhängigkeizen kompiliert werden müssen. Dies benötigt Zeit und Rechenleistung. 
+Zum anderen kann man die Abhängigkeiten über ein mitgeliefertes Skript installieren ("install-dependencies.sh"). Dieses Skript nutzt den Paketmanager "spack" um die Abhängigkeiten zu installieren. Dadurch ist man nicht mehr auf das Paketrepository des Betriebssystems angewiesen und könnte auch spezifische Versionen der Abhängigkeiten installieren. Der Nachteil ist, dass diese Abhängigkeiten kompiliert werden müssen. Dies benötigt Zeit und Rechenleistung. 
 
-Julea wird bereits mit Github-Actions automatisiert kompiliert und getestet. Es gibt bereits eine Pipeline, welche Ubuntu-Container mit den benötigten Abhängigkeiten für Julea erstellt. Momentan finden dies Container keine Verwendung, in den nachgelagerten CI-Pipelines. 
+JULEA wird bereits mit GitHub-Actions automatisiert kompiliert und getestet. Es gibt bereits eine Pipeline, welche Ubuntu-Container mit den benötigten Abhängigkeiten für JULEA erstellt. Momentan finden dies Container keine Verwendung, in den nachgelagerten CI-Pipelines. 
 
 \todo[inline]{Vergleich von Compilezeiten zwischen unterschiedlichen maschinen}
 
-Um die Entwicklung von Julea zu erleichtern wäre es sinnvoll eine Betriebssystemagnostische Entwicklungsumgebung zu haben, wo die Abhängigkeiten bereits vorinstalliert sind. Nachfolgend wird erleutert wie dies umgesetzt wurde und welche Containervisualisierungssoftware dafür verwendet wurde.
+Um die Entwicklung von JULEA zu erleichtern wäre es sinnvoll eine Betriebssystemagnostische Entwicklungsumgebung zu haben, wo die Abhängigkeiten bereits vorinstalliert sind. Nachfolgend wird erläutert wie dies umgesetzt wurde und welche Containervisualisierungssoftware dafür verwendet wurde.
 
 \section{Benötigte Containerimages}
 
-Um die Containerimages möglichst effizient zu gestalten, ist es sinnvoller mehrere domainspezifische Containerimages zu erstellen, als ein großes Containerimage, welches dann ggf. Komponenten beinhaltet, welche man nicht benötigt.
+Um die Containerimages möglichst effizient zu gestalten, ist es sinnvoller mehrere domänenspezifische Containerimages zu erstellen, als ein großes Containerimage, welches dann ggf. Komponenten beinhaltet, welche man nicht benötigt.
 
-Bei betrachtung der Julea-Repository fallen zwei Domainen auf. Zu einem ist es eine Entwicklungsumgebung, welche alle optionalen und nicht-optionalen Abhängigkeiten von Julea zum Kompilieren benötigt, sowie eine Testumgebung, um Julea zu testen. Außerdem sollte man eine Deploymentumgebung haben, worin eine bereits kompilierte version Julea mit den benötigten laufzeitabhängigkeiten enthalten ist.
+Bei Betrachtung der JULEA-Repository fallen zwei Domänen auf. Zu einem ist es eine Entwicklungsumgebung, welche alle optionalen und nicht-optionalen Abhängigkeiten von JULEA zum Kompilieren benötigt, sowie eine Testumgebung, um JULEA zu testen. Außerdem sollte man eine Deploymentumgebung haben, worin eine bereits kompilierte version JULEA mit den benötigten laufzeitabhängigkeiten enthalten ist.
 
 Nun könnte man für jede Domain ein eigenes Containerimage erstellen. Dies ist allerdings im Falle von der Testumgebung und der Entwicklungsumgebung nicht unbedingt notwendig, da es durchaus üblich ist, dass man während der Entwicklung auch tests schreibt und diese ausführt. Aus diesem Grund und um nicht zu viele verschiedene Versionen von Containerimages zu haben, wird für die Entwicklungsumgebung und die Testumgebung ein Containerimage erstellt.
 
-Außerdem wird Julea gegen verschiedene Kompiler und Betriebssysteme kompiliert und getestet. Somit muss jeder Entwicklungs- und Produktivcontainer in jeder Kombination von Kompiler und Betriebssystem vorhanden sein. 
+Außerdem wird JULEA gegen verschiedene Kompilierer und Betriebssysteme kompiliert und getestet. Somit muss jeder Entwicklungs- und Produktivcontainer in jeder Kombination von Kompilierer und Betriebssystem vorhanden sein. 
 
-Aktuell wird Julea mit CLang und GCC kompiliert und auf Ubuntu 20.04, Ubuntu 22.04 und Ubuntu 24.04 kompiliert und getestet.
+Aktuell wird JULEA mit CLang und GCC kompiliert und auf Ubuntu 20.04, Ubuntu 22.04 und Ubuntu 24.04 kompiliert und getestet.
 
-Außerdem gibt es 2 möglichkeiten um die benötigten Abhängigkeiten, welche Julea zum Kompilierungszeitpunkt benötigt, zu installieren. Entweder nutzt man das mitgelieferte Skript "install-dependencies.sh", oder man stellt die Abhängigkeiten über das Betriebssystem bereit. Somit muss der Entwicklungs- sowie der Produktivcontainer in jeder Kombination von Betriebssystem, Kompiler und Abhängigkeits-Installationsmethode vorhanden sein.
+Außerdem gibt es zwei Möglichkeiten um die benötigten Abhängigkeiten, welche JULEA zum Kompilierungszeitpunkt benötigt, zu installieren. Entweder nutzt man das mitgelieferte Skript "install-dependencies.sh", oder man stellt die Abhängigkeiten über das Betriebssystem bereit. Somit muss der Entwicklungs- sowie der Produktivcontainer in jeder Kombination von Betriebssystem, Kompilierer und Abhängigkeits-Installationsmethode vorhanden sein.
 
-Grundlegend gibt es somit 2 Containerimages: julea-dev und julea-prod. Beide diese Containerimages haben jeweils 12 varianten.
+Grundlegend gibt es somit 2 Containerimages: JULEA-dev und JULEA-prod. Beide diese Containerimages haben jeweils zwölf Varianten.
 
 Das Namensschema der Containerimages ist wie folgt: \\
-julea-\{dev, prod\}:\{kompiler\}-\{abhängigkeitsquelle\}-\{betriebssystem(version)\}
+JULEA-\{dev, prod\}:\{Kompilierer\}-\{abhängigkeitsquelle\}-\{betriebssystem(version)\}
 Somit gibt es folgende Containerimages:
 
 \begin{multicols}{2}
     \begin{itemize}
-        \item julea-dev-gcc-system-ubuntu-20.04  
-        \item julea-prod-gcc-system-ubuntu-20.04  
-        \item julea-dev-gcc-system-ubuntu-22.04  
-        \item julea-prod-gcc-system-ubuntu-22.04  
-        \item julea-dev-gcc-system-ubuntu-24.04  
-        \item julea-prod-gcc-system-ubuntu-24.04  
-        \item julea-dev-clang-system-ubuntu-20.04
-        \item julea-prod-clang-system-ubuntu-20.04
-        \item julea-dev-clang-system-ubuntu-22.04
-        \item julea-prod-clang-system-ubuntu-22.04
-        \item julea-dev-clang-system-ubuntu-24.04
-        \item julea-prod-clang-system-ubuntu-24.04
-        \item julea-dev-gcc-spack-ubuntu-20.04   
-        \item julea-prod-gcc-spack-ubuntu-20.04   
-        \item julea-dev-gcc-spack-ubuntu-22.04   
-        \item julea-prod-gcc-spack-ubuntu-22.04   
-        \item julea-dev-gcc-spack-ubuntu-24.04   
-        \item julea-prod-gcc-spack-ubuntu-24.04   
-        \item julea-dev-clang-spack-ubuntu-20.04 
-        \item julea-prod-clang-spack-ubuntu-20.04 
-        \item julea-dev-clang-spack-ubuntu-22.04 
-        \item julea-prod-clang-spack-ubuntu-22.04 
-        \item julea-dev-clang-spack-ubuntu-24.04 
-        \item julea-prod-clang-spack-ubuntu-24.04 
+        \item JULEA-dev-gcc-system-ubuntu-20.04  
+        \item JULEA-prod-gcc-system-ubuntu-20.04  
+        \item JULEA-dev-gcc-system-ubuntu-22.04  
+        \item JULEA-prod-gcc-system-ubuntu-22.04  
+        \item JULEA-dev-gcc-system-ubuntu-24.04  
+        \item JULEA-prod-gcc-system-ubuntu-24.04  
+        \item JULEA-dev-clang-system-ubuntu-20.04
+        \item JULEA-prod-clang-system-ubuntu-20.04
+        \item JULEA-dev-clang-system-ubuntu-22.04
+        \item JULEA-prod-clang-system-ubuntu-22.04
+        \item JULEA-dev-clang-system-ubuntu-24.04
+        \item JULEA-prod-clang-system-ubuntu-24.04
+        \item JULEA-dev-gcc-spack-ubuntu-20.04   
+        \item JULEA-prod-gcc-spack-ubuntu-20.04   
+        \item JULEA-dev-gcc-spack-ubuntu-22.04   
+        \item JULEA-prod-gcc-spack-ubuntu-22.04   
+        \item JULEA-dev-gcc-spack-ubuntu-24.04   
+        \item JULEA-prod-gcc-spack-ubuntu-24.04   
+        \item JULEA-dev-clang-spack-ubuntu-20.04 
+        \item JULEA-prod-clang-spack-ubuntu-20.04 
+        \item JULEA-dev-clang-spack-ubuntu-22.04 
+        \item JULEA-prod-clang-spack-ubuntu-22.04 
+        \item JULEA-dev-clang-spack-ubuntu-24.04 
+        \item JULEA-prod-clang-spack-ubuntu-24.04 
     \end{itemize} 
 \end{multicols}
 
@@ -103,11 +103,11 @@ Der Layer-Graf für das Containerfile "Spack" sieht wie folgt aus.
     \caption{Containerfile "Spack" Layer-Graf}
 \end{figure}
 
-Die dazugehörige Dockerfile hat folgenden aufbau.
+Die dazugehörige Dockerfile hat folgenden Aufbau.
 
 \inputminted{dockerfile}{./code-examples/Dockerfile.spack}
 
-Bei beiden Dockerfiles fällt auf, dass apt-get update und apt-get install stets im selben "RUN" befehl ausgeführt werden. Dies gilt nicht nur für apt-get, sondern auch für andere Paketmanager, welche vor der installation vorgelagerte Schritte ähnlich wie apt-get update benötigen. Sollte man die vorgelagerten schritte in einzelne "RUN" befehle ausführen, hätte das für das erste ausführen von docker build keine implikationen, da dort der cache noch nicht befüllt wurde. Bei allen folgenden ausführungen von docker build, kann es nach Anpassung der apt-get install Zeile zu Problemen führen. Dies liegt daran, dass alle vorgelagerten Schritte immernoch im cache liegen, bei dem apt-get install schritt kommt es allerdings zu einem cache-miss und dieser muss neu evaluiert werden. Wenn nun die paketinformationen, welche für apt-get update im layer cache liegen nicht mehr aktuell sind, wird apt-get install fehlschlagen, da es die Pakete, welche beim Mirror angefragt werden nicht mehr gibt. Um dieses Problem zu beheben, sollte man stets apt-get update und apt-get install im selben "RUN" befehl ausführen. Dadurch wird bei jeder anpassung der benötigten Pakete automatisch auch apt-get update ausgeführt und es kann zu keinen veralteten Paketinformationen kommen. 
+Bei beiden Dockerfiles fällt auf, dass apt-get update und apt-get install stets im selben "RUN"-Befehl ausgeführt werden. Dies gilt nicht nur für apt-get, sondern auch für andere Paketmanager, welche vor der installation vorgelagerte Schritte ähnlich wie apt-get update benötigen. Sollte man die vorgelagerten schritte in einzelne "RUN" befehle ausführen, hätte das für das erste ausführen von docker build keine Implikationen, da dort der cache noch nicht befüllt wurde. Bei allen folgenden Ausführungen von docker build, kann es nach Anpassung der apt-get install Zeile zu Problemen führen. Dies liegt daran, dass alle vorgelagerten Schritte immer noch im cache liegen, bei dem apt-get install schritt kommt es allerdings zu einem cache-miss und dieser muss neu evaluiert werden. Wenn nun die paketinformationen, welche für apt-get update im layer cache liegen nicht mehr aktuell sind, wird apt-get install fehlschlagen, da es die Pakete, welche beim Mirror angefragt werden nicht mehr gibt. Um dieses Problem zu beheben, sollte man stets apt-get update und apt-get install im selben "RUN"-Befehl ausführen. Dadurch wird bei jeder Anpassung der benötigten Pakete, automatisch auch apt-get update ausgeführt und es kann zu keinen veralteten Paketinformationen kommen. 
 
 \subsection{Zusammenspiel Dockerfile -> Images/Tags}
 
@@ -115,20 +115,72 @@ Welche Dockerfile generiert welche Images/Tags?
 
 \section{Docker Bakefile}
 
-Das Erstellen mehrerer Containerimages aus einer Containerfiles ohne einen automatismus, kann sehr aufwendig werden, da man jedes Image einzeln erstellen lassen muss. Insbesondere bei der erstellung einer großen Menge von Containerimages wie es hier der Fall ist, wäre das manuell Erstellen der Containerimages mit einem zu hohen aufwand verbunden. 
+Das Erstellen mehrerer Containerimages aus Containerfiles ohne einen Automatismus, kann sehr aufwendig werden, da man jedes Image einzeln erstellen lassen muss. Insbesondere bei der Erstellung einer großen Menge von Containerimages wie es hier der Fall ist, wäre das manuell Erstellen der Containerimages mit einem zu hohen aufwand verbunden. 
 
-Es gibt eine große Anzahl an Build-Automatisierungs-Tools. Ein sehr bekanntes Programm ist GNU-Make. Eine weitere möglichkeit wäre auch ein einfaches Shell-Skript, welche die erstellung automatisiert. Das Erstellen kann außerdem mithilfe von CI-Pipelines verinfacht werden. Github-Actions hat explizite Aktionen, um Containerimages zu erstellen. Mithilfe einer Matrix könnte man somit bei Github-Actions alle Containerimages unkompliziert erstellen. Eine weitere option ist, das Benutzen einer "Bakefile", dies ist ein spezieller dialekt der Hashicorp Configuration Language (HCL). Bakefiles sind ein feature von Docker Buildx, um mehrere Containerimages vordefiniert zu erstellen. Es löst also genau das oben beschriebene Problem in einem standardisierten und einfachen Weg. Außerdem hat Github-Actions auch eine Action für Docker-Bakefiles, somit lässt es sich auch in die existierende CI/CD-Pipeline integrieren. 
+Es gibt eine große Anzahl an Build-Automatisierungs-Tools. Ein sehr bekanntes Programm ist GNU-Make. Eine weitere Möglichkeit wäre auch ein einfaches Shell-Skript, welche die Erstellung automatisiert. Das Erstellen kann außerdem mithilfe von CI-Pipelines vereinfacht werden. GitHub-Actions hat explizite Aktionen, um Containerimages zu erstellen. Mithilfe einer Matrix könnte man somit bei GitHub-Actions alle Containerimages unkompliziert erstellen. Eine weitere option ist, das Benutzen einer "Bakefile", dies ist ein spezieller Dialekt der Hashicorp-Configuration-Language (HCL). Bakefiles sind ein feature von Docker Buildx, um mehrere Containerimages vordefiniert zu erstellen. Es löst also genau das oben beschriebene Problem in einem standardisierten und einfachen Weg. Außerdem hat GitHub-Actions auch eine Action für Docker-Bakefiles, somit lässt es sich auch in die existierende CI/CD-Pipeline integrieren. 
 
-Die Docker-Bakefile sieht wie folgt aus: 
+Die Bakefile selber kann in 5 Teile unterteilt werden.
 
-\inputminted{dockerfile}{./code-examples/docker-bake.hcl}
+\subsection{Bakefile Header}
+
+In diesem Teil werden Variablen, Gruppen und generische Targets definiert.
+\inputminted[firstline=1,lastline=7]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+
+Das target "base" ist das basis-target. Hier können alle generellen einstellungen gesetzt werden, ohne, dass man diese in jeder target-definition wiederholen muss. 
+
+Anschließen werden zwei Variablen definiert. 
+
+"BAKE\_IMAGE\_NAME" ist der festgelegte Basisname aller resultierenden Containerimages. Sprich alle Containerimages werden wie folgt benannt: "BAKE\_IMAGE\_NAME*:TAG".
+
+Diese Variable macht es einfach von außen dynamisch festzulegen, wo das image veröffentlicht werden soll. Als default-wert, wird der JULEA-Fork für diese Arbeit verwendet.
+
+"COMMIT\_SHA" wird genutzt, um von außen (üblicherweise von einer CI-Pipeline) den Commit-Hash zu übergeben. Dieser wird dann benutzt, um Containerimages für spezifische Commits zu erstellen. Diese können dann für das einfache debugging von spezifischen Commits zu verwenden.
+
+Zuletzt gibt es die Gruppe "ubuntu". Den Namen braucht man keine weitere Bedeutung zuzuweisen. Diese Gruppe ist lediglich dafür da, um alle folgenden targets in einem Docker Buildx Befehl zu erstellen. Gruppen können von Docker Buildx Bake build wie ein target angesprochen werden. Das heißt, dass man anstelle von mehreren Docker Buildx befehlen, nur einen Befehl ausführen muss, um mehrere targets zu erstellen.
+
+\subsection{Bakefile Target "ubuntu-spack"}
+
+In diesem Target werden die Containerimages für die produktiven JULEA-Container, welche Spack für das Abhängigkeitsmanagement verwenden, definiert.
+
+\inputminted[firstline=9,lastline=33]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+
+Dieses Target – wie alle anderen Targets auch – ist ein "Matrix-Target". Das bedeutet, dass dieses Target eigentlich mehrere Targets darstellt. Dies wird mit dem Attribut "matrix" gemacht. Das Attribut selber hat 2 unterattribute: "version", welches die zu verwendenden Ubuntu-Major-Versionen angibt, und "compilers", welche die zu verwendenden Kompilierer angibt.
+Die "versions" und "compilers" Matrix-Variables werden in dem Target wie andere Variablen auch benutzt. 
+Bei Matrix-Targets ist es wichtig, dass der name für jede Matrix-Variante eindeutig ist. Das bedeutet, dass man die Matrix-Variablen in den Namen einbauen muss. Dies sieht man im Attribut "name"
+
+Nach dem Matrix-Attribut kommt das "args"-Attribut. Mit diesem werden Attribute an die Dockerfile weitergegeben. In diesem Fall die zu verwendende Ubuntu-Version, welcher Kompilierer Spack verwenden soll, und mit welchem Kompilierer JULEA kompiliert werden soll. 
+
+Anschließend werden die zu generierenden Container-Tags definiert. Zum einen wird der generelle Tag für diese JULEA-Variante erstellt. Dies ist der erste eintrag. Zum anderen wird das gleiche Image noch einmal als Tag mit dem Commit-Hash erstellt.
+
+Danach wird definiert welche Dockerfile und welches Target innerhalb der Dockerfile gebaut werden soll. 
+
+Zuletzt wird noch das caching aktiviert, um die hier besonders langen Compile-Zeiten in folgenden Builds zu minimieren. Das hier konfigurierte caching ist das GitHub-Actions caching, welches das unkomplizierte caching von Docker Builds in GitHub-Actions ermöglicht.
+
+\subsection{Bakefile Target "ubuntu-system"}
+
+Dieses target ist fast identisch zum "ubuntu-spack" target. Der einzige Unterschied ist, dass hier nicht gecached wird, da das Bauen dieser Container ohne Caching bereits sehr schnell ist und die Cache-Größe von GitHub-Actions begrenzt ist. Außerdem wird hier das Dockerfile "Dockerfile.system" verwendet und die Tags haben andere Namen. Es wird des Weiteren kein Spack compiler Argument an das Dockerfile übergeben, da das Dockerfile.system bereits die Abhängigkeiten über das Betriebssystem installiert und kein Spack verwendet wird. 
+
+\inputminted[firstline=35,lastline=50]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+
+\subsection{Bakefile Target "ubuntu-latest"}
+
+Dieses Target sehr ähnlich zum "ubuntu-system" target. Hier wird allerdings der "latest"-Tag erzeugt. 
+Der rest ist identisch zum "ubuntu-system" target. Es wäre auch möglich diesen mit dem "ubuntu-system" target zu kombinieren, allerdings würde das die Lesbarkeit des Bakefiles verringern, da man nun spezielle Funktionen und konditionelle Anweisungen im Bakefile-Target verwenden müsste.
+
+\inputminted[firstline=52,lastline=62]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+
+\subsection{Bakefile Target "ubuntu-dev-container"}
+
+Dieses Target ist das letzte Target und erstellt die Entwicklungscontainer. Diese Container sind identisch zum Spack-Produktionscontainer, allerdings wird hier ein anderes Target verwendet ("JULEA\_dependncies"). Dieses Target hat JULEA noch nicht kompiliert und lediglich die nötigen Abhängigkeiten mit Spack installiert.
+
+\inputminted[firstline=64]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
 
 \section{CI}
 
-Um das Erstellen der Container noch komfortabler zu machen, werden diese mithilfe einer CI-Pipeline erstellt und automatisch in ein Container-Repository geladen. Da das Julea-Projekt auf Github gehostet wird und bereits Github-Actions als CI-/CD-Lösung verwendet, wird auf diese Pipeline aufgebaut und Github-Actions verwendet.
+Um das Erstellen der Container noch komfortabler zu machen, werden diese mithilfe einer CI-Pipeline erstellt und automatisch in ein Container-Repository geladen. Da das JULEA-Projekt auf GitHub gehostet wird und bereits GitHub-Actions als CI-/CD-Lösung verwendet, wird auf diese Pipeline aufgebaut und GitHub-Actions verwendet.
 
-Hierbei wird die Pipeline um die Funktionalität des Container-Erstellens sowie veröffentlichen erweitert. Des weiteren werden in den nachgelagerten Test-Pipelines auch die erstellten Container verwendet.
+Hierbei wird die Pipeline um die Funktionalität des Container-Erstellens sowie veröffentlichen erweitert. Des Weiteren werden in den nachgelagerten Test-Pipelines auch die erstellten Container verwendet.
 
-Die CI-Pipeline wird außerdem die erstellten OCI-Containerimages in Apptainer-Images umwandeln und diese als artefakte bereitstellen.
+Die CI-Pipeline wird außerdem die erstellten OCI-Containerimages in Apptainer-Images umwandeln und diese als Artefakte bereitstellen.
 
 
