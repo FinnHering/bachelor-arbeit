@@ -47,25 +47,45 @@ Es ist bereits bei Betrachtung der Boxplots ersichtlich, dass beide Ergebnisse g
 Um einen besseren Überblick über den Unterschied zwischen beiden Benchmarkergebnissen zu erhalten, wird der errechnete Speedup um -1 verschoben. Das hat zur folge, dass anstelle vom Wert 1, nun der Wert 0 identische Performance bedeutet. 
 Negative Werte bedeuten, dass die Containerisierte Ausführung des Benchmarks schlechter ist als die Native Ausführung. Positive Werte bedeuten, dass die Containerisierte Ausführung des Benchmarks besser ist als die Native Ausführung. 
 
-\todo[inline]{Benchmark-Grafik noch etwas splitten.}
+Die übergeordneten Kategorien der Benchmarkmetriken, werden nachfolgend einzeln betrachtet.
+
+\subsection{Objektspeicher}
+
 \begin{figure}
     \centering
-    \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/difference_operations.svg}
-    \caption{Speedup der Benchmarkergebnisse}
-    \label{fig:speedup}
+    \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/object/difference_operations.svg}
+    \caption{Speedup der Benchmarkergebnisse für den Objektspeicher}
+    \label{fig:speedup_object}
 \end{figure}
 
 \FloatBarrier
-
-\subsection{Objektspeicher}
 
 Als Erstes wird der Speedup der Benchmarkmetrik "object" betrachtet. Hier ist zu erkennen, dass die Containerisierte ausführung des Benchmarks stets zwischen $1\%$ bis $3\%$ langsamer ist. Die Benchmarkmetrik "object" misst dabei die Performance der Objektverwaltung. Diese Objektverwaltung läuft bei diesem Benchmark über das Dateisystem. Somit ist es naheliegend, dass, in diesem Fall, das Dateisystem ein Bottleneck sein könnte. Allerdings ist diese sehr konsistente Performance-Verschlechterung im Vergleich zur nativen Ausführung auf dem ersten Blick nicht erklärbar, da beide Ausführungsweisen auf das gleiche Verzeichnis im Host-Dateisystem zugegriffen haben (/tmp). Im Fall von Apptainer wurde das Verzeichnis mithilfe eines bind-mounts in den Container eingebunden. Allerdings gab es für die Containertechnologie Docker bereits eine Performance-Analyse von bind-mounts und es konnte keine Signifikaten Performance-Einbußen festgestellt werden \cite[Vgl. 4]{dordevicFileSystemPerformance2022}. Somit lässt sich darauf schließen, dass die bind-mounts nicht die Ursache für die Performance-Einbußen sind. Allerdings gibt es bei Apptainer noch die besonderheit, dass die Container-Images ein SquashFS-Dateisystem verwenden. Dieses Dateisystem wird beim Start des Containers in das Host-Dateisystem eingehängt. Hier gibt es bei Apptainer zwei möglichkeiten, wie dieses Containerimage eingehangen wird. Entweder wird das Image mit dem Kernel-SquashFS-Treiber eingehangen, was allerdings priviligierte Rechte benötigt, oder es wird mithilfe des SquashFS-FUSE-Treibers eingehangen. Hierfür werden keine privilegierten Rechte benötigt. Allerdings ist laut eigenen aussagen von Apptainer die Performance des FUSE-Treibers schlechter als die des Kernel-Treibers. Somit könnte dies eine mögliche Ursache für die Performance-Einbußen sein \cite{apptainerSecurityApptainerApptainer}.  
 
 \subsection{Key-Value (lmdb)}
 
+
+\begin{figure}
+    \centering
+    \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/kv/difference_operations.svg}
+    \caption{Speedup der Benchmarkergebnisse für Key-Value}
+    \label{fig:speedup_kv}
+\end{figure}
+
+\FloatBarrier
+
 Die Key-Value-Komponente von Julea ("kv"), hingegen weist kaum eine Veränderung der Performance zwischen der nativen und containerisierten Ausführung auf. Die Performance geht zwar leicht zurück, allerdings ist der rückgang deutlich unter $1\%$ uns es kann nicht ausgeschlossen werden, dass dies nur eine Messungenauigkeit ist. Eine Metrik, sticht jedoch heraus. Die Metrik "kv/get" weist eine Performance-Senkung von mehr als $1,7\%$ auf. Diese Metrik weißt auf die Performance des lesend innerhalb der Key-Value-Datenbank hin. In diesem fall wird LMDB als lösung im hintergrund verwendet. Die Datenbank selber nutzt memory-mapping, um lese und schreibzugriffe möglichst performant zu machen. Hierbei sollte es zu keinem signifikanten Overhead kommen, da das Memory-Mapping durch den Kernel verwaltet wird und die Datenbank-Datei(en) selber direkt auf dem Host-Dateisystem liegen. Somit wird der SquashFS-FUSE-Treiber während der Ausführung des Benchmarks umgangen und es kann zu keinem Performance-Verlust kommen. Desweiteren würde ein solcher Performance-Verlust – sollte es ihn dennoch geben – auch bei der "put"-Benchmarkmetrik zu erkennen sein. Da dies nicht der Fall ist, kann davon ausgegangen werden, dass die Performance-Einbußen bei der "kv/get"-Metrik nicht durch das Dateisystem verursacht werden. Es könnte sein, dass die Julea-Spezifische implementierung der interaktion mit der Datenbank, in der Containerisierten Umgebung, hier zu Performance-Einbußen führt. 
 
 \subsection{Item-Store}
+
+\begin{figure}
+    \centering
+    \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/item/difference_operations.svg}
+    \caption{Speedup der Benchmarkergebnisse für den Item-Store}
+    \label{fig:speedup_item}
+\end{figure}
+
+\FloatBarrier
 
 Der Item-Store ist im vergleich zu den vorherigen Benchmarkmetriken anders. Er baut auf beiden Implementierungen auf.
 \todo[inline]{Mal schauen, ob man das auch in dem Paper zu JULEA findet, dann hier zitieren. Ansonsten auf den JULEA-Source-Code verweisen.}
@@ -100,6 +120,4 @@ Die Operationen "/item/item/read" und "/item/item/write" hingegen, bauen auf den
 \section{Hintergrund-Operationen}
 
 \dots
-
-
 
