@@ -92,15 +92,30 @@ Der Item-Store ist im vergleich zu den vorherigen Benchmarkmetriken anders. Er b
 
 \subsubsection{Item}
 
-Zum einen wird für die Operationen "/item/item/create", sowie "/item/item/delete" auf die mechanisem "/kv/put", "/kv/delete" aufgebaut, was den ähnlich insignifikanten Speedup zu den beiden "kv"-Metriken erklärt. 
+Zum einen wird für die Operationen "/item/\{item, collection\}/create", sowie "/item/\{item, collection\}/delete" auf die mechanisem "/kv/put", "/kv/delete" aufgebaut, was den ähnlich insignifikanten Speedup zu den beiden "kv"-Metriken erklärt. 
 Die Operationen "/item/item/read" und "/item/item/write" hingegen, bauen auf den Objekt-Mechanismen "/object/object/read" und "/object/object/write" auf. Bei "/item/item/write"
 
-\subsubsection{Collection}
+Bei den befehlen "/item/item/read" und "/item/item/write" ist wie zu erwarten auch ein Performance-Verlust – wie bei den object-read/write Ergebnissen – zu erkennen. Bei "/item/item/read" ist der Performance-Verlust um etwas mehr als $1\%$ geringer als bei "/object/object/read". Bei "/item/item/write" ist der Performance-Verlust um etwa $0.5\%$ geringer als bei "/object/object/write". Da es sich hierbei um geringe Unterschiede handelt, ist davon auszugehen, dass dies Messungenauigkeiten sind. 
 
-\dots
+Die Metrik "/item/item/delete" hat einen positiven Speedup. Dieser ist jedoch sehr gering ($<0.25\%$). Diese Metrik baut auf den "/kv/delete" Mechanismus auf. "/kv/delete" hat einen geringen Performance-Verlust aufgewiesen. Der Unterschied zwischen den beiden Metriken ist sehr gering. Er liegt unterhalb von $0.5\%$. Da es sich hierbei um geringe Unterschiede handelt, ist davon auszugehen, dass dies Messungenauigkeiten sind. Das gleiche gilt auch für "/item/collection/delete".
 
+Wesentlich auffälliger ist hingegen die Metrik "/item/collection/create". Diese hat Performance-Zunahmen von fast $2\%$. Um dieses Ergebnis besser zu verstehen werden nachstehend die Messwertverteilungen der beiden Benchmarkergenisse analysiert. 
+
+\begin{figure}
+    \centering
+    \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/comparisons/run_to_run_distribution__item_collection_create.svg}
+    \caption{Speedup der Benchmarkergebnisse für den Item-Store}
+    \label{fig:speedup_item}
+\end{figure}
 
 \FloatBarrier
+
+Es ist ersichtlich, dass die Benchmark-Ergebnisse von der nativen Ausführung deutlich konsistenter sind als die der containerisierten Ausführung. Mehr als die Hälfte der nativen Ergebnisse liegen hier zwischen 5200 und 5300 Operationen/s. Allerdings ist die Streumenge der nativen Ergebnisse deutlich größer. 
+
+Die containerisierten Ergebnisse sind wie bereits angemerkt deutlich inkonsistenter und die Streumenge ist hier deutlich geringer. Die Verteilung der Messwerte ist – im Vergleich zur nativen Ausführung – in die positive Richtung verzerrt.  
+
+Trotz dieser Unterschiede sieht man allerdings hier auch wie identisch die beiden Benchmarkergebnisse im Kern sind. Während bei der nativen Ausführung die meisten Ergebnisse zwischen 5200 und 5300 Operationen/s liegen, liegen die meisten containerisierten Ergebnisse zwischen 5200 und ca. 5325 Operationen/s. Das ist in Anbetracht der Insgesammt 10 Iterationen des Benchmarks pro Ausführungsweise nicht signifikant genug um von einer signifikanten Performance-Änderung zu sprechen. Es handelt sich hierbei sehr wahrscheinlich um Messungenauigkeiten. 
+
 
 \subsection{Datenbank}
 
