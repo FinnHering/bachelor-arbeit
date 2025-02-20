@@ -1,5 +1,36 @@
 \chapter{Evaluation}
 
+\section{Erörterung der Benchmarkarkmetriken}
+
+Um genauer zu verstehen, welche faktoren einen Einfluss auf die Benchmarkergebnisse haben, ist es wichtig die bedeutung der Benchmarkmetriken, sowie dessen unterliegende Technologien zu verstehen. Die Benchmarkmetriken sind stets in einem spezifischen Format angegeben, dieses Format ist einem POSIX-Pfad ähnlich. Die Benchmarkmetriken sind in verschiedene (Unter-)Kategorien unterteilt. Die Struktur einer Benchmarkmetrik ist somit /Kategorie/Unterkategorie-0/../Unterkategorie-n-1/Unterkategorie-n.
+
+Folgend werden die Benchmarkmetriken nach ihren Kategorien unterteilt und erläutert.
+
+\subsection{Objektspeicher}
+
+Objektspeicher wird unter den Benchmarkmetriken, welche "/object" als Präfix besitzen, gebenchmarkt.
+
+Dabei gibt es eine Differenzierung zwischen "/object/object" und "/object/distributed-object". "/object/object" repräsentiert die Operationen auf Objekten, welche auf dem lokalen Dateisystem gespeichert sind. "/object/distributed-object" repräsentiert die Operationen auf Objekten, welche auf einem verteilten Dateisystem gespeichert sind. 
+
+\subsection{Key-Value}
+
+Die Benchmark zu der Key-Value-Komponente von JULEA haben "/kv" als Prefix. 
+
+Hierbei werden alle üblichen Operationen einer Key-Value-Datenbank gebenchmarkt. Dazu gehören das Einfügen, Aktualisiere, Löschen, sowie Lesen von Key-Value-Paaren.
+
+\subsection{Item-Store}
+
+Der Item-Store – alle Benchmarkmetriken, welche mit "/item" beginnen – repräsentieren die von JULEA unterstützten Operationen auf dem Item-Store.
+
+\subsection{Datenbank}
+
+Die Datenbank-Benchmarkmetriken haben "/db" als Präfix. Hier werden übliche Datenbankoperationen wie das Einfügen, Löschen, Aktualisieren von Einträgen, sowie das Erstellen und Löschen von Schemas gebenchmarkt.
+
+\subsection{Ausgeschlossene Benchmarkmetriken}
+
+Die Benchmarkmetriken Message ("/message"), Cache ("/cache") und Background Operation ("/background") wurden in dieser Auswertung nicht berücksichtigt. Die Benchmarkmetriken Message und Background wiesen eine sehr hohe Varianz 
+
+
 \section{Vor-Auswertung der Benchmarkergenisse}
 
 Um die Benchmarkergebinsse effektiv auswerten zu können ist im ersten Schritt wichtig sich die Verteilung der Messwerte anzusehen. Um Schlüsse aus den Messwerten ziehen zu können, ist es wichtig die Verteilung der Messwerte zu kennen. Ein Boxplot, ist eine populäre Möglichkeit Verteilungen zu analysieren \cite[Vgl. 1]{majawExploringDataDistributions2023}. Nachfolgend werden die Verteilungen der nativen sowie containerisierten Benchmarkergebnisse betrachtet. Um die Boxplots übersichtlich zu gestalten, werden für jede unterkategorie der Benchmarkergebnisse (z.B. /db, /kv, etc.) ein Boxplot erstellt. Desweiteren werden messwerte, welche sich beim verglich von nativen und containerisierten Benchmarkergebnissen gleich verhalten und in der gleichen Kategorie liegen, in einem Boxplot zusammengefasst. Die vollständige Auswertung ist im Appendix zu finden. 
@@ -14,7 +45,6 @@ Die Verteilungen der Messwerte des Benchmarks, welche Nativ auf dem Host-System 
 \includesvg[width=1\linewidth]{benchmark/vis/compressed/boxplots/system/kv/boxplot.svg}
 \includesvg[width=1\linewidth]{benchmark/vis/compressed/boxplots/system/object/boxplot.svg}
 \includesvg[width=1\linewidth]{benchmark/vis/compressed/boxplots/system/message/boxplot.svg}
-
 
 \FloatBarrier
 
@@ -117,22 +147,77 @@ Die containerisierten Ergebnisse sind wie bereits angemerkt deutlich inkonsisten
 Trotz dieser Unterschiede sieht man allerdings hier auch wie identisch die beiden Benchmarkergebnisse im Kern sind. Während bei der nativen Ausführung die meisten Ergebnisse zwischen 5200 und 5300 Operationen/s liegen, liegen die meisten containerisierten Ergebnisse zwischen 5200 und ca. 5325 Operationen/s. Das ist in Anbetracht der Insgesammt 10 Iterationen des Benchmarks pro Ausführungsweise nicht signifikant genug um von einer signifikanten Performance-Änderung zu sprechen. Es handelt sich hierbei sehr wahrscheinlich um Messungenauigkeiten. 
 
 
-\subsection{Datenbank}
+\subsection{Datenbank (sqlite)}
 
-\dots
+\begin{figure}
+    \centering
+    \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/db/difference_operations.svg}
+    \caption{Speedup der Benchmarkergebnisse für Datenbanken}
+    \label{fig:speedup_db}
+\end{figure}
 
+\FloatBarrier
+
+Die Speedups der Datenbank-Benchmarkergebnisse für die Metriken "/db/entry/delete", "/db/entry/insert" und "/db/iterator/get-simple" sind deutlich unterhalb von $1\%$, die werte sind zu gering um von einer signifikanten Performance-Änderung zu sprechen. 
+
+Die Metrik "/db/entry/update" hingegen ist beinahe $3\%$ performanter. Um hier eine genauere Aussage zu treffen, wird im nächsten Schritt die Verteilung der Messwerte der Benchmarkergebnisse analysiert.
+
+\begin{figure}
+    \centering
+    \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/comparisons/run_to_run_distribution__db_entry_update.svg}
+    \caption{Verteilung Benchmarkergebnisse für "/db/entry/update"}
+    \label{fig:mdist_db_entry_update}
+\end{figure}
+
+\FloatBarrier
+
+Es ist ersichtlich, dass die containerisierte Ausführung wesentlich konsistentere Ergebnisse erzieht hat. 
+Die nativen Ergebnisse sind etwas inkonsitenter und haben einen Ausreißer nach unten. 
+
+Allerdings sieht man auch hier, dass sich die Ergebnisse von der containierisierten und nativen Lösung zwischen ca. 5100 und 5250 Operationen/s mehrheitlich befinden. 
+
+Dies ist ein weiteres Beispiel dafür, wie ähnlich die beiden Benchmarkergebnisse sind. Die Messwerte liegen so weit bei einander, dass man in Anbetracht der geringen Messwertanzahl keinen Signifikanten Speedup feststellen kann.
+
+
+Für "/db/schema\{create, delete\}" ist anschließend auch ersichtlich, dass sich bei betrachtung der Messwertvertilung kein signifikanter Speedup festgestellt werden kann. Die Ergebnisse liegen soweit beieinander, dass nicht auszuschließen ist, dass es sich um Messungenauigkeiten handelt.
+
+\begin{figure}
+    \centering
+    \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/comparisons/run_to_run_distribution__db_schema_create.svg}
+    \caption{Verteilung Benchmarkergebnisse für "/db/schema/create"}
+    \label{fig:mdist_db_schema_create}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/comparisons/run_to_run_distribution__db_schema_delete.svg}
+    \caption{Verteilung Benchmarkergebnisse für "/db/schema/delete"}
+    \label{fig:mdist_db_schema_delete}
+\end{figure}
+
+\FloatBarrier
 
 \subsection{Cache}
 
-\dots
+\todo[inline]{Vlcht. Cache komplett Entfernen?}
 
-\subsection{Nachrichten}
+\begin{figure}
+    \centering
+    \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/cache/difference_operations.svg}
+    \caption{Speedup der Benchmarkergebnisse für Caching}
+    \label{fig:speedup_cache}
+\end{figure}
 
-\dots
+\FloatBarrier
+
+Der Speedup von der cache Benchmarkmetrik ist nicht signifikant. Es wird davon ausgegangen, dass die Engebnisse Identisch sind. Dies ist auch realistisch, da Apptainer keine Virtualisierung des System-Memories vornimmt. Es wird transparent auf den Zwischenspeicher des Hostsystems zugegriffen.
 
 
+\subsection{Fazit}
 
-\subsection{Hintergrund-Operationen}
+Insgesammt lässt sich ein deutlichen Bild erkennen. Die Benchmarkergebnisse unterscheiden sich nur sehr geringfügig. Selbst da wo es zu Performance-Verlusten kommt, sind diese sehr gering und liegen unterhalb von $3\%$. \
+Viele der Benchmarkergebnisse sind effektiv – unter berücksichtigung der Messungenaugikeiten – identisch.
 
-\dots
+Dies ist kein Überraschendes Ergebniss, es wurde bereits in vielen anderen Publikationen ein Ähnlichen verhalten wie hier festgestellt.  \todo{Zitat}
 
+Sollte man starken Gebrauch von Dateisystemfunktionen machen, so kann es zu Performance-Einbußen kommen. Allerdings ist in den meisten Fällen ein Performance-Verlust von unter $3\%$ akzeptabel. 

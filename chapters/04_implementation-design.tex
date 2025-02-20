@@ -23,64 +23,130 @@ Um die Containerimages möglichst effizient zu gestalten, ist es sinnvoller mehr
 
 Bei Betrachtung der JULEA-Repository fallen zwei Domänen auf. Zu einem ist es eine Entwicklungsumgebung, welche alle optionalen und nicht-optionalen Abhängigkeiten von JULEA zum Kompilieren benötigt, sowie eine Testumgebung, um JULEA zu testen. Außerdem sollte man eine Deploymentumgebung haben, worin eine bereits kompilierte version JULEA mit den benötigten laufzeitabhängigkeiten enthalten ist.
 
-Nun könnte man für jede Domain ein eigenes Containerimage erstellen. Dies ist allerdings im Falle von der Testumgebung und der Entwicklungsumgebung nicht unbedingt notwendig, da es durchaus üblich ist, dass man während der Entwicklung auch tests schreibt und diese ausführt. Aus diesem Grund und um nicht zu viele verschiedene Versionen von Containerimages zu haben, wird für die Entwicklungsumgebung und die Testumgebung ein Containerimage erstellt.
+\subsection{Kompilierer}
 
-Außerdem wird JULEA gegen verschiedene Kompilierer und Betriebssysteme kompiliert und getestet. Somit muss jeder Entwicklungs- und Produktivcontainer in jeder Kombination von Kompilierer und Betriebssystem vorhanden sein. 
+JULEA und dessen Abhängigkeiten werden gegen 2 Kompilierer getestet und kompiliert. Zum einen GCC und zum anderen CLang.
+Es diese Variation sollte auch in den Containerimages abgebildet werden. 
 
-Aktuell wird JULEA mit CLang und GCC kompiliert und auf Ubuntu 20.04, Ubuntu 22.04 und Ubuntu 24.04 kompiliert und getestet.
+Hierbei gilt allerdings zu beachten, dass stets beide Kompilierer während der Kompilierung verfügbar sind. Welcher Kompilierer verwendet wird, wird durch u. A. die Umgebungsvariable "CC" festgelegt.  
 
-Außerdem gibt es zwei Möglichkeiten um die benötigten Abhängigkeiten, welche JULEA zum Kompilierungszeitpunkt benötigt, zu installieren. Entweder nutzt man das mitgelieferte Skript "install-dependencies.sh", oder man stellt die Abhängigkeiten über das Betriebssystem bereit. Somit muss der Entwicklungs- sowie der Produktivcontainer in jeder Kombination von Betriebssystem, Kompilierer und Abhängigkeits-Installationsmethode vorhanden sein.
+\subsection{Betriebssystem(-Versionen)}
 
-Grundlegend gibt es somit 2 Containerimages: JULEA-dev und JULEA-prod. Beide diese Containerimages haben jeweils zwölf Varianten.
+Momentan wird JULEA exklusiv – während der CI-Pipeline – auf Ubuntu kompiliert und getestet. Dabei finden die Ubuntu-LTS-Versionen 20.04, 22.04 und 24.04 Verwendung. Dies wird auch in den Containerimage-Variationen abgebildet. Es werden Containerimages gegen die Ubuntu-Basis-Images 20.04, 22.04 und 24.04 erstellt.
 
-Das Namensschema der Containerimages ist wie folgt: \\
-JULEA-\{dev, prod\}:\{Kompilierer\}-\{abhängigkeitsquelle\}-\{betriebssystem(version)\}
-Somit gibt es folgende Containerimages:
+\subsection{Abhängigkeitsquelle}
+
+Des Weiteren gibt es zwei Möglichkeiten um die benötigten Abhängigkeiten, welche JULEA zum Kompilierungszeitpunkt benötigt, zu installieren. Entweder nutzt man das mitgelieferte Skript "install-dependencies.sh", oder man stellt die Abhängigkeiten über das Betriebssystem bereit. Somit muss der Entwicklungs- sowie der Produktivcontainer in jeder Kombination von Betriebssystem, Kompilierer und Abhängigkeits-Installationsmethode vorhanden sein.
+
+\subsection{Entwicklungs- und Produktivcontainer}
+
+Container können verwendet werden, um das Ausrollen von Applikationen zu vereinfachen. Dieses Konzept kann man auch auf die Entwicklungsumgeung erweitern. Somit wird auch eine Containierisierte Entwicklungsumgebung für JULEA erstellt, welche alle Nötigen Abhängigkeiten zum Kompilieren von JULEA enthält.
+
+\subsection{Namensschema}
+
+In diesem Abschnitt wird das Namensschema der Containerimages erläutert und aufgezeigt, welche Containerimages erstellt werden. 
+
+Zuerst werden die produktiven Containerimages vorgestellt und anschließend die Entwicklungscontainerimages. 
+
+\subsubsection{Produktive Containerimages}
+
+Das Namensschema der produktiven Containerimages ist wie folgt: \\
+JULEA:\{Kompilierer\}-\{abhängigkeitsquelle\}-\{betriebssystem(version)\}
+Somit gibt es folgende produktiven Containerimages:
 
 \begin{multicols}{2}
     \begin{itemize}
-        \item JULEA-dev-gcc-system-ubuntu-20.04  
-        \item JULEA-prod-gcc-system-ubuntu-20.04  
-        \item JULEA-dev-gcc-system-ubuntu-22.04  
-        \item JULEA-prod-gcc-system-ubuntu-22.04  
-        \item JULEA-dev-gcc-system-ubuntu-24.04  
-        \item JULEA-prod-gcc-system-ubuntu-24.04  
-        \item JULEA-dev-clang-system-ubuntu-20.04
-        \item JULEA-prod-clang-system-ubuntu-20.04
-        \item JULEA-dev-clang-system-ubuntu-22.04
-        \item JULEA-prod-clang-system-ubuntu-22.04
-        \item JULEA-dev-clang-system-ubuntu-24.04
-        \item JULEA-prod-clang-system-ubuntu-24.04
-        \item JULEA-dev-gcc-spack-ubuntu-20.04   
-        \item JULEA-prod-gcc-spack-ubuntu-20.04   
-        \item JULEA-dev-gcc-spack-ubuntu-22.04   
-        \item JULEA-prod-gcc-spack-ubuntu-22.04   
-        \item JULEA-dev-gcc-spack-ubuntu-24.04   
-        \item JULEA-prod-gcc-spack-ubuntu-24.04   
-        \item JULEA-dev-clang-spack-ubuntu-20.04 
-        \item JULEA-prod-clang-spack-ubuntu-20.04 
-        \item JULEA-dev-clang-spack-ubuntu-22.04 
-        \item JULEA-prod-clang-spack-ubuntu-22.04 
-        \item JULEA-dev-clang-spack-ubuntu-24.04 
-        \item JULEA-prod-clang-spack-ubuntu-24.04 
+        \item JULEA:gcc-system-ubuntu-20.04  
+        \item JULEA:gcc-system-ubuntu-22.04  
+        \item JULEA:gcc-system-ubuntu-24.04  
+        \item JULEA:clang-system-ubuntu-20.04
+        \item JULEA:clang-system-ubuntu-22.04
+        \item JULEA:clang-system-ubuntu-24.04
+        \item JULEA:gcc-spack-ubuntu-20.04   
+        \item JULEA:gcc-spack-ubuntu-22.04   
+        \item JULEA:gcc-spack-ubuntu-24.04   
+        \item JULEA:clang-spack-ubuntu-20.04 
+        \item JULEA:clang-spack-ubuntu-22.04 
+        \item JULEA:clang-spack-ubuntu-24.04 
     \end{itemize} 
 \end{multicols}
 
+Es ist üblich, dass es für ein Image-Tag immer eine "latest" version existiert. Diese wird automatisch ausgewählt, sollte keine spezifische Version angegeben werden.
+
+Als "latest"-Version wird das Image "JULEA:gcc-system-ubuntu-24.04" verwendet. 
+
+\subsubsection{Entwicklungs-Containerimages}
+
+Desweiteren gibt es noch die Entwicklungscontainer. Diese haben das Namensschema: \\
+JULEA-dev:\{Kompilierer\}-\{abhängigkeitsquelle\}-\{betriebssystem(version)\}
+
+Somit gibt es folgende Entwicklungscontainer:
+
+\begin{multicols}{2}
+    \begin{itemize}
+        \item JULEA-dev:system-ubuntu-20.04  
+        \item JULEA-dev:system-ubuntu-22.04  
+        \item JULEA-dev:system-ubuntu-24.04  
+        \item JULEA-dev:gcc-spack-ubuntu-20.04   
+        \item JULEA-dev:gcc-spack-ubuntu-22.04   
+        \item JULEA-dev:gcc-spack-ubuntu-24.04   
+        \item JULEA-dev:clang-spack-ubuntu-20.04 
+        \item JULEA-dev:clang-spack-ubuntu-22.04 
+        \item JULEA-dev:clang-spack-ubuntu-24.04 
+    \end{itemize} 
+\end{multicols}
+
+Eine besonderheit ist, dass es für die "system" Variante des Entwickungscontainers keine Kompilierer-Variation gibt. Das liegt daran, dass bei der "system" variation keine Abhängigkeiten kompiliert werden müssen. Außerdem sind stets beide Kompilierer in der Entwicklungsumgebung vorhanden. Somit wären die Kompilierer-Variationen renundant und könnten für Verwirrung sorgen. 
+
+Es ist üblich, dass es für ein Image-Tag immer eine "latest" version existiert. Diese wird automatisch ausgewählt, sollte keine spezifische Version angegeben werden.
+
+Als "latest"-Version wird das Image "JULEA:gcc-system-ubuntu-24.04" verwendet. 
+
 \section{Aufbau der Dockerfiles}
 
-Der de-facto standard um Containerimages zu bauen, ist das Erstellen einer Containerfile (umgansprachlich Dockerfile). Diese werden von verschiedenen OCI-Containervisualisierungssoftwares, wie Docker, Podman, Buildah unterstützt. Ein alternatives Format stellt Apptainer dar, dass sogennante "Apptainer definition file" Dateiformat. Von der benutzung wird abgesehen, da dieses Format nicht sehr weit verbreitet ist und Apptainer die aus der Containerfile herforgehenden OCI-Containerimages unterstützt. Somit erzieht man mit der Containerfile eine hohe Kompatibilität innerhalb der Containerisierungslandschaft, währenddessen man Apptainer unterstützt welche eine weitverbreitete Containerlösung innerhalb des HPC darstellt. 
+Der de-facto standard um Containerimages zu bauen, ist das Erstellen einer Containerfile (umgansprachlich Dockerfile). Diese werden von verschiedenen OCI-Containervisualisierungssoftwares, wie Docker, Podman, Buildah unterstützt. Ein alternatives Format stellt Apptainer dar, dass sogennante "Apptainer definition file" Dateiformat. Von der benutzung wird abgesehen, da dieses Format nicht sehr weit verbreitet ist und Apptainer die aus der Containerfile herforgehenden OCI-Containerimages unterstützt. Somit erzieht man mit der Containerfile eine hohe Kompatibilität innerhalb der Containerisierungslandschaft, währenddessen man Apptainer unterstützt welche eine weitverbreitete Containerlösung innerhalb des HPC darstellt.
 
-Der Aufbau der Containerfile ist wie folgt:
+Der generische Aufbau der Stages, welcher hier Anwendung findet, ist wie folgt: 
 
 \begin{figure}[!htbp]
     \centering
     \includesvg[width=400pt]{./figures/modell-containerfile.drawio.svg}
-    \caption{Containerfile Layer-Graf}
+    \caption{Containerfile Stage-Graf}
 \end{figure}
 
 \FloatBarrier
 
-Der Layer-Graf zeigt auf, dass die Pfade von Spack, sowie System sehr früh schon voneinander abweichen. Dadurch ist es sinnvoll zwei Containerfiles für Spack und System zu erstellen, um die beiden Dateien übersichtlicher zu halten. 
+\subsection{Stage 0: Basis}
+
+Diese stage dient als Grundlage. Hier wird ausgewählt welches Image als basis verwendet wird, welche Argumente es geben soll und anderweitige grundlegende Konfigurationen. \
+Besonders wichtig ist es hier die Argumente zu definieren. Da Argumente, welche nicht in dieser Basis-Stage definiert werden, auch nicht in den anderen Stages verfügbar \cite[Vgl. "Understand how ARG and FROM interact"]{DockerfileReference0100}. Man müsste also die Argumente in jeder Stage – wo man sie benötigt – erneut definieren.  
+
+
+\subsection{Stage 1: Runtime Abhängigkeiten installieren}
+
+In dieser Stage, welche direkt auf der Basis-Stage aufbaut, werden alle Abhängigkeiten installiert, welche man zur laufzeit benötigt. Dazu gehören Bibliotheken oder andere Programme, welche zur Laufzeit von JULEA benötigt werden.
+
+
+\subsection{Stage 2: Compiletime Abhängigkeiten installieren}
+
+In dieser Stage, welche direkt auf der Runtime-Stage aufbaut, werden alle Abhängigkeiten installiert welche man exklusiv nur zur Kompilierung von JULEA benötigt. Das Trennen von Stage 1 und Stage 2 ist eine bewusste Entscheidung mit dem Ziel, dass im resultierendem Containerimage nur die Abhängigkeiten enthalten sind, welche auch wirklich für die Ausführung benötigt werden. Dies spart Platz.
+
+\subsection{Stage 3: Konfigurieren und Kompilieren}
+
+In dieser Stage, welche direkt auf der "Compiletime Abhängigkeiten installieren"-Stage aufbaut, wird JULEA konfiguriert und kompiliert. Hier wird u. A. der Kompilierer verwendet, welcher über ein Argument übergeben wird. Hier wird das Kompilat an einen spezifischen Ort bereitgestellt, jedoch noch nicht installiert.
+
+\subsection{Stage 4a: Entwicklungsabhängigkeiten installieren}
+
+Diese stage baut auf der Stage 3 auf, da wir das in Stage 3 erstellte Kompilat nicht benötigen. 
+In dieser Stage werden für die Entwicklung nützliche oder benötigte Abhängigkeiten installiert. 
+
+Die Stage 4a wird ausgewählt, wenn man einen JULEA Entwicklungscontainer (JULEA-dev) erstellen möchte. 
+
+\subsection{Stage 4b: Kompilat installieren}
+
+Diese stage baut auf der Stage 1 auf, da wir lediglich die Laufzeitabhängigkeiten benötigen. Anschließend werden die in Stage 4 erstellten Kompilate installiert, indem man sie an den richtigen Ort kopiert.
+
+Die Stage 4b wird ausgewählt, wenn man einen JULEA Entwicklungscontainer (JULEA) erstellen möchte.
 
 \subsection{"System" Containerfile}
 
@@ -90,6 +156,48 @@ Der Layer-Graf für das Containerfile "System" sieht wie folgt aus.
     \includesvg[width=400pt]{./figures/modell-system-containerfile.drawio.svg}
     \caption{Containerfile "System" Layer-Graf}
 \end{figure}
+\FloatBarrier
+
+Man erkennt, dass dieser identisch zum generischen Aufbau ist. Anschließend wird das Dockerfile in den Selben Schritten wie oben beschrieben aufgebaut.
+
+\subsubsection{Stage 0: Basis}
+
+\inputminted[firstline=0,lastline=7]{dockerfile}{./code-examples/Dockerfile.system}
+
+Die Basis-Stage ist kompakt und beinhaltet alle nötigen Argumente, wie die zu verwendende Ubuntu-Version, den "Buildtype" und den Kompilierer. Außerdem wird die Standard-Shell auf "bash" gesetzt. Dies hat u. A. einfluss auf die Shell, indem die "RUN" befehle ausgeführt werden. Es wird später ein Befehl ausgeführt, welcher ohne die verwendung einer bash-shell nicht funktionieren würde.
+
+Außerdem wird das Ubuntu-Versions-Argument zweimal definiert. Es erscheint renundant, ist jedoch nicht anders zu bewerkstelligen. Das Argument wird in Zeile 1 definiert, um es in Zeile 3 zu verwenden. Da in Zeile 3 ein "FROM"-Statement ist, verfällt die Gültigkeit des Arguments. Deshalb wird es in Zeile 4 erneut definiert, um es später in anderen Stages zu verwenden. 
+
+Die Entscheidung alle Argumente in einer Stage "global" zu definieren, hat den Vorteil, dass diese Argumente an einem Ort zu finden sind und man davon ausgehen kann, dass in allen Stages die gleichen Argumente verwendet werden können. Dies macht das Dockerfile übersichtlicher und erleichtert die Wartung. 
+
+\subsubsection{Stage 1: Runtime Abhängigkeiten installieren}
+
+\inputminted[firstline=10,lastline=25]{dockerfile}{./code-examples/Dockerfile.system}
+
+Diese Stage besteht aus einem sehr langen Befehl. Hier werden alle Abhängigkeiten installiert, welche auch zur Laufzeit von JULEA benötigt werden. Zum installieren wird hier der Standard-Paketmanager von Ubuntu "apt-get" verwendet. 
+
+In dieser Stage gibt es einige Unterschiede im Vergleich zu dem wie man die Pakete interaktiv installieren würde. 
+
+Zum einen wird "apt-get update" und "apt-get install" in einem "RUN"-Befehl ausgeführt. Dies ist eine technische Notwendigkeit. Wie bereits im technischen Hintergrund erläutert, nutzt Docker Caching um die Build-Zeit in subsequenten Builds zu verringern. Würde man "apt-get update" und "apt-get install" in zwei "RUN"-Befehlen ausführen, würde "apt-get update" separat von "apt-get install" ausgeführt und gecached werden. Initial würde dies kein Problem darstellen, sobald man allerdings im "apt-get install" Schritt Pakete hinzufügt oder entfernt, würde "apt-get install" nicht mehr gecached sein und müsste neu ausgeführt werden. Da sich "apt-get update" allerdings nicht geändert hat, würde das immernoch gecached sein. Dies würde zu Problemen führen, da die Paketinformationen, welche "apt-get install" benötigt, nicht mehr aktuell sind. Typische symptome sind hierbei, dass Pakete nicht mehr gefungen werden können, da sie nicht mehr im Paketrepository vorhanden sind. Beide Befehle in einem "RUN"-Befehl auszuführen, löst dieses Problem, da bei jeder Änderung der "apt-get install" Zeile, auch "apt-get update" ausgeführt wird.
+
+Des Weiteren wird DEBIAN\_FRONTEND=noninteractive und "--yes" gesetzt. Beide diese Optionen sind notwendig, um "apt-get install" im nicht-interaktiven Modus auszuführen. Ohne diese optionen kann es dazu kommen, dass "apt-get install" nachfragen stellt und eine Nutzereingabe erwartet. Dies ist in einem Dockerfile nicht möglich, da es keine Nutzereingabe gibt.
+
+Außerdem werden die "dev"-Pakete der Varianten installiert. Diese Pakete enthalten nicht nur die Bibliotheken, sondern auch die Header-Dateien, welche für das Kompilieren von JULEA benötigt werden. Es werden also nicht nur die Laufzeitabhängigkeiten installiert, sondern auch teile der Kompilierzeitabhängigkeiten. \
+Ubuntu stellt selbstverständlich auch die Pakete als reine Bibliotheken zur Verfügung. Hier besteht allerdings das Problem, dass diese eine spezifische Version im Paketnamen haben. Diese Versionen ändern sich von Ubuntu-Version zu Ubuntu-Version. Somit ist es nicht möglich diese Paketnamen hart zu kodieren. Man müsste diese dynamisch generieren. Dies würde das Containerfile verkomplizieren und die Wartungsintensivität erhöhen. Als Kompromiss werden die "dev"-Pakete installiert und etwas mehr Speicherplatz verbraucht.
+
+\subsubsection{Stage 2: Compiletime Abhängigkeiten installieren}
+
+\inputminted[firstline=28,lastline=43]{dockerfile}{./code-examples/Dockerfile.system}
+
+Wie zu erwarten sieht diese Stage ähnlich zur stage 3 aus. Hier werden wie in Stage 2 auch Abhängigkeiten installiert. 
+
+Allerdings sieht man in Zeile 43 eine Besonderheit. In Ubuntu-Versionen älter als 22.04 ist die installierte Meson Version älter als die von JULEA benötigte Version. Deshalb muss hier die Meson-Version für die älteren Versionen mit pip installiert werden. 
+
+\subsubsection{Stage 3: Konfigurieren und Kompilieren}
+
+\inputminted[firstline=46,lastline=53]{dockerfile}{./code-examples/Dockerfile.system}
+
+
 
 Die dazugehörigen Dockerfile sieht wie folgt aus: 
 

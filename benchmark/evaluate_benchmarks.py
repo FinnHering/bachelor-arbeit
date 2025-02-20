@@ -16,6 +16,8 @@ def compress_benchmark(df: pd.DataFrame) -> pd.DataFrame:
     df = df[~df["name"].str.contains("batch", case=False, na=False)]
     df = df[~df["name"].str.contains("index-single", case=False, na=False)]
     df = df[~df["name"].str.contains("index-mixed", case=False, na=False)]
+    df = df[~df["name"].str.contains("index-all", case=False, na=False)]
+
     return df   
 
 
@@ -57,7 +59,7 @@ def create_unaggregated_performance_result(dir: Path) -> pd.DataFrame:
     performances = parse_all_files(dir)
 
     pfs = pd.concat(performances, ignore_index=True).reset_index()
-    return pfs
+    return compress_benchmark(pfs)
 
 
 def plot_barchart(performance: pd.DataFrame, name: str):
@@ -283,7 +285,9 @@ def plot_compressed_subname_differences():
             ax.xaxis.set_minor_locator(MultipleLocator(0.0025))
             ax.relim(visible_only=True)
 
-            ax.set_xlim(max(-0.25, min_diff), min(0.25, max_diff))
+            print(f"{sub}: {min_diff} {max_diff}")
+
+            ax.set_xlim(max(-0.25, min(min_diff, 0)), min(0.25, max(max_diff, 0)))
             #plt.tight_layout()
             plt.savefig(p / f"difference_{metric}.svg", bbox_inches='tight')
 
@@ -459,7 +463,10 @@ def plot_full_subname_boxplots_raw():
         plt.tight_layout()
         plt.savefig(p / "boxplot.svg")
 
-def plot_compare_disribution_hist(metric: str):
+def plot_compare_disribution_hist(metric: str, bins: int = 15):
+
+    sns.set_theme(rc={"xtick.bottom" : True, "ytick.left" : True}, font_scale=2.5, style="whitegrid")
+
     apptainer_data = create_unaggregated_performance_result(Path("benchmark/apptainer"))
     apptainer_data = apptainer_data.assign(dir='apptainer')
     system_data = create_unaggregated_performance_result(Path("benchmark/system"))
@@ -476,8 +483,8 @@ def plot_compare_disribution_hist(metric: str):
     p = Path(f"benchmark/vis/compressed/differences/comparisons/")
     p.mkdir(parents=True, exist_ok=True)
 
-    plt.figure(figsize=(30, 10))
-    ax = sns.histplot(data=full_data, x="operations", hue="dir", multiple="stack", bins=15)
+    plt.figure(figsize=(20, 10))
+    ax = sns.histplot(data=full_data, x="operations", hue="dir", multiple="stack", bins=bins)
     ax.title.set_text(f"Verteilung der Laufzeitunterschiede zwischen Apptainer und System")
 
     #sanitize metric 
@@ -521,6 +528,17 @@ if __name__ == "__main__":
     plt.close('all')
 
     plot_compare_disribution_hist("/item/collection/create")
+    plt.close('all')
+
+    plot_compare_disribution_hist("/db/entry/update", bins=30)
+    plt.close('all')
+
+    plot_compare_disribution_hist("/db/schema/create", bins=10)
+    plt.close('all')
+
+    plot_compare_disribution_hist("/db/schema/delete", bins=10)
+    plt.close('all')
+
     #export_boxplots()
 
 
