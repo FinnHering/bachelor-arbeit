@@ -19,7 +19,79 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global/global}
-    \entry{dockerDockerBuildx2024}{online}{}{}
+    \entry{apptainerApptainerPortableReproducible}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=79ec40623b09578724f5e88e75630f03}{%
+           family={Apptainer},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{fullhash}{79ec40623b09578724f5e88e75630f03}
+      \strng{fullhashraw}{79ec40623b09578724f5e88e75630f03}
+      \strng{bibnamehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authorbibnamehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authornamehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authorfullhash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authorfullhashraw}{79ec40623b09578724f5e88e75630f03}
+      \field{extraname}{1}
+      \field{labelalpha}{App}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extraalpha}{1}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Apptainer - {{Portable}}, {{Reproducible Containers}}}
+      \field{urlday}{28}
+      \field{urlmonth}{1}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/8ZDQE2PB/apptainer.org.html
+      \endverb
+      \verb{urlraw}
+      \verb https://apptainer.org/
+      \endverb
+      \verb{url}
+      \verb https://apptainer.org/
+      \endverb
+    \endentry
+    \entry{apptainerSecurityApptainerApptainer}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=79ec40623b09578724f5e88e75630f03}{%
+           family={Apptainer},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{fullhash}{79ec40623b09578724f5e88e75630f03}
+      \strng{fullhashraw}{79ec40623b09578724f5e88e75630f03}
+      \strng{bibnamehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authorbibnamehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authornamehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authorfullhash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authorfullhashraw}{79ec40623b09578724f5e88e75630f03}
+      \field{extraname}{2}
+      \field{labelalpha}{App}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extraalpha}{2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Security in {{Apptainer}} — {{Apptainer User Guide}} Main Documentation}
+      \field{urlday}{28}
+      \field{urlmonth}{1}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/UN46KGMZ/security.html
+      \endverb
+      \verb{urlraw}
+      \verb https://apptainer.org/docs/user/main/security.html#singularity-image-format-sif
+      \endverb
+      \verb{url}
+      \verb https://apptainer.org/docs/user/main/security.html#singularity-image-format-sif
+      \endverb
+    \endentry
+    \entry{dockerBake}{online}{}{}
       \name{author}{1}{}{%
         {{hash=c5fd214cdd0d2b3b4272e73b022ba5c2}{%
            family={Docker},
@@ -37,31 +109,29 @@
       \strng{authorfullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
       \strng{authorfullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
       \field{extraname}{1}
-      \field{labelalpha}{Doc24}
+      \field{labelalpha}{Doc}
       \field{sortinit}{D}
       \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
       \field{extraalpha}{1}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{langid}{english}
-      \field{title}{Docker Buildx}
+      \field{title}{Bake}
       \field{urlday}{28}
       \field{urlmonth}{1}
       \field{urlyear}{2025}
-      \field{year}{2024}
-      \field{dateera}{ce}
       \field{urldateera}{ce}
       \verb{file}
-      \verb /Users/finn/Zotero/storage/HQXMSQR2/buildx.html
+      \verb /Users/finn/Zotero/storage/UDYURW93/bake.html
       \endverb
       \verb{urlraw}
-      \verb https://docs.docker.com/reference/cli/docker/buildx/
+      \verb https://docs.docker.com/build/bake/
       \endverb
       \verb{url}
-      \verb https://docs.docker.com/reference/cli/docker/buildx/
+      \verb https://docs.docker.com/build/bake/
       \endverb
     \endentry
-    \entry{dockerDockerfileOverview2024}{online}{}{}
+    \entry{dockerBuildKit}{online}{}{}
       \name{author}{1}{}{%
         {{hash=c5fd214cdd0d2b3b4272e73b022ba5c2}{%
            family={Docker},
@@ -79,10 +149,132 @@
       \strng{authorfullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
       \strng{authorfullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
       \field{extraname}{2}
-      \field{labelalpha}{Doc24}
+      \field{labelalpha}{Doc}
       \field{sortinit}{D}
       \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
       \field{extraalpha}{2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Introduction and overview of BuildKit}
+      \field{langid}{english}
+      \field{title}{{{BuildKit}}}
+      \field{urlday}{28}
+      \field{urlmonth}{1}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/IIBAHBH3/buildkit.html
+      \endverb
+      \verb{urlraw}
+      \verb https://docs.docker.com/build/buildkit/
+      \endverb
+      \verb{url}
+      \verb https://docs.docker.com/build/buildkit/
+      \endverb
+    \endentry
+    \entry{dockerCache}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=c5fd214cdd0d2b3b4272e73b022ba5c2}{%
+           family={Docker},
+           familyi={D\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Docker Documentation}%
+      }
+      \strng{namehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{fullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{fullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{bibnamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorbibnamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authornamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorfullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorfullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \field{extraname}{3}
+      \field{labelalpha}{Doc}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extraalpha}{3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Improve your build speed with effective use of the build cache}
+      \field{langid}{english}
+      \field{title}{Cache}
+      \field{urlday}{28}
+      \field{urlmonth}{1}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/LRUG6BJM/cache.html
+      \endverb
+      \verb{urlraw}
+      \verb https://docs.docker.com/build/cache/
+      \endverb
+      \verb{url}
+      \verb https://docs.docker.com/build/cache/
+      \endverb
+    \endentry
+    \entry{dockerDockerBuildx}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=c5fd214cdd0d2b3b4272e73b022ba5c2}{%
+           family={Docker},
+           familyi={D\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Docker Documentation}%
+      }
+      \strng{namehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{fullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{fullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{bibnamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorbibnamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authornamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorfullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorfullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \field{extraname}{4}
+      \field{labelalpha}{Doc}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extraalpha}{4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{langid}{english}
+      \field{title}{Docker Buildx}
+      \field{urlday}{28}
+      \field{urlmonth}{1}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/HQXMSQR2/buildx.html
+      \endverb
+      \verb{urlraw}
+      \verb https://docs.docker.com/reference/cli/docker/buildx/
+      \endverb
+      \verb{url}
+      \verb https://docs.docker.com/reference/cli/docker/buildx/
+      \endverb
+    \endentry
+    \entry{dockerDockerfileOverview}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=c5fd214cdd0d2b3b4272e73b022ba5c2}{%
+           family={Docker},
+           familyi={D\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {Docker Documentation}%
+      }
+      \strng{namehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{fullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{fullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{bibnamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorbibnamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authornamehash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorfullhash}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \strng{authorfullhashraw}{c5fd214cdd0d2b3b4272e73b022ba5c2}
+      \field{extraname}{5}
+      \field{labelalpha}{Doc}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extraalpha}{5}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Learn about Dockerfiles and how to use them with Docker Images to build and package your software}
@@ -91,8 +283,6 @@
       \field{urlday}{28}
       \field{urlmonth}{1}
       \field{urlyear}{2025}
-      \field{year}{2024}
-      \field{dateera}{ce}
       \field{urldateera}{ce}
       \verb{file}
       \verb /Users/finn/Zotero/storage/BSFP8ARI/dockerfile.html
@@ -103,6 +293,90 @@
       \verb{url}
       \verb https://docs.docker.com/build/concepts/dockerfile/
       \endverb
+    \endentry
+    \entry{DockerfileReference0100}{online}{}{}
+      \list{organization}{1}{%
+        {Docker Documentation}%
+      }
+      \field{labelalpha}{00}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Find all the available commands you can use in a Dockerfile and learn how to use them, including COPY, ARG, ENTRYPOINT, and more.}
+      \field{langid}{english}
+      \field{title}{Dockerfile Reference}
+      \field{urlday}{20}
+      \field{urlmonth}{2}
+      \field{urlyear}{2025}
+      \field{year}{13:54:16 +0100 +0100}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/3U6AHRTW/dockerfile.html
+      \endverb
+      \verb{urlraw}
+      \verb https://docs.docker.com/reference/dockerfile/
+      \endverb
+      \verb{url}
+      \verb https://docs.docker.com/reference/dockerfile/
+      \endverb
+    \endentry
+    \entry{dordevicFileSystemPerformance2022}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=b5285a6f4d8fce9e74723010d75b3eb5}{%
+           family={Đorđević},
+           familyi={Đ\bibinitperiod},
+           given={Borislav},
+           giveni={B\bibinitperiod}}}%
+        {{hash=13b8f1e869c88ba0c5a03bdf698d1ea6}{%
+           family={Stefanović},
+           familyi={S\bibinitperiod},
+           given={Aleksandar},
+           giveni={A\bibinitperiod}}}%
+        {{hash=93d06117dd8e85ed871d0c10ab799fc9}{%
+           family={Timčenko},
+           familyi={T\bibinitperiod},
+           given={Valentina},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{cab6e0e25d99484b23b0ac55f5603a44}
+      \strng{fullhash}{cab6e0e25d99484b23b0ac55f5603a44}
+      \strng{fullhashraw}{cab6e0e25d99484b23b0ac55f5603a44}
+      \strng{bibnamehash}{cab6e0e25d99484b23b0ac55f5603a44}
+      \strng{authorbibnamehash}{cab6e0e25d99484b23b0ac55f5603a44}
+      \strng{authornamehash}{cab6e0e25d99484b23b0ac55f5603a44}
+      \strng{authorfullhash}{cab6e0e25d99484b23b0ac55f5603a44}
+      \strng{authorfullhashraw}{cab6e0e25d99484b23b0ac55f5603a44}
+      \field{labelalpha}{ĐST22}
+      \field{sortinit}{Đ}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The goal of this paper is to compare the file system performance of physical operating system and Docker as container-based virtualization using its mechanism for persisting data with Volumes and Bind mounts. The importance of virtualization and its popularity with container-based virtualization is mentioned with an emphasis on OS-type virtualization. In addition, this article contains a detailed description of the Dockers mechanism for persistent data, its operating mode and the difference between Volumes and Bind mounts. The main purpose of this paper is the comparison of Docker Volumes and Bind Mounts file system performance. Thus, we have selected FileBench, one of the best open-source benchmarks for testing file system capabilities.}
+      \field{booktitle}{2022 30th {{Telecommunications Forum}} ({{TELFOR}})}
+      \field{eventtitle}{2022 30th {{Telecommunications Forum}} ({{TELFOR}})}
+      \field{month}{11}
+      \field{title}{File System Performance Comparison in the Case of {{Docker}} Container-Based Virtualization with {{Volumes}} and {{Bind}} Mounts}
+      \field{urlday}{9}
+      \field{urlmonth}{2}
+      \field{urlyear}{2025}
+      \field{year}{2022}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1\bibrangedash 4}
+      \range{pages}{4}
+      \verb{doi}
+      \verb 10.1109/℡FOR56187.2022.9983751
+      \endverb
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/DJMMJZVJ/9983751.html
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/abstract/document/9983751
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/abstract/document/9983751
+      \endverb
+      \keyw{benchmark,Benchmark testing,bind mounts,Containers,containers-based virtualization,Docker,file system performance,File systems,FileBench,modeling,Operating systems,Security,Telecommunications,volumes,Writing}
     \endentry
     \entry{ermakovTestingDockerPerformance2017}{article}{}{}
       \name{author}{2}{}{%
@@ -143,64 +417,45 @@
       \verb /Users/finn/Zotero/storage/SZNYLCVW/Ermakov und Vasyukov - 2017 - Testing Docker Performance for HPC Applications.pdf
       \endverb
     \endentry
-    \entry{kaliberaRigorousBenchmarkingReasonable2013}{inproceedings}{}{}
-      \name{author}{2}{}{%
-        {{hash=9aeaaaffd9b9f0bfa8dcc11c4c98813b}{%
-           family={Kalibera},
-           familyi={K\bibinitperiod},
-           given={Tomas},
-           giveni={T\bibinitperiod}}}%
-        {{hash=686f63784177f089204782d110bd55f1}{%
-           family={Jones},
-           familyi={J\bibinitperiod},
-           given={Richard},
-           giveni={R\bibinitperiod}}}%
+    \entry{githubGitHubActions}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=b79b798b2812cfe1c1431894a617897d}{%
+           family={GitHub},
+           familyi={G\bibinitperiod},
+           given={Inc},
+           giveni={I\bibinitperiod}}}%
       }
-      \list{location}{1}{%
-        {New York, NY, USA}%
+      \list{organization}{1}{%
+        {GitHub}%
       }
-      \list{publisher}{1}{%
-        {Association for Computing Machinery}%
-      }
-      \strng{namehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{fullhash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{fullhashraw}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{bibnamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{authorbibnamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{authornamehash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{authorfullhash}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \strng{authorfullhashraw}{d8b20a11f935fcb80a3b833e3fe31ad2}
-      \field{labelalpha}{KJ13}
-      \field{sortinit}{K}
-      \field{sortinithash}{c02bf6bff1c488450c352b40f5d853ab}
+      \strng{namehash}{b79b798b2812cfe1c1431894a617897d}
+      \strng{fullhash}{b79b798b2812cfe1c1431894a617897d}
+      \strng{fullhashraw}{b79b798b2812cfe1c1431894a617897d}
+      \strng{bibnamehash}{b79b798b2812cfe1c1431894a617897d}
+      \strng{authorbibnamehash}{b79b798b2812cfe1c1431894a617897d}
+      \strng{authornamehash}{b79b798b2812cfe1c1431894a617897d}
+      \strng{authorfullhash}{b79b798b2812cfe1c1431894a617897d}
+      \strng{authorfullhashraw}{b79b798b2812cfe1c1431894a617897d}
+      \field{labelalpha}{Git}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{Experimental evaluation is key to systems research. Because modern systems are complex and non-deterministic, good experimental methodology demands that researchers account for uncertainty. To obtain valid results, they are expected to run many iterations of benchmarks, invoke virtual machines (VMs) several times, or even rebuild VM or benchmark binaries more than once. All this repetition costs time to complete experiments. Currently, many evaluations give up on sufficient repetition or rigorous statistical methods, or even run benchmarks only in training sizes. The results reported often lack proper variation estimates and, when a small difference between two systems is reported, some are simply unreliable.In contrast, we provide a statistically rigorous methodology for repetition and summarising results that makes efficient use of experimentation time. Time efficiency comes from two key observations. First, a given benchmark on a given platform is typically prone to much less non-determinism than the common worst-case of published corner-case studies. Second, repetition is most needed where most uncertainty arises (whether between builds, between executions or between iterations). We capture experimentation cost with a novel mathematical model, which we use to identify the number of repetitions at each level of an experiment necessary and sufficient to obtain a given level of precision.We present our methodology as a cookbook that guides researchers on the number of repetitions they should run to obtain reliable results. We also show how to present results with an effect size confidence interval. As an example, we show how to use our methodology to conduct throughput experiments with the DaCapo and SPEC CPU benchmarks on three recent platforms.}
-      \field{booktitle}{Proceedings of the 2013 International Symposium on Memory Management}
-      \field{day}{20}
-      \field{isbn}{978-1-4503-2100-6}
-      \field{month}{6}
-      \field{series}{{{ISMM}} '13}
-      \field{title}{Rigorous Benchmarking in Reasonable Time}
-      \field{urlday}{22}
+      \field{abstract}{Easily build, package, release, update, and deploy your project in any language—on GitHub or any external system—without having to run code yourself.}
+      \field{langid}{english}
+      \field{title}{{{GitHub Actions}}}
+      \field{urlday}{28}
       \field{urlmonth}{1}
       \field{urlyear}{2025}
-      \field{year}{2013}
-      \field{dateera}{ce}
       \field{urldateera}{ce}
-      \field{pages}{63\bibrangedash 74}
-      \range{pages}{12}
-      \verb{doi}
-      \verb 10.1145/2491894.2464160
-      \endverb
       \verb{file}
-      \verb /Users/finn/Zotero/storage/2S9FIJD8/Kalibera und Jones - 2013 - Rigorous benchmarking in reasonable time.pdf
+      \verb /Users/finn/Zotero/storage/2E2IBJGK/actions.html
       \endverb
       \verb{urlraw}
-      \verb https://dl.acm.org/doi/10.1145/2491894.2464160
+      \verb https://github.com/features/actions
       \endverb
       \verb{url}
-      \verb https://dl.acm.org/doi/10.1145/2491894.2464160
+      \verb https://github.com/features/actions
       \endverb
     \endentry
     \entry{kuhnJULEAFlexibleStorage2017}{inproceedings}{}{}
@@ -273,6 +528,60 @@
       \verb /Users/finn/Zotero/storage/ZV63H426/Kuhn - 2017 - JULEA A Flexible Storage Framework for HPC.pdf
       \endverb
       \keyw{Flexible storage framework,High performance computing,Key-value store,Object store,Parallel file system}
+    \endentry
+    \entry{majawExploringDataDistributions2023}{inproceedings}{}{}
+      \name{author}{2}{}{%
+        {{hash=3c8c218d8bf38d8c5d4f59fea83275c2}{%
+           family={Majaw},
+           familyi={M\bibinitperiod},
+           given={Nangskhembor},
+           giveni={N\bibinitperiod}}}%
+        {{hash=495be1c017d536586b9567aca3b97385}{%
+           family={Ahmed},
+           familyi={A\bibinitperiod},
+           given={Syed\bibnamedelima Sazzad},
+           giveni={S\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \strng{namehash}{a02f780b249b8fecaf4335efc36eb0d7}
+      \strng{fullhash}{a02f780b249b8fecaf4335efc36eb0d7}
+      \strng{fullhashraw}{a02f780b249b8fecaf4335efc36eb0d7}
+      \strng{bibnamehash}{a02f780b249b8fecaf4335efc36eb0d7}
+      \strng{authorbibnamehash}{a02f780b249b8fecaf4335efc36eb0d7}
+      \strng{authornamehash}{a02f780b249b8fecaf4335efc36eb0d7}
+      \strng{authorfullhash}{a02f780b249b8fecaf4335efc36eb0d7}
+      \strng{authorfullhashraw}{a02f780b249b8fecaf4335efc36eb0d7}
+      \field{labelalpha}{MA23}
+      \field{sortinit}{M}
+      \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Data analysis plays a crucial role in decision-making processes in various industries. One common approach to analyzing data distributions is through the use of box and whisker plots. In this paper, we explore the use of box and whisker plot analysis as a tool for exploring data distributions. We discuss how this analysis can be used to compare and draw crucial information, determine the spread of data, and visualize the shape of the data distribution. Additionally, we describe a Windows application tool developed in VB.NET. that allows users to explore the data distributions using box and whisker plot. The application includes features such as the ability to import a CSV file, display its contents, select specific columns for analysis, scale down data values, generate box and whisker plots and draw important conclusions. We have applied the application tool in three varied datasets - salary, marks and movies and were able to draw some meaningful conclusions from the data distributions in the datasets.}
+      \field{booktitle}{2023 14th {{International Conference}} on {{Computing Communication}} and {{Networking Technologies}} ({{ICCCNT}})}
+      \field{eventtitle}{2023 14th {{International Conference}} on {{Computing Communication}} and {{Networking Technologies}} ({{ICCCNT}})}
+      \field{issn}{2473-7674}
+      \field{month}{7}
+      \field{title}{Exploring {{Data Distributions}} Using {{Box}} and {{Whisker Plot Analysis}}}
+      \field{urlday}{3}
+      \field{urlmonth}{2}
+      \field{urlyear}{2025}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{1\bibrangedash 8}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1109/ICCCNT56998.2023.10308191
+      \endverb
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/DRG52YJX/10308191.html
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/abstract/document/10308191
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/abstract/document/10308191
+      \endverb
+      \keyw{Box and whisker plot,Data analysis,Data Analysis,Data visualization,decision making,Decision making,Exploratory data analysis,Industries,Motion pictures,Remuneration,Shape,VB.NET,Windows application}
     \endentry
     \entry{malanContainerizingCS50Standardizing2024}{inproceedings}{}{}
       \name{author}{1}{}{%
@@ -407,12 +716,52 @@
       \verb https://dl.acm.org/doi/10.1145/3364228.3364682
       \endverb
     \endentry
+    \entry{stengelStatistikUndAufbereitung2011}{book}{}{}
+      \name{author}{3}{}{%
+        {{hash=0925d59a3b59d3b9aac36fd8720d1817}{%
+           family={Stengel},
+           familyi={S\bibinitperiod},
+           given={Dirk},
+           giveni={D\bibinitperiod}}}%
+        {{hash=0d2d93e2e68b178db41ae06c40f72629}{%
+           family={Bhandari},
+           familyi={B\bibinitperiod},
+           given={Mohit},
+           giveni={M\bibinitperiod}}}%
+        {{hash=55c0735b8c67fd8c3287d4be03d0addc}{%
+           family={Hanson},
+           familyi={H\bibinitperiod},
+           given={Beate},
+           giveni={B\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Georg Thieme Verlag}%
+      }
+      \strng{namehash}{70092cd25d9245a6cf3bd7f60ce20221}
+      \strng{fullhash}{70092cd25d9245a6cf3bd7f60ce20221}
+      \strng{fullhashraw}{70092cd25d9245a6cf3bd7f60ce20221}
+      \strng{bibnamehash}{70092cd25d9245a6cf3bd7f60ce20221}
+      \strng{authorbibnamehash}{70092cd25d9245a6cf3bd7f60ce20221}
+      \strng{authornamehash}{70092cd25d9245a6cf3bd7f60ce20221}
+      \strng{authorfullhash}{70092cd25d9245a6cf3bd7f60ce20221}
+      \strng{authorfullhashraw}{70092cd25d9245a6cf3bd7f60ce20221}
+      \field{labelalpha}{SBH11}
+      \field{sortinit}{S}
+      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Dieses hilfreiche ebook erklärt kompakt und sehr anschaulich die Grundlagen statistischer Auswertung und die Präsentation klinischer Daten. - Praktisches Kompendium zum sofortigen Umsetzen - Viele praxisbezogene Tipps - Zahlreiche Merksätze und Zusammenfassungen- Bewusst ohne komplizierte Formeln - Gut gewählte und visualisierte Beispiele aus der Praxis- Sicherheit im Umgang mit dem Thema durch eine leicht verständliche Aufbereitung}
+      \field{day}{23}
+      \field{isbn}{978-3-13-169341-9}
+      \field{langid}{ngerman}
+      \field{month}{2}
+      \field{pagetotal}{158}
+      \field{title}{Statistik und Aufbereitung klinischer Daten}
+      \field{year}{2011}
+      \field{dateera}{ce}
+      \keyw{Medical / Clinical Medicine}
+    \endentry
   \enddatalist
-  \missing{ApptainerPortableReproducible2024}
-  \missing{GitHubActions2025}
-  \missing{dockerBake2024}
-  \missing{dockerBuildKit2024}
-  \missing{dockerCache2024}
 \endrefsection
 \endinput
 

@@ -6,6 +6,7 @@
     "latex-workshop.formatting.latex": "latexindent",
     "latex-workshop.docker.enabled": false,
     "cSpell.words": [
-        "Benchmarkergenisse"
+        "Benchmarkergenisse",
+        "containerisierte"
     ]
 }

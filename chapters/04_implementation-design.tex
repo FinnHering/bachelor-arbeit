@@ -195,13 +195,28 @@ Allerdings sieht man in Zeile 43 eine Besonderheit. In Ubuntu-Versionen älter a
 
 \subsubsection{Stage 3: Konfigurieren und Kompilieren}
 
-\inputminted[firstline=46,lastline=53]{dockerfile}{./code-examples/Dockerfile.system}
+\inputminted[firstline=46,lastline=52]{dockerfile}{./code-examples/Dockerfile.system}
 
+In dieser Stage sieht man das erste mal die Verwendung von "WORKDIR" und "COPY". "WORKDIR" setzt das Arbeitsverzeichnis für alle folgenden Befehle. "COPY" kopiert standardmäßig Dateien von dem Build-Context in das Arbeitsverzeichnis.
 
+Nachdem das Arbeitsverzeichnis gesetzt wurde wird das gesamte JULEA Repository in das Arbeitsverzeichnis /app kopiert. Nicht alle Dateien, die kopiert werden, sind für die Kompilierung notwendig. Allerdings ist diese Stage auch nicht dafür vorgesehen als ein Containerimage bereitgestellt zu werden. Dadurch macht es keinen Unterschied im Speicherverbrauch des resultierenden Containerimages und es ist einfacher und wartbarer das gesamte Repository zu kopieren. \
+Sollte es große mengen nicht relevanter Dateien geben und dies einen einfluss auf die Build-Geschwindigkeit haben, was es aktuell nicht der fall ist, kann man mithilfe einer .dockerignore Datei die Dateien, welche nicht kopiert werden sollen, definieren. Diese Dateien werden von Docker ignoriert und werden somit auch nicht in den Build-Context kopiert. 
 
-Die dazugehörigen Dockerfile sieht wie folgt aus: 
+Im anschluss wird JULEA konfiguriert, konfiguriert und mithilfe von "ninja install" an einen spezifischen Ort installiert (kopiert). Dadurch, dass in Zeile 50 das Präfix auf "/usr/local" und in Zeile 52 "DESTDIR" auf "/app/julea-install" gesetzt wird, werden die JULEA Bibliotheken und Binaries mit der richtigen Ordernerstruktur in "/app/julea-install/usr/local" kopiert. Dadurch, dass die Ordnerstruktur nun bereits korrekt vorliegt und die Dateien in einem bekannten Ordner liegen, können Stages die Kompilate aus dieser Stage problemlos kopieren und unkompliziert installieren.
 
-\inputminted{dockerfile}{./code-examples/Dockerfile.system}
+\subsubsection{Stage 4a: Entwicklungsabhängigkeiten installieren}
+
+\inputminted[firstline=61,lastline=65]{dockerfile}{./code-examples/Dockerfile.system}
+
+In dieser Stage, welche direkt auf der Stage "Compiletime Abhängigkeiten installieren" aufbaut, werden in einem Befehl die Entwicklungsabhängigkeiten installiert.
+
+\subsubsection{Stage 4b: Kompilat installieren}
+
+\inputminted[firstline=55,lastline=58]{dockerfile}{./code-examples/Dockerfile.system}
+
+In dieser Stage, welche direkt auf der Stage "Runtime Abhängigkeiten installieren" aufbaut wird aus der Stage "Konfigurieren und Kompilieren" das Kompilat kopiert, sodass nun die kompilate in den richtigen verzeichnisse unter "/usr/local" liegen.
+
+Anschließend muss "ldconfig" ausgeführt werden. Ohne "ldconfig" würde das System nicht wissen, wo die Bibliotheken liegen. "ldconfig" aktualisiert die liste verfügbarer Bibliotheken und deren Pfade, sodass die JULEA-Binärdateien die JULEA-Bibliotheken finden können.
 
 \subsection{"Spack" Containerfile}
 Der Layer-Graf für das Containerfile "Spack" sieht wie folgt aus.
@@ -211,15 +226,68 @@ Der Layer-Graf für das Containerfile "Spack" sieht wie folgt aus.
     \caption{Containerfile "Spack" Layer-Graf}
 \end{figure}
 
-Die dazugehörige Dockerfile hat folgenden Aufbau.
+Es sind strukturelle Ähnlichkeiten zum generischen Aufbau zu erkennen, jedoch mit einigen unterschieden. Anschließend wird das Dockerfile in denselben Schritten wie oben illustriert beschrieben.
 
-\inputminted{dockerfile}{./code-examples/Dockerfile.spack}
+\subsubsection{Stage 0: Basis}
 
-Bei beiden Dockerfiles fällt auf, dass apt-get update und apt-get install stets im selben "RUN"-Befehl ausgeführt werden. Dies gilt nicht nur für apt-get, sondern auch für andere Paketmanager, welche vor der installation vorgelagerte Schritte ähnlich wie apt-get update benötigen. Sollte man die vorgelagerten schritte in einzelne "RUN" befehle ausführen, hätte das für das erste ausführen von docker build keine Implikationen, da dort der cache noch nicht befüllt wurde. Bei allen folgenden Ausführungen von docker build, kann es nach Anpassung der apt-get install Zeile zu Problemen führen. Dies liegt daran, dass alle vorgelagerten Schritte immer noch im cache liegen, bei dem apt-get install schritt kommt es allerdings zu einem cache-miss und dieser muss neu evaluiert werden. Wenn nun die paketinformationen, welche für apt-get update im layer cache liegen nicht mehr aktuell sind, wird apt-get install fehlschlagen, da es die Pakete, welche beim Mirror angefragt werden nicht mehr gibt. Um dieses Problem zu beheben, sollte man stets apt-get update und apt-get install im selben "RUN"-Befehl ausführen. Dadurch wird bei jeder Anpassung der benötigten Pakete, automatisch auch apt-get update ausgeführt und es kann zu keinen veralteten Paketinformationen kommen. 
+\inputminted[firstline=0,lastline=8]{dockerfile}{./code-examples/Dockerfile.spack}
 
-\subsection{Zusammenspiel Dockerfile -> Images/Tags}
+Die Basis-Stage ist größtenteils identisch, wie die Basis-Stage des "System" Dockerfiles. Es gibt hier allerdings ein weiteres Argument "JULEA\_SPACK\_COMPILER". Dieses Argument definiert mit welchem Kompilierer Spack die abhänngigkeiten kompilieren soll. 
 
-Welche Dockerfile generiert welche Images/Tags?
+\subsubsection{Stage 1: Runtime Abhängigkeiten für Spack installieren}
+
+\inputminted[firstline=10,lastline=13]{dockerfile}{./code-examples/Dockerfile.spack}
+
+Die einzig benötigte Runtime-Abhängigkeit ist hier "python3". Alle anderen abhängigkeiten werden durch Spack bereitgestellt und werden somit nicht über das Betriebssystem installiert. Im gegensatz zum "System" Dockerfile, werden hier nur die Laufzeitabhängigkeiten von Spack installiert, um Spack zu befähigen die eigentlichen Abhängigkeiten zu verwalten.
+
+
+\subsubsection{Stage 2: Spack Compiletime abhängigkeiten installieren, JULEA Run- und Compiletime Abhängigkeiten mit installieren}
+
+\inputminted[firstline=15,lastline=29]{dockerfile}{./code-examples/Dockerfile.spack}
+
+Zu begin sieht man wie mithilfe von apt die Abhängigkeiten für das Kompilieren der Abhängigkeiten durch Spack installiert werden. 
+
+Anschließend wird das durch JULEA bereitgestellte "script" verzeichnis in den Container kopiert und das Skript "install\-dependencies.sh" ausgeführt. Dieses Skript installiert die Abhängigkeiten mithilfe von Spack, welche JULEA für die Compiletime sowie die Laufzeit benötigt. Hier wird das "JULEA\_SPACK\_COMPILER" Argument as Umgebungsvariable an das Skript übergeben und beeinflusst damit die verwendung des Kompilierers.
+
+
+\subsubsection{Stage 3: Konfigurieren und Kompilieren}
+
+\inputminted[firstline=32,lastline=40]{dockerfile}{./code-examples/Dockerfile.spack}
+
+In dieser Stage wird JULEA konfiguriert und kompiliert. Im vergleich zum "System" Dockerfile, ist diese stage recht identisch. Ein unterschied ist, dass hier das konfigurieren und kompilieren in einem Schritt ausgeführt wird. Dies wird gemacht, da man die Umgebungsvariablen welche in der "environment.sh" gesetzt werden, auch für das Kompilieren benötigt werden. 
+
+Außerdem ist der Prefix auf "/app/julea-install" gesetzt. Dies wird getan, da die Bibliotheks- und Binärdateien nicht in "/usr/local" installiert werden, sondern in "/app/julea-install". Dies wird gemacht, da die JULEA-Binärdateien und Bibliotheken von den durch Spack bereitgestellten Bibliotheken abhängen und diese nicht in "/usr/local" installiert sind. Würde man nun JULEA in "/usr/local" installieren, würde es nicht funktionieren, da die Bibliotheken welche durch Spack installiert wurden, nicht gefunden werden können. Man müsse erst Spack die Umgebung laden lassen, damit JULEA funktioniert. \
+Ein installieren von JULEA in "/usr/local" wäre also eher verwirrend, da alle JULEA komponenten standardmäßig verfügbar wären, jedoch nicht funktionieren würden. Wenn man JULEA nun in ein nicht standardisiertes Verzeichnis installiert, ist JULEA auch nicht standardmäßig über den "PATH" verfügbar. 
+
+Um JULEA verfügbar zu machen werden in der Stage 4b weitere schritte vorgenommen.
+
+\subsubsection{Stage 4a: Entwicklungsabhängigkeiten installieren}
+
+\inputminted[firstline=51,lastline=55]{dockerfile}{./code-examples/Dockerfile.spack}
+
+Diese stage ist identisch zu der vom "System" Dockerfile. Hier werden die Entwicklungsabhängigkeiten installiert.
+
+
+\subsubsection{Stage 4b: Kompilat installieren}
+
+\inputminted[firstline=42,lastline=48]{dockerfile}{./code-examples/Dockerfile.spack}
+
+In dieser Stage werden die Abhängigkeiten aus der Stage 3 kopiert, die JULEA Kompilate werden in "/app/julea-install" installiert und es werden die "scripts" in "/app/scripts" kopiert.
+
+Danach wird "docker-spack-entrypoint.sh" in den Container kopiert und als "ENTRYPOINT" gesetzt. 
+
+
+Das Skript "docker-spack-entrypoint.sh" sieht wie folgt aus:
+\inputminted{bash}{./code-examples/docker-spack-entrypoint.sh}
+
+Hier sieht man, dass zu begin die Spack Umgebung sowie JULEA über das Skript "environment.sh" geladen werden.
+Anschließend werden die Argumente, die an das Skript übergeben werden, ausgeführt.
+
+Das ausführen der übergebenen Argumente ist eher ungewöhnlich, allerdings ist dies hier erwünscht, denn Docker hat neben dem "ENTRYPOINT" auch noch den "CMD" Befehl. Der "CMD" Befehl definiert die Argumente, welche an das "ENTRYPOINT" übergeben werden. 
+
+Der CMD Befehl wird unter anderem über das starten des Containers mit "docker run" übergeben. "docker run <container> echo "Hello, World!" würde folgenden Befehl im Container ausführen: "<ENTRYPOINT> echo "Hello, World!". Das bedeutet, dass "ENTRYPOINT" den gegebenen Befehl als Argumente erhält. Somit muss "ENTRYPOINT" die Argumente ausführen.
+
+Ein Skript welches die Spack und JULEA Umgebung läd als ENTRYPOINT zu verwenden, ist somit ideal. Dadurch kann der Endnutzer der Containers JULEA im Container verwenden, ohne sich mit den technischen details auseinanderzusetzen, um die Umgebung korrekt zu laden.
 
 \section{Docker Bakefile}
 
@@ -287,8 +355,69 @@ Dieses Target ist das letzte Target und erstellt die Entwicklungscontainer. Dies
 
 Um das Erstellen der Container noch komfortabler zu machen, werden diese mithilfe einer CI-Pipeline erstellt und automatisch in ein Container-Repository geladen. Da das JULEA-Projekt auf GitHub gehostet wird und bereits GitHub-Actions als CI-/CD-Lösung verwendet, wird auf diese Pipeline aufgebaut und GitHub-Actions verwendet.
 
-Hierbei wird die Pipeline um die Funktionalität des Container-Erstellens sowie veröffentlichen erweitert. Des Weiteren werden in den nachgelagerten Test-Pipelines auch die erstellten Container verwendet.
+Es wird ein neuer Workflow erstellt, welcher bei jedem Push auf dem "main" Branch den Docker-Bakefile-Target "ubuntu" erstellt und in die GitHub Container-Registry veröffentlicht.
 
-Die CI-Pipeline wird außerdem die erstellten OCI-Containerimages in Apptainer-Images umwandeln und diese als Artefakte bereitstellen.
+Der Workflow kann in zwei Teilen illustriert werden 
 
+\subsection{Workflow Kopf}
 
+Im Kopf der Workflows befinden sich die Metadaten, sowie Konfigurationsdaten des Workflows.
+
+\inputminted[firstline=0,lastline=10]{yaml}{./code-examples/containers-ci.yml}
+
+In Zeile 1 sehen wir den Anzeigenamen des Workflows, gefolgt von den Triggern, welche den Workflow auslösen. Es sind 3 Trigger definiert. 
+
+Der erste Trigger – "workflow\_dispatch" – ist ein manueller Trigger. Dieser Trigger ermöglicht es den Workflow manuell aus der GitHub Actions Oberfläche zu starten. Dies ist kein essenzieller Trigger und ohne ihn würde der Workflow auch ohne Probleme funktionieren. Allerdings hat es sich an einigen Stellen als sehr nützlich erwiesen den Workflow manuell zu starten. Eine davon ist das manuelle regenerieren der Containerimages, wenn man diese für eine lange Zeit nicht mehr erstellt hat. Außerdem kann man mit dieser Funktion auch den Workflow auf spezifischen Branches, sowie Tags ausführen.
+
+Der nächste Trigger ist der "push" Trigger mit der Bedingung, dass alle Pushs in den Branch "master" den Workflow auslösen.
+
+Der letzte Trigger ist der "workflow\_call" Trigger. Dieser Trigger ermöglicht es anderen Workflows diesen Workflow auszuführen. Dies ermöglicht die Wiederverwendung des Workflows in anderen Workflows in der Zukunft. 
+
+Im anschluss folgt das Setzen von Variablen für den Workflow. Hier wird "REGISTRY\_IMAGE" definiert, welches im zweiten Teil des Workflows Verwendung findet.
+
+\subsection{Workflow Körper}
+
+Die eigentlichen Schritte des Workflows befinden sich im zweiten Teil des Workflows. Im Körper sind 2 "Jobs" definiert. Diese werden folgend erläutert.
+
+\subsubsection{Job "Prepare"}
+
+Der erste ausgeführter Job ist der "Prepare" Job. Dieser Job generiert die nötigen Daten aus dem Bakefile, um anschließend die einzelnen Containertargets parallel zu erstellen.
+
+\inputminted[firstline=12,lastline=23]{yaml}{./code-examples/containers-ci.yml}
+
+In Zeile 14 wird definiert, auf welchem Betriebssystem der Job laufen soll. Hierbei wurde sich für Ubuntu entschieden. 
+Anschließend wird die Ausgabe des Jobs definiert. Diese Ausgabe gibt der Job weiter an alle Jobs, welche vom Job abhängig sind.
+
+Anschließend kommen die Schritte (Engl. "Steps"). Der erste Schritt "Checkout", läd das repository in das aktuelle Arbeitsverzeichnis.
+
+Danach wird der Schritt "List targets" ausgeführt. Dieser Schritt gibt die Targets zurück. Diese ausgabe wird im zweiten Schritt für das parallele erstellen der Targets verwendet.
+
+\subsubsection{Job "Build Julea Containers"}
+
+Der zweite Job erstellt und veröffentlicht die Containerimages. Es ist eine sog. "Matrixstrategie". Dies ermöglicht es mehrere Variationen eines Jobs parallel auszuführen. In diesem Fall ist die Variable das Docker-Bakefile-Target. 
+
+Da dieser Code-Abschnitt etwas länger ist, wird er in mehreren Teilen erläutert.
+
+\paragraph{Kopf}
+
+\inputminted[firstline=25,lastline=35]{yaml}{./code-examples/containers-ci.yml}
+
+Im Kopf des Jobs werden wieder Name und Betriebssystem definiert. Anschließend wird mit "needs" die Abhängigkeit zum vorherigen "Prepare"-Job gesetzt. Im anschluss in Zeile 30 bis 33 wird die Matrixstrategie definiert. Hierbei wird die Ausgabe des Jobs "Prepare" verwendet, was in Zeile 33 explizit definiert wird. In Zeile 31 wird "fail-fast" deaktiviert. Fail-Fast ist ein feature der Matrixstrategie, welches alle parallelen Ausführungen des Jobs stoppt, sobald einer fehlschlägt. Dies ist in diesem Fall nicht erwünscht.
+
+In Zeile 34 und 35 werden die benötigten Berechtigungen definiert. Dies ist zwingend notwendig, da ansonsten der GitHub API-Token nicht die ausreichenden Berechtigungen hätte. Die Berechtigung "packages: write" erlaubt es dem Job Pakete/Container in der Registry des Repositoriums zu veröffentlichen.
+
+\paragraph{Initialisierung}
+
+\inputminted[firstline=36,lastline=49]{yaml}{./code-examples/containers-ci.yml}
+
+Im Anschluss folgen die Schritte des Jobs. Im ersten Schritt wird das Repository geladen. Danach loggt sich der Job bei der GitHub Container Registry ein, um darin die erstellten Containerimages zu veröffentlichen. 
+
+Anschließend wird QEMU initialisiert. Dies ist eine indirekte Abhängigkeit von Docker, wenn man Containerimages für eine Host-Fremde CPU-Architektur erstellen möchte. Dies ist zum aktuellen Zeitpunkt nicht vorgesehen, allerdings in der Zukunft eine mögliche Erweiterung, welche man dann – ohne die Job-Definition zu verändern – hinzufügen könnte.
+
+Nun wird Docker Buildx initialisiert, um später die Docker-Bakefile Targets zu erstellen. Diese benötigen Docker Buildx, da sie ein Docker Buildx Feature sind. 
+
+\paragraph{Erstellen der Containertargets}
+
+\inputminted[firstline=50,lastline=60]{yaml}{./code-examples/containers-ci.yml}
+
+Nach der Initialisierung erfolgt nun das Erstellen der Containerimages. Es werden mit dem "env" Schlüssel die Variablen "COMMIT\_SHA" und "BASE\_IMAGE\_NAME" der Docker-Bakefile gesetzt. Danach werden die Docker-Bakefile-Argumente in Zeile 55 bis 60 gesetzt. Es wird der Target aus der Matrixstrategie gesetzt, das Veröffentlichen der erstellten Dockerimages aktiviert und die Docker-Bake-File definiert.

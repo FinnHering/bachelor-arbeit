@@ -47,14 +47,12 @@ FROM julea_dependencies AS julea_build
 WORKDIR /app
 COPY . /app/
 
-RUN CC=${CC} meson setup --buildtype=${BUILDTYPE} --werror --prefix="/usr" bld
+RUN CC=${CC} meson setup --buildtype=${BUILDTYPE} --werror --prefix="/usr/local" bld
 RUN ninja -C bld
 RUN DESTDIR=/app/julea-install/ ninja -C bld install
 
 
 FROM julea_runtime_dependencies AS julea
-WORKDIR /app
-
 COPY --from=julea_build /app/julea-install/ /
 # Required for ld to detect the added libraries
 RUN ldconfig
