@@ -230,20 +230,29 @@ Es sind strukturelle Ähnlichkeiten zum generischen Aufbau zu erkennen, jedoch m
 
 \subsubsection{Stage 0: Basis}
 
-\inputminted[firstline=0,lastline=8]{dockerfile}{./code-examples/Dockerfile.spack}
+\begin{listing}[H]
+    \inputminted[firstline=0,lastline=8]{dockerfile}{./code-examples/Dockerfile.spack}
+    \caption{Ausschnitt aus "Dockerfile.spack"}
+\end{listing}
 
 Die Basis-Stage ist größtenteils identisch, wie die Basis-Stage des "System" Dockerfiles. Es gibt hier allerdings ein weiteres Argument "JULEA\_SPACK\_COMPILER". Dieses Argument definiert mit welchem Kompilierer Spack die abhänngigkeiten kompilieren soll. 
 
 \subsubsection{Stage 1: Runtime Abhängigkeiten für Spack installieren}
 
-\inputminted[firstline=10,lastline=13]{dockerfile}{./code-examples/Dockerfile.spack}
+\begin{listing}[H]
+    \inputminted[firstline=10,lastline=13]{dockerfile}{./code-examples/Dockerfile.spack}
+    \caption{Ausschnitt aus "Dockerfile.spack"}
+\end{listing}
 
 Die einzig benötigte Runtime-Abhängigkeit ist hier "python3". Alle anderen abhängigkeiten werden durch Spack bereitgestellt und werden somit nicht über das Betriebssystem installiert. Im gegensatz zum "System" Dockerfile, werden hier nur die Laufzeitabhängigkeiten von Spack installiert, um Spack zu befähigen die eigentlichen Abhängigkeiten zu verwalten.
 
 
 \subsubsection{Stage 2: Spack Compiletime abhängigkeiten installieren, JULEA Run- und Compiletime Abhängigkeiten mit installieren}
 
-\inputminted[firstline=15,lastline=29]{dockerfile}{./code-examples/Dockerfile.spack}
+\begin{listing}[H]
+    \inputminted[firstline=15,lastline=29]{dockerfile}{./code-examples/Dockerfile.spack}
+    \caption{Ausschnitt aus "Dockerfile.spack"}
+\end{listing}
 
 Zu begin sieht man wie mithilfe von apt die Abhängigkeiten für das Kompilieren der Abhängigkeiten durch Spack installiert werden. 
 
@@ -252,7 +261,10 @@ Anschließend wird das durch JULEA bereitgestellte "script" verzeichnis in den C
 
 \subsubsection{Stage 3: Konfigurieren und Kompilieren}
 
-\inputminted[firstline=32,lastline=40]{dockerfile}{./code-examples/Dockerfile.spack}
+\begin{listing}[H]
+    \inputminted[firstline=32,lastline=40]{dockerfile}{./code-examples/Dockerfile.spack}
+    \caption{Ausschnitt aus "Dockerfile.spack"}
+\end{listing}
 
 In dieser Stage wird JULEA konfiguriert und kompiliert. Im vergleich zum "System" Dockerfile, ist diese stage recht identisch. Ein unterschied ist, dass hier das konfigurieren und kompilieren in einem Schritt ausgeführt wird. Dies wird gemacht, da man die Umgebungsvariablen welche in der "environment.sh" gesetzt werden, auch für das Kompilieren benötigt werden. 
 
@@ -263,24 +275,37 @@ Um JULEA verfügbar zu machen werden in der Stage 4b weitere schritte vorgenomme
 
 \subsubsection{Stage 4a: Entwicklungsabhängigkeiten installieren}
 
+
+\begin{listing}[H]
 \inputminted[firstline=51,lastline=55]{dockerfile}{./code-examples/Dockerfile.spack}
+\caption{Ausschnitt aus "Dockerfile.spack"}
+\end{listing}
+
 
 Diese stage ist identisch zu der vom "System" Dockerfile. Hier werden die Entwicklungsabhängigkeiten installiert.
 
 
 \subsubsection{Stage 4b: Kompilat installieren}
 
+\begin{listing}[H]
 \inputminted[firstline=42,lastline=48]{dockerfile}{./code-examples/Dockerfile.spack}
+\caption{Ausschnitt aus "Dockerfile.spack"}
+\end{listing}
+
 
 In dieser Stage werden die Abhängigkeiten aus der Stage 3 kopiert, die JULEA Kompilate werden in "/app/julea-install" installiert und es werden die "scripts" in "/app/scripts" kopiert.
 
 Danach wird "docker-spack-entrypoint.sh" in den Container kopiert und als "ENTRYPOINT" gesetzt. 
 
+Den Inhalt dieses Skripts kann man aus \cref{lst:docker-spack-entrypoint.sh} entnehmen.
 
-Das Skript "docker-spack-entrypoint.sh" sieht wie folgt aus:
-\inputminted{bash}{./code-examples/docker-spack-entrypoint.sh}
+\begin{listing}[H]
+    \inputminted{bash}{./code-examples/docker-spack-entrypoint.sh}
+    \caption{docker-spack-entrypoint.sh}
+    \label{lst:docker-spack-entrypoint.sh}
+\end{listing}
 
-Hier sieht man, dass zu begin die Spack Umgebung sowie JULEA über das Skript "environment.sh" geladen werden.
+In \cref{lst:docker-spack-entrypoint.sh} sieht man, dass zu begin die Spack Umgebung sowie JULEA über das Skript "environment.sh" geladen werden.
 Anschließend werden die Argumente, die an das Skript übergeben werden, ausgeführt.
 
 Das ausführen der übergebenen Argumente ist eher ungewöhnlich, allerdings ist dies hier erwünscht, denn Docker hat neben dem "ENTRYPOINT" auch noch den "CMD" Befehl. Der "CMD" Befehl definiert die Argumente, welche an das "ENTRYPOINT" übergeben werden. 
@@ -300,7 +325,11 @@ Die Bakefile selber kann in 5 Teile unterteilt werden.
 \subsection{Bakefile Header}
 
 In diesem Teil werden Variablen, Gruppen und generische Targets definiert.
-\inputminted[firstline=1,lastline=7]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+
+\begin{listing}[H]
+    \inputminted[firstline=1,lastline=7]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+    \caption{Ausschnitt aus "docker-bake.hcl"}
+\end{listing}
 
 Das target "base" ist das basis-target. Hier können alle generellen einstellungen gesetzt werden, ohne, dass man diese in jeder target-definition wiederholen muss. 
 
@@ -314,11 +343,15 @@ Diese Variable macht es einfach von außen dynamisch festzulegen, wo das image v
 
 Zuletzt gibt es die Gruppe "ubuntu". Den Namen braucht man keine weitere Bedeutung zuzuweisen. Diese Gruppe ist lediglich dafür da, um alle folgenden targets in einem Docker Buildx Befehl zu erstellen. Gruppen können von Docker Buildx Bake build wie ein target angesprochen werden. Das heißt, dass man anstelle von mehreren Docker Buildx befehlen, nur einen Befehl ausführen muss, um mehrere targets zu erstellen.
 
-\subsection{Bakefile Target "ubuntu-spack"}
+\subsection{Bakefile Target "ubuntu-spack"} \label{ubuntu-spack-target}
 
 In diesem Target werden die Containerimages für die produktiven JULEA-Container, welche Spack für das Abhängigkeitsmanagement verwenden, definiert.
 
-\inputminted[firstline=9,lastline=33]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+\begin{listing}[H]
+    \inputminted[firstline=9,lastline=33]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+    \caption{Ausschnitt aus "docker-bake.hcl"}
+\end{listing}
+
 
 Dieses Target – wie alle anderen Targets auch – ist ein "Matrix-Target". Das bedeutet, dass dieses Target eigentlich mehrere Targets darstellt. Dies wird mit dem Attribut "matrix" gemacht. Das Attribut selber hat 2 unterattribute: "version", welches die zu verwendenden Ubuntu-Major-Versionen angibt, und "compilers", welche die zu verwendenden Kompilierer angibt.
 Die "versions" und "compilers" Matrix-Variables werden in dem Target wie andere Variablen auch benutzt. 
@@ -332,24 +365,33 @@ Danach wird definiert welche Dockerfile und welches Target innerhalb der Dockerf
 
 Zuletzt wird noch das caching aktiviert, um die hier besonders langen Compile-Zeiten in folgenden Builds zu minimieren. Das hier konfigurierte caching ist das GitHub-Actions caching, welches das unkomplizierte caching von Docker Builds in GitHub-Actions ermöglicht.
 
-\subsection{Bakefile Target "ubuntu-system"}
+\subsection{Bakefile Target "ubuntu-system"} \label{ubuntu-system-target}
 
-Dieses target ist fast identisch zum "ubuntu-spack" target. Der einzige Unterschied ist, dass hier nicht gecached wird, da das Bauen dieser Container ohne Caching bereits sehr schnell ist und die Cache-Größe von GitHub-Actions begrenzt ist. Außerdem wird hier das Dockerfile "Dockerfile.system" verwendet und die Tags haben andere Namen. Es wird des Weiteren kein Spack compiler Argument an das Dockerfile übergeben, da das Dockerfile.system bereits die Abhängigkeiten über das Betriebssystem installiert und kein Spack verwendet wird. 
+Dieses target ist fast identisch zum "ubuntu-system" target (\cref{ubuntu-spack-target}). Der einzige Unterschied ist, dass hier nicht gecached wird, da das Bauen dieser Container ohne Caching bereits sehr schnell ist und die Cache-Größe von GitHub-Actions begrenzt ist. Außerdem wird hier das Dockerfile "Dockerfile.system" verwendet und die Tags haben andere Namen. Es wird des Weiteren kein Spack compiler Argument an das Dockerfile übergeben, da das Dockerfile.system bereits die Abhängigkeiten über das Betriebssystem installiert und kein Spack verwendet wird. 
 
-\inputminted[firstline=35,lastline=50]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+\begin{listing}[H]
+    \inputminted[firstline=35,lastline=50]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+    \caption{Ausschnitt aus "docker-bake.hcl"}
+\end{listing}
 
 \subsection{Bakefile Target "ubuntu-latest"}
 
-Dieses Target sehr ähnlich zum "ubuntu-system" target. Hier wird allerdings der "latest"-Tag erzeugt. 
+Dieses Target sehr ähnlich zum "ubuntu-system" target (\cref{ubuntu-system-target}). Hier wird allerdings der "latest"-Tag erzeugt. 
 Der rest ist identisch zum "ubuntu-system" target. Es wäre auch möglich diesen mit dem "ubuntu-system" target zu kombinieren, allerdings würde das die Lesbarkeit des Bakefiles verringern, da man nun spezielle Funktionen und konditionelle Anweisungen im Bakefile-Target verwenden müsste.
 
-\inputminted[firstline=52,lastline=62]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+\begin{listing}[H]
+    \inputminted[firstline=52,lastline=62]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+    \caption{Ausschnitt aus "docker-bake.hcl"}
+\end{listing}
 
 \subsection{Bakefile Target "ubuntu-dev-container"}
 
 Dieses Target ist das letzte Target und erstellt die Entwicklungscontainer. Diese Container sind identisch zum Spack-Produktionscontainer, allerdings wird hier ein anderes Target verwendet ("JULEA\_dependncies"). Dieses Target hat JULEA noch nicht kompiliert und lediglich die nötigen Abhängigkeiten mit Spack installiert.
 
-\inputminted[firstline=64]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+\begin{listing}[H]
+    \inputminted[firstline=64]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+    \caption{Ausschnitt aus "docker-bake.hcl"}
+\end{listing}
 
 \section{CI}
 
@@ -363,9 +405,13 @@ Der Workflow kann in zwei Teilen illustriert werden
 
 Im Kopf der Workflows befinden sich die Metadaten, sowie Konfigurationsdaten des Workflows.
 
-\inputminted[firstline=0,lastline=10]{yaml}{./code-examples/containers-ci.yml}
+\begin{listing}[H]
+    \inputminted[firstline=0,lastline=10]{yaml}{./code-examples/containers-ci.yml}
+    \caption{Ausschnitt aus "containers-ci.yml"}
+    \label{lst:containers-ci-0-10}
+\end{listing}
 
-In Zeile 1 sehen wir den Anzeigenamen des Workflows, gefolgt von den Triggern, welche den Workflow auslösen. Es sind 3 Trigger definiert. 
+In Zeile 1 von \cref{lst:containers-ci-0-10} sehen wir den Anzeigenamen des Workflows, gefolgt von den Triggern, welche den Workflow auslösen. Es sind 3 Trigger definiert. 
 
 Der erste Trigger – "workflow\_dispatch" – ist ein manueller Trigger. Dieser Trigger ermöglicht es den Workflow manuell aus der GitHub Actions Oberfläche zu starten. Dies ist kein essenzieller Trigger und ohne ihn würde der Workflow auch ohne Probleme funktionieren. Allerdings hat es sich an einigen Stellen als sehr nützlich erwiesen den Workflow manuell zu starten. Eine davon ist das manuelle regenerieren der Containerimages, wenn man diese für eine lange Zeit nicht mehr erstellt hat. Außerdem kann man mit dieser Funktion auch den Workflow auf spezifischen Branches, sowie Tags ausführen.
 
@@ -383,7 +429,11 @@ Die eigentlichen Schritte des Workflows befinden sich im zweiten Teil des Workfl
 
 Der erste ausgeführter Job ist der "Prepare" Job. Dieser Job generiert die nötigen Daten aus dem Bakefile, um anschließend die einzelnen Containertargets parallel zu erstellen.
 
-\inputminted[firstline=12,lastline=23]{yaml}{./code-examples/containers-ci.yml}
+\begin{listing}[H]
+    \inputminted[firstline=12,lastline=23]{yaml}{./code-examples/containers-ci.yml}
+    \caption{Ausschnitt aus "containers-ci.yml"}
+    \label{lst:containers-ci-12-23}
+\end{listing}
 
 In Zeile 14 wird definiert, auf welchem Betriebssystem der Job laufen soll. Hierbei wurde sich für Ubuntu entschieden. 
 Anschließend wird die Ausgabe des Jobs definiert. Diese Ausgabe gibt der Job weiter an alle Jobs, welche vom Job abhängig sind.
@@ -400,7 +450,11 @@ Da dieser Code-Abschnitt etwas länger ist, wird er in mehreren Teilen erläuter
 
 \paragraph{Kopf}
 
-\inputminted[firstline=25,lastline=35]{yaml}{./code-examples/containers-ci.yml}
+\begin{listing}
+    \inputminted[firstline=25,lastline=35]{yaml}{./code-examples/containers-ci.yml}
+    \caption{Ausschnitt aus "containers-ci.yml"}
+    \label{lst:containers-ci-25-35}
+\end{listing}
 
 Im Kopf des Jobs werden wieder Name und Betriebssystem definiert. Anschließend wird mit "needs" die Abhängigkeit zum vorherigen "Prepare"-Job gesetzt. Im anschluss in Zeile 30 bis 33 wird die Matrixstrategie definiert. Hierbei wird die Ausgabe des Jobs "Prepare" verwendet, was in Zeile 33 explizit definiert wird. In Zeile 31 wird "fail-fast" deaktiviert. Fail-Fast ist ein feature der Matrixstrategie, welches alle parallelen Ausführungen des Jobs stoppt, sobald einer fehlschlägt. Dies ist in diesem Fall nicht erwünscht.
 
@@ -418,6 +472,10 @@ Nun wird Docker Buildx initialisiert, um später die Docker-Bakefile Targets zu 
 
 \paragraph{Erstellen der Containertargets}
 
-\inputminted[firstline=50,lastline=60]{yaml}{./code-examples/containers-ci.yml}
+\begin{listing}[H]
+    \inputminted[firstline=50,lastline=60]{yaml}{./code-examples/containers-ci.yml}
+    \caption{Ausschnitt aus "containers-ci.yml"}
+    \label{lst:containers-ci-50-60}
+\end{listing}
 
 Nach der Initialisierung erfolgt nun das Erstellen der Containerimages. Es werden mit dem "env" Schlüssel die Variablen "COMMIT\_SHA" und "BASE\_IMAGE\_NAME" der Docker-Bakefile gesetzt. Danach werden die Docker-Bakefile-Argumente in Zeile 55 bis 60 gesetzt. Es wird der Target aus der Matrixstrategie gesetzt, das Veröffentlichen der erstellten Dockerimages aktiviert und die Docker-Bake-File definiert.

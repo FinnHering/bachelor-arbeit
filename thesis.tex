@@ -93,7 +93,8 @@
 \MakeOuterQuote{"}
 
 \usepackage[hidelinks]{hyperref}
-\usepackage[capitalise,noabbrev]{cleveref}
+\usepackage[capitalise,noabbrev,german]{cleveref}
+
 
 \graphicspath{{./figures/}}
 
@@ -141,8 +142,11 @@
 \maketitle
 
 \begin{abstract}
-  \lipsum[1]
+Die immer steigende Rechenleistung hat zur Folge, dass in der Wissenschaft und insbesondere im High Performance Computing (HPC) Bereich die Komplexität der Problemstellung aufgrund der erhöhten Rechen-Ressourcen steigen. Dies hat zur Folge, dass somit auch die Applikationen, welche diese Problemstellungen lösen komplexer werden. Komplexe Applikationen haben oft viele direkte oder indirekte Abhängigkeiten und Systemvoraussetzung, welche das manuelle Ausrollen der Applikation sehr fehlernanfällig und zeitaufwendig machen. 
 
+Um das Problem des Ausrollens von komplexen Applikationen zu minimieren, wird in dieser Arbeit anhand einer Beispielapplikation – "JULEA" – eine referenzimplementierung der Containerisierung modelliert und implementiert. Anschließend wird die Performance der Containersierung von JULEA anhand eines Apptainer Container im vergleich zu der nativen Installation von JULEA auf einem HPC-System evaluiert.
+
+Die Ergebnisse zeigen, dass die Containerisierung von JULEA keine signifikanten Performance-Einbußen hat und die Containerisierung von JULEA eine gute Alternative zur nativen Installation von JULEA ist. Die Containerisierung von JULEA hat den Vorteil, dass die Installation von JULEA auf einem HPC-System vereinfacht und reproduzierbar wird. Außerdem wird dem ausrollenden das Kompilieren der Abhängigkeiten für JULEA abgenommen, da die Abhängigkeiten mit dem Containerimage mitgeliefert werden.
 \end{abstract}
 
 \tableofcontents
@@ -167,21 +171,8 @@
 
 \include{chapters/05_evaluation}
 
-\chapter{Conclusion}
-\label{cha:conclusion}
+\include{chapters/06_conclusion}
 
-\textit{In this chapter, ...}
-
-\section{Todos}
-
-\todo[inline]{FIXME}
-
-\lipsum[1-2]
-\todo{FIXME: remove this}
-
-\section*{Summary}
-
-\lipsum[2]
 
 \printbibliography
 

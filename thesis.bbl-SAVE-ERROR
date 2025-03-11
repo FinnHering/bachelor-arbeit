@@ -19,6 +19,27 @@
 
 \refsection{0}
   \datalist[entry]{nty/global//global/global/global}
+    \entry{2024StateSoftware}{online}{}{}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Explore our 10th Annual State of the Software Supply Chain Report to gain insights on open source consumption, growing risks, and development efficiency.}
+      \field{langid}{american}
+      \field{title}{2024 {{State}} of the {{Software Supply Chain Report}} | {{Scale}} of {{Open Source}}}
+      \field{urlday}{9}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/9MAQB8RE/scale.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.sonatype.com/state-of-the-software-supply-chain/2024/scale
+      \endverb
+      \verb{url}
+      \verb https://www.sonatype.com/state-of-the-software-supply-chain/2024/scale
+      \endverb
+    \endentry
     \entry{apptainerApptainerPortableReproducible}{online}{}{}
       \name{author}{1}{}{%
         {{hash=79ec40623b09578724f5e88e75630f03}{%
@@ -378,44 +399,63 @@
       \endverb
       \keyw{benchmark,Benchmark testing,bind mounts,Containers,containers-based virtualization,Docker,file system performance,File systems,FileBench,modeling,Operating systems,Security,Telecommunications,volumes,Writing}
     \endentry
-    \entry{ermakovTestingDockerPerformance2017}{article}{}{}
+    \entry{fachrudinImplementationAnalysisContainer2025}{article}{}{}
       \name{author}{2}{}{%
-        {{hash=e80c333549fc0d3ab1afc28cde0fb8d6}{%
-           family={Ermakov},
-           familyi={E\bibinitperiod},
-           given={Alexey},
-           giveni={A\bibinitperiod}}}%
-        {{hash=1f53a1354cf65e80124e217f667b92c7}{%
-           family={Vasyukov},
-           familyi={V\bibinitperiod},
-           given={Alexey},
-           giveni={A\bibinitperiod}}}%
+        {{hash=d2325ba1c39df255ded37d5809269666}{%
+           family={Fachrudin},
+           familyi={F\bibinitperiod},
+           given={Mochamad\bibnamedelima Rizal},
+           giveni={M\bibinitperiod\bibinitdelim R\bibinitperiod}}}%
+        {{hash=847fba061e25fc82e053816c989a71b5}{%
+           family={Affandi},
+           familyi={A\bibinitperiod},
+           given={Arif\bibnamedelima Saivul},
+           giveni={A\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
       }
-      \strng{namehash}{5638b7a4d7097585b0f86e242f87f5de}
-      \strng{fullhash}{5638b7a4d7097585b0f86e242f87f5de}
-      \strng{fullhashraw}{5638b7a4d7097585b0f86e242f87f5de}
-      \strng{bibnamehash}{5638b7a4d7097585b0f86e242f87f5de}
-      \strng{authorbibnamehash}{5638b7a4d7097585b0f86e242f87f5de}
-      \strng{authornamehash}{5638b7a4d7097585b0f86e242f87f5de}
-      \strng{authorfullhash}{5638b7a4d7097585b0f86e242f87f5de}
-      \strng{authorfullhashraw}{5638b7a4d7097585b0f86e242f87f5de}
-      \field{labelalpha}{EV17}
-      \field{sortinit}{E}
-      \field{sortinithash}{8da8a182d344d5b9047633dfc0cc9131}
+      \strng{namehash}{cdafc585d3e10d0557e74343551a0bcc}
+      \strng{fullhash}{cdafc585d3e10d0557e74343551a0bcc}
+      \strng{fullhashraw}{cdafc585d3e10d0557e74343551a0bcc}
+      \strng{bibnamehash}{cdafc585d3e10d0557e74343551a0bcc}
+      \strng{authorbibnamehash}{cdafc585d3e10d0557e74343551a0bcc}
+      \strng{authornamehash}{cdafc585d3e10d0557e74343551a0bcc}
+      \strng{authorfullhash}{cdafc585d3e10d0557e74343551a0bcc}
+      \strng{authorfullhashraw}{cdafc585d3e10d0557e74343551a0bcc}
+      \field{labelalpha}{FA25}
+      \field{sortinit}{F}
+      \field{sortinithash}{2638baaa20439f1b5a8f80c6c08a13b4}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
-      \field{abstract}{The main goal for this article is to compare performance penalties when using KVM virtualization and Docker containers for creating isolated environments for HPC applications. The article provides both data obtained using commonly accepted synthetic tests (High Performance Linpack) and real life applications (OpenFOAM). The article highlights the influence on resulting application performance of major infrastructure configuration options: CPU type presented to VM, networking connection type used.}
-      \field{day}{18}
-      \field{month}{4}
-      \field{title}{Testing {{Docker Performance}} for {{HPC Applications}}}
-      \field{year}{2017}
+      \field{abstract}{Containerization enables isolation within a host, with Docker being a popular tool for packaging applications and their dependencies in container images. However, challenges like slow build processes and bloated image sizes can consume resources, slow down builds, and pose security risks. This study optimizes Docker images by combining the Alpine base image with multi-stage builds, analyzing size, build speed, and security across different combinations and environments to identify and propose the most efficient combination solution. The approach used is a quantitative quasi-experiment with a within-subject design. The sample used was a JavaScript framework, with the main experimental group being the combination of Alpine and multi-stage builds, while the comparison group included combinations of Node and Node-Alpine, both in single-stage and multi-stage configurations, as well as single-stage Alpine. Data was obtained from CI/CD, container registry, and Trivy reports. Analyzed by descriptive analysis, One-Way ANOVA or Kruskal Wallis test, and post-hoc test. The results show that combining multi-stage builds with Alpine is considered best practice because it produces the smallest image size, reducing it by up to 94\% compared to single-stage Node. It also achieves the shortest build times across all environments and presents low vulnerability issues. However, it is important to note that while the Alpine multi-stage combination offers the most efficient build times, it experiences a 1.3x increase in duration in low-spec environments.}
+      \field{day}{3}
+      \field{issn}{2549-8045}
+      \field{issue}{1}
+      \field{journaltitle}{Teknika}
+      \field{langid}{english}
+      \field{month}{3}
+      \field{number}{1}
+      \field{title}{Implementation and {{Analysis}} of {{Container Image Optimization Using Alpine Linux}} and {{Multi-Stage Builds}}}
+      \field{urlday}{9}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{volume}{14}
+      \field{year}{2025}
       \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{9\bibrangedash 18}
+      \range{pages}{10}
       \verb{doi}
-      \verb 10.48550/arXiv.1704.05592
+      \verb 10.34148/teknika.v14i1.1118
       \endverb
       \verb{file}
-      \verb /Users/finn/Zotero/storage/SZNYLCVW/Ermakov und Vasyukov - 2017 - Testing Docker Performance for HPC Applications.pdf
+      \verb /Users/finn/Zotero/storage/VESEEIGK/Fachrudin und Affandi - 2025 - Implementation and Analysis of Container Image Optimization Using Alpine Linux and Multi-Stage Build.pdf
       \endverb
+      \verb{urlraw}
+      \verb https://ejournal.ikado.ac.id/index.php/teknika/article/view/1118
+      \endverb
+      \verb{url}
+      \verb https://ejournal.ikado.ac.id/index.php/teknika/article/view/1118
+      \endverb
+      \keyw{Building Time,Docker Image,Optimization,Size,Vulnerability}
     \endentry
     \entry{githubGitHubActions}{online}{}{}
       \name{author}{1}{}{%
@@ -457,6 +497,64 @@
       \verb{url}
       \verb https://github.com/features/actions
       \endverb
+    \endentry
+    \entry{huExploringPerformanceSingularity2019}{inproceedings}{}{}
+      \name{author}{3}{}{%
+        {{hash=edb6375d8764555fde1f62f2a102b653}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Guangchao},
+           giveni={G\bibinitperiod}}}%
+        {{hash=e760d38078aff4a5b24c867aa5178c26}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Yang},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=584582dd5e1e8e9100b2de7cdaced7b4}{%
+           family={Chen},
+           familyi={C\bibinitperiod},
+           given={Wenbo},
+           giveni={W\bibinitperiod}}}%
+      }
+      \strng{namehash}{dac4b76d6f914f46c3e8e6fdb124672a}
+      \strng{fullhash}{dac4b76d6f914f46c3e8e6fdb124672a}
+      \strng{fullhashraw}{dac4b76d6f914f46c3e8e6fdb124672a}
+      \strng{bibnamehash}{dac4b76d6f914f46c3e8e6fdb124672a}
+      \strng{authorbibnamehash}{dac4b76d6f914f46c3e8e6fdb124672a}
+      \strng{authornamehash}{dac4b76d6f914f46c3e8e6fdb124672a}
+      \strng{authorfullhash}{dac4b76d6f914f46c3e8e6fdb124672a}
+      \strng{authorfullhashraw}{dac4b76d6f914f46c3e8e6fdb124672a}
+      \field{labelalpha}{HZC19}
+      \field{sortinit}{H}
+      \field{sortinithash}{23a3aa7c24e56cfa16945d55545109b5}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Traditional hypervisor-based virtualization solutions have not been commonly used in High Performance Computing (HPC) due to the performance overhead. Container-based virtualization technologies represented by Linux Container and Docker can provide better resource sharing, customized environments and low overhead. However, they still can't satisfy the functional and security needs in HPC environments. Singularity is an attractive container-based approach to meet the requirements of scientific applications. Its characteristics such as mobility of compute, reproducibility, user freedom and support on existing traditional HPC, can effectively solve some flaws compared to other virtualization technologies. In this paper, we conducted a detailed performance evaluation of CPU, memory and network bandwidth between Singularity and bare metal by using HPL, STREAM and OSU Micro benchmarks. Four typical HPC applications such as NAMD, VASP, AMBER, and WRF are deployed to further validate the performance overhead of Singularity. Furthermore, migration and compatibility of Singularity are also investigated. Results from the experiments show that Singularity can achieve near-native performance in MPI and GPU parallel applications, which also demonstrate that it has a greater application prospect in HPC.}
+      \field{booktitle}{2019 {{IEEE}} 21st {{International Conference}} on {{High Performance Computing}} and {{Communications}}; {{IEEE}} 17th {{International Conference}} on {{Smart City}}; {{IEEE}} 5th {{International Conference}} on {{Data Science}} and {{Systems}} ({{HPCC}}/{{SmartCity}}/{{DSS}})}
+      \field{eventtitle}{2019 {{IEEE}} 21st {{International Conference}} on {{High Performance Computing}} and {{Communications}}; {{IEEE}} 17th {{International Conference}} on {{Smart City}}; {{IEEE}} 5th {{International Conference}} on {{Data Science}} and {{Systems}} ({{HPCC}}/{{SmartCity}}/{{DSS}})}
+      \field{month}{8}
+      \field{title}{Exploring the {{Performance}} of {{Singularity}} for {{High Performance Computing Scenarios}}}
+      \field{urlday}{11}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{year}{2019}
+      \field{dateera}{ce}
+      \field{urldateera}{ce}
+      \field{pages}{2587\bibrangedash 2593}
+      \range{pages}{7}
+      \verb{doi}
+      \verb 10.1109/HPCC/SmartCity/DSS.2019.00362
+      \endverb
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/8P6KJ42F/Hu et al. - 2019 - Exploring the Performance of Singularity for High Performance Computing Scenarios.pdf;/Users/finn/Zotero/storage/NMMPVFWY/8855563.html
+      \endverb
+      \verb{urlraw}
+      \verb https://ieeexplore.ieee.org/abstract/document/8855563
+      \endverb
+      \verb{url}
+      \verb https://ieeexplore.ieee.org/abstract/document/8855563
+      \endverb
+      \keyw{Conferences,Data science,Handheld computers,High performance computing,Singularity container HPC application MPI GPU,Smart cities}
     \endentry
     \entry{kuhnJULEAFlexibleStorage2017}{inproceedings}{}{}
       \name{author}{1}{}{%
@@ -583,138 +681,118 @@
       \endverb
       \keyw{Box and whisker plot,Data analysis,Data Analysis,Data visualization,decision making,Decision making,Exploratory data analysis,Industries,Motion pictures,Remuneration,Shape,VB.NET,Windows application}
     \endentry
-    \entry{malanContainerizingCS50Standardizing2024}{inproceedings}{}{}
-      \name{author}{1}{}{%
-        {{hash=44cdaec3ccb4f770462a3c0f71885896}{%
-           family={Malan},
+    \entry{moreauContainersComputationalReproducibility2023}{article}{}{}
+      \name{author}{3}{}{%
+        {{hash=490326f73d892a72c79f5833becc68a8}{%
+           family={Moreau},
            familyi={M\bibinitperiod},
-           given={David\bibnamedelima J.},
-           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
-      }
-      \list{location}{1}{%
-        {Milan Italy}%
+           given={David},
+           giveni={D\bibinitperiod}}}%
+        {{hash=99c0c04d962cee142b542330dee28690}{%
+           family={Wiebels},
+           familyi={W\bibinitperiod},
+           given={Kristina},
+           giveni={K\bibinitperiod}}}%
+        {{hash=b23d21a39d596cb65c7411216d994660}{%
+           family={Boettiger},
+           familyi={B\bibinitperiod},
+           given={Carl},
+           giveni={C\bibinitperiod}}}%
       }
       \list{publisher}{1}{%
-        {ACM}%
+        {Nature Publishing Group}%
       }
-      \strng{namehash}{44cdaec3ccb4f770462a3c0f71885896}
-      \strng{fullhash}{44cdaec3ccb4f770462a3c0f71885896}
-      \strng{fullhashraw}{44cdaec3ccb4f770462a3c0f71885896}
-      \strng{bibnamehash}{44cdaec3ccb4f770462a3c0f71885896}
-      \strng{authorbibnamehash}{44cdaec3ccb4f770462a3c0f71885896}
-      \strng{authornamehash}{44cdaec3ccb4f770462a3c0f71885896}
-      \strng{authorfullhash}{44cdaec3ccb4f770462a3c0f71885896}
-      \strng{authorfullhashraw}{44cdaec3ccb4f770462a3c0f71885896}
-      \field{labelalpha}{Mal24}
+      \strng{namehash}{1601c6ba09d9ed886308a4df4cc33f51}
+      \strng{fullhash}{1601c6ba09d9ed886308a4df4cc33f51}
+      \strng{fullhashraw}{1601c6ba09d9ed886308a4df4cc33f51}
+      \strng{bibnamehash}{1601c6ba09d9ed886308a4df4cc33f51}
+      \strng{authorbibnamehash}{1601c6ba09d9ed886308a4df4cc33f51}
+      \strng{authornamehash}{1601c6ba09d9ed886308a4df4cc33f51}
+      \strng{authorfullhash}{1601c6ba09d9ed886308a4df4cc33f51}
+      \strng{authorfullhashraw}{1601c6ba09d9ed886308a4df4cc33f51}
+      \field{labelalpha}{MWB23}
       \field{sortinit}{M}
       \field{sortinithash}{4625c616857f13d17ce56f7d4f97d451}
       \field{labelnamesource}{author}
-      \field{labeltitlesource}{shorttitle}
-      \field{abstract}{We argue in favor of Docker containers as alternatives to clusters of servers or virtual machines for students in introductory programming courses. We present our experience with the same since 2015 in CS50 at Harvard University as well as the pedagogical and operational motivations therefor. We present, too, the evolution of our environments for students over the years, from an on-campus cluster, to an off-campus cloud, to client-side virtual machines, to Docker containers, discussing the trade-offs of each. Not only do containers provide students with a standardized environment, reducing technical difficulties and frequently asked questions at term’s start, they also provide instructors with full control over the software in use and versions thereof, additionally allowing instructors to deploy updates mid-semester. Particularly for large courses with hundreds or even thousands of students, containers allow staff to focus more of their time on teaching than on technical support. And, coupled with text editors that support extensions or plugins, containers allow instructors to optimize students’ environment for learning, while still acquainting students with industry-standard tools. Most recently implemented atop GitHub Codespaces, a cloud-based version of Visual Studio Code, our own container-based solutions have since been used by more than 700,000 students and teachers, both on campus and off, and are also freely available to any teacher or student outside of our own university.}
-      \field{booktitle}{Proceedings of the 2024 on {{Innovation}} and {{Technology}} in {{Computer Science Education V}}. 1}
-      \field{day}{3}
-      \field{eventtitle}{{{ITiCSE}} 2024: {{Innovation}} and {{Technology}} in {{Computer Science Education}}}
-      \field{isbn}{9798400706004}
+      \field{labeltitlesource}{title}
+      \field{abstract}{The fast-paced development of computational tools has enabled tremendous scientific progress in recent years. However, this rapid surge of technological capability also comes at a cost, as it leads to an increase in the complexity of software environments and potential compatibility issues across systems. Advanced workflows in processing or analysis often require specific software versions and operating systems to run smoothly, and discrepancies across machines and researchers can impede reproducibility and efficient collaboration. As a result, scientific teams are increasingly relying on containers to implement robust, dependable research ecosystems. Originally popularized in software engineering, containers have become common in scientific projects, particularly in large collaborative efforts. In this Primer, we describe what containers are, how they work and the rationale for their use in scientific projects. We review state-of-the-art implementations in diverse contexts and fields, with examples in various scientific fields. Finally, we discuss the possibilities enabled by the widespread adoption of containerization, especially in the context of open and reproducible research, and propose recommendations to facilitate seamless implementation across platforms and domains, including within high-performance computing clusters such as those typically available at universities and research institutes.}
+      \field{day}{13}
+      \field{issn}{2662-8449}
+      \field{journaltitle}{Nature Reviews Methods Primers}
       \field{langid}{english}
       \field{month}{7}
-      \field{shorttitle}{Containerizing {{CS50}}}
-      \field{title}{Containerizing {{CS50}}: {{Standardizing Students}}' {{Programming Environments}}}
-      \field{urlday}{31}
-      \field{urlmonth}{10}
-      \field{urlyear}{2024}
-      \field{year}{2024}
+      \field{number}{1}
+      \field{shortjournal}{Nat Rev Methods Primers}
+      \field{title}{Containers for Computational Reproducibility}
+      \field{urlday}{10}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{volume}{3}
+      \field{year}{2023}
       \field{dateera}{ce}
       \field{urldateera}{ce}
-      \field{pages}{534\bibrangedash 540}
-      \range{pages}{7}
+      \field{pages}{1\bibrangedash 16}
+      \range{pages}{16}
       \verb{doi}
-      \verb 10.1145/3649217.3653567
-      \endverb
-      \verb{file}
-      \verb /Users/finn/Zotero/storage/SR6UYDT5/Malan - 2024 - Containerizing CS50 Standardizing Students' Programming Environments.pdf
+      \verb 10.1038/s43586-023-00236-9
       \endverb
       \verb{urlraw}
-      \verb https://dl.acm.org/doi/10.1145/3649217.3653567
+      \verb https://www.nature.com/articles/s43586-023-00236-9
       \endverb
       \verb{url}
-      \verb https://dl.acm.org/doi/10.1145/3649217.3653567
+      \verb https://www.nature.com/articles/s43586-023-00236-9
       \endverb
+      \keyw{Research management,Software}
     \endentry
-    \entry{shudlerSpackMeetsSingularity2019}{inproceedings}{}{}
-      \name{author}{5}{}{%
-        {{hash=32aee5eaaca43c9154263bde15fdc49c}{%
-           family={Shudler},
-           familyi={S\bibinitperiod},
-           given={Sergei},
-           giveni={S\bibinitperiod}}}%
-        {{hash=1279cefa12b624bee4a3b09423cd5edd}{%
-           family={Ferrier},
-           familyi={F\bibinitperiod},
-           given={Nicola},
-           giveni={N\bibinitperiod}}}%
-        {{hash=967c8ec8eced02f1958ce47369e2461d}{%
-           family={Insley},
-           familyi={I\bibinitperiod},
-           given={Joseph},
-           giveni={J\bibinitperiod}}}%
-        {{hash=40004a2252db0d08567098b4d192b87f}{%
-           family={Papka},
-           familyi={P\bibinitperiod},
-           given={Michael\bibnamedelima E.},
-           giveni={M\bibinitperiod\bibinitdelim E\bibinitperiod}}}%
-        {{hash=18bcf5f59147089e40689262834c766b}{%
-           family={Rizzi},
+    \entry{rajaramanFrontierWorldsFirst2023}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=5006f22b22cc881544e74908a57f048a}{%
+           family={Rajaraman},
            familyi={R\bibinitperiod},
-           given={Silvio},
-           giveni={S\bibinitperiod}}}%
+           given={V.},
+           giveni={V\bibinitperiod}}}%
       }
-      \list{location}{1}{%
-        {New York, NY, USA}%
-      }
-      \list{publisher}{1}{%
-        {Association for Computing Machinery}%
-      }
-      \strng{namehash}{194f295c3068c26d5ee58133887b3b0c}
-      \strng{fullhash}{46ca89c829b14b03dd64b724f592db74}
-      \strng{fullhashraw}{46ca89c829b14b03dd64b724f592db74}
-      \strng{bibnamehash}{194f295c3068c26d5ee58133887b3b0c}
-      \strng{authorbibnamehash}{194f295c3068c26d5ee58133887b3b0c}
-      \strng{authornamehash}{194f295c3068c26d5ee58133887b3b0c}
-      \strng{authorfullhash}{46ca89c829b14b03dd64b724f592db74}
-      \strng{authorfullhashraw}{46ca89c829b14b03dd64b724f592db74}
-      \field{labelalpha}{Shu+19}
-      \field{sortinit}{S}
-      \field{sortinithash}{b164b07b29984b41daf1e85279fbc5ab}
+      \strng{namehash}{5006f22b22cc881544e74908a57f048a}
+      \strng{fullhash}{5006f22b22cc881544e74908a57f048a}
+      \strng{fullhashraw}{5006f22b22cc881544e74908a57f048a}
+      \strng{bibnamehash}{5006f22b22cc881544e74908a57f048a}
+      \strng{authorbibnamehash}{5006f22b22cc881544e74908a57f048a}
+      \strng{authornamehash}{5006f22b22cc881544e74908a57f048a}
+      \strng{authorfullhash}{5006f22b22cc881544e74908a57f048a}
+      \strng{authorfullhashraw}{5006f22b22cc881544e74908a57f048a}
+      \field{labelalpha}{Raj23}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
       \field{labelnamesource}{author}
-      \field{labeltitlesource}{shorttitle}
-      \field{abstract}{In-situ data analysis and visualization is a promising technique to handle the enormous amount of data an extreme-scale application produces. One challenge users often face in adopting in-situ techniques is setting the right environment on a target machine. Platforms such as SENSEI require complex software stacks that consist of various analysis packages and visualization applications. The user has to make sure all these prerequisites exist on the target machine, which often involves compiling and setting them up from scratch. In this paper, we leverage the containers technology (e.g., light-weight virtualization images) and provide users with Singularity containers that encapsulate ready-to-use, movable in-situ software stacks. Moreover, we make use of Spack to ease the process of creating these containers. Finally, we evaluate this solution by running in-situ analysis from within a container on an HPC system.}
-      \field{booktitle}{Proceedings of the {{Workshop}} on {{In Situ Infrastructures}} for {{Enabling Extreme-Scale Analysis}} and {{Visualization}}}
-      \field{day}{18}
-      \field{isbn}{978-1-4503-7723-2}
-      \field{month}{11}
-      \field{series}{{{ISAV}} '19}
-      \field{shorttitle}{Spack Meets Singularity}
-      \field{title}{Spack Meets Singularity: Creating Movable in-Situ Analysis Stacks with Ease}
-      \field{urlday}{31}
-      \field{urlmonth}{10}
-      \field{urlyear}{2024}
-      \field{year}{2019}
+      \field{labeltitlesource}{title}
+      \field{abstract}{A race began around 2010 among many countries to build a supercomputer that would breach the ExaFLOPS (1018 floatingpoint operations per second) barrier, a formidable goal. Frontier, a supercomputer designed by a team of engineers from Cray-HPE and the Oak Ridge National Laboratory, achieved this goal in May 2022. It executed the HPLinpack benchmark program at a speed of 1.102 ExaFLOPS. In this article, I trace the events leading up to the design of Frontier and its architecture. I also describe various benchmarks used to compare the speeds of high-performance computers.}
+      \field{day}{1}
+      \field{issn}{0973-712X}
+      \field{journaltitle}{Resonance}
+      \field{langid}{english}
+      \field{month}{4}
+      \field{number}{4}
+      \field{shortjournal}{Reson}
+      \field{title}{Frontier — {{World}}’s {{First ExaFLOPS Supercomputer}}}
+      \field{urlday}{9}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{volume}{28}
+      \field{year}{2023}
       \field{dateera}{ce}
       \field{urldateera}{ce}
-      \field{pages}{34\bibrangedash 38}
-      \range{pages}{5}
+      \field{pages}{567\bibrangedash 576}
+      \range{pages}{10}
       \verb{doi}
-      \verb 10.1145/3364228.3364682
-      \endverb
-      \verb{file}
-      \verb /Users/finn/Zotero/storage/CJDSSMG2/Shudler et al. - 2019 - Spack meets singularity creating movable in-situ analysis stacks with ease.pdf
+      \verb 10.1007/s12045-023-1583-7
       \endverb
       \verb{urlraw}
-      \verb https://dl.acm.org/doi/10.1145/3364228.3364682
+      \verb https://doi.org/10.1007/s12045-023-1583-7
       \endverb
       \verb{url}
-      \verb https://dl.acm.org/doi/10.1145/3364228.3364682
+      \verb https://doi.org/10.1007/s12045-023-1583-7
       \endverb
+      \keyw{Exascale computers,Frontier HPC architecture,GPGPUs in HPC,HPC benchmarks}
     \endentry
     \entry{stengelStatistikUndAufbereitung2011}{book}{}{}
       \name{author}{3}{}{%
