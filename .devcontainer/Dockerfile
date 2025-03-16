@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/islandoftex/images/texlive:TL2024-2024-12-22-full-doc-src
+FROM registry.gitlab.com/islandoftex/images/texlive:TL2025-2025-03-16-full-doc-src
 
 RUN apt update \
     && apt upgrade -y \

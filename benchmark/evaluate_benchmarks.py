@@ -42,6 +42,20 @@ def parse_all_files(dir: Path) -> list[pd.DataFrame]:
     return [parse_file(file) for file in dir.iterdir() if file.is_file() and file.suffix == ".out"]
 
 
+def write_full_performance_result(dir: Path):
+    performances = parse_all_files(dir)
+
+   
+    for i,k in enumerate(performances):
+        k["iteration"] = i + 1
+
+    pfs = pd.concat(performances, ignore_index=True)
+    print(pfs)
+
+    pfs.to_latex(dir / "all_performance.tex", index=False, escape=True, longtable=True)
+    pfs.to_csv(dir / "all_performance.csv", index=False)
+
+
 def create_performance_result(dir: Path) -> pd.DataFrame:
     performances = parse_all_files(dir)
    
@@ -216,7 +230,8 @@ def plot_compressed_subname_differences():
         metrics = ["operations", "total_elapsed"]
 
         for metric in metrics:
-            subres[f"difference_{metric}"] = subres[f"{metric}_x"] / subres[f"{metric}_y"]
+            subres[f"difference_{metric}"] = ( subres[f"{metric}_x"] / subres[f"{metric}_y"] ) - 1
+
 
         sub_dir_name = sub.strip("/")
         p = Path(f"benchmark/vis/compressed/differences/{sub_dir_name}")
@@ -224,17 +239,20 @@ def plot_compressed_subname_differences():
 
         for metric in metrics:
             plt.subplots_adjust(left=0.5)
-            fig, ax = plt.subplots(figsize=(30, 40))
+            fig, ax = plt.subplots(figsize=(8.0, 8.0))#figsize=(30, 40))
 
-            ax = sns.barplot(data=subres, x=f"difference_{metric}", y="name", orient="h")
+            ax = sns.barplot(data=subres, y="name", x=f"difference_{metric}", orient='h', width=0.7)
             ax.xaxis.set_ticks_position('bottom')
-            ax.tick_params(which='major', width=1.00)
-            ax.tick_params(which='major', length=5)
-            ax.tick_params(which='minor', width=0.75)
-            ax.tick_params(which='minor', length=2.5)
-            ax.xaxis.set_major_locator(MultipleLocator(1))
-            ax.xaxis.set_minor_locator(MultipleLocator(0.1))
-            plt.tight_layout()
+            ratio = 0.9
+            x_left, x_right = ax.get_xlim()
+            y_low, y_high = ax.get_ylim()
+            ax.set_aspect(abs((x_right-x_left)/(y_low-y_high))*ratio)
+            ax.tick_params(axis='y', which='major', width=1)
+            ax.tick_params(axis='y', which='major', length=10)
+            wrap_labels(ax, 15)
+            #ax.yaxis.set_major_locator(MultipleLocator(1))
+            #ax.yaxis.set_minor_locator(MultipleLocator(0.1))
+            #plt.tight_layout()
             plt.savefig(p / f"difference_{metric}.svg")
 
 
@@ -324,10 +342,10 @@ def plot_compressed_subname_boxplots_raw():
         p = Path(f"benchmark/vis/compressed/boxplots/system/{sub.strip('/')}")
         p.mkdir(parents=True, exist_ok=True)
 
-        plt.figure(figsize=(30, 10))
+        plt.figure(figsize=(10, 10))
         ax = sns.boxplot(data=sub_data_sys, x="operations", y="name")
         ax.title.set_text(f"System - {sub.strip('/')}")
-        plt.tight_layout()
+        #plt.tight_layout()
         plt.savefig(p / "boxplot.svg")
 
     # Process apptainer data
@@ -409,6 +427,17 @@ def plot_full_subname_boxplots_raw():
         plt.tight_layout()
         plt.savefig(p / "boxplot.svg")
 
+
+import textwrap
+def wrap_labels(ax, width, break_long_words=False):
+
+    labels = []
+    for label in ax.get_yticklabels():
+        text = label.get_text()
+        labels.append(textwrap.fill(text, width=width,
+                      break_long_words=break_long_words))
+    ax.set_yticklabels(labels, rotation=0)
+
 if __name__ == "__main__":
 
 
@@ -438,5 +467,9 @@ if __name__ == "__main__":
     plot_compressed_boxplots_raw()
     plt.close('all')
     #export_boxplots()
+
+    write_full_performance_result(Path("benchmark/system"))
+    write_full_performance_result(Path("benchmark/apptainer"))
+
 
 

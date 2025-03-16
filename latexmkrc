@@ -8,6 +8,6 @@ $continuous_mode = 1;
 $log_file = 'latexmk.log';
 
 # Zusätzliche Optionen für pdflatex
-$pdflatex = 'pdflatex -synctex=1 %O --shell-escape %S';
+$pdflatex = 'pdflatex -synctex=1 %O --shell-escape --main-memory=100000000 %S';
 
 @default_files = ('thesis');

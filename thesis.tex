@@ -31,6 +31,7 @@
 
 % Enabling caching causes problems with overleaf..
 \usepackage{minted}
+\raggedbottom
 
 
 \setminted{
@@ -57,7 +58,11 @@
 \usepackage{lmodern}
 \usepackage{newtxmath}
 
-\usepackage{longtable}
+
+\usepackage{tabularx}
+\usepackage{longtable} %needs package ninecolors.sty
+\usepackage{booktabs}
+\usepackage[l3]{csvsimple} % or "\usepackage{csvsimple-l3}"
 
 \usepackage{svg}
 \svgsetup{inkscapepath=svgsubdir}
@@ -172,6 +177,8 @@ Die Ergebnisse zeigen, dass die Containerisierung von JULEA keine signifikanten 
 \include{chapters/05_evaluation}
 
 \include{chapters/06_conclusion}
+
+\include{chapters/07_appendix}
 
 
 \printbibliography
