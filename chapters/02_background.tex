@@ -60,7 +60,7 @@ Jedes OCI-Container-Image hat die gleiche erste Schicht. Diese heißt "scratch".
 
 Es ist unüblich, dass man bei der Containerisierung einer Applikation mit dem "scratch"-Layer startet. Stattdessen startet man mit einem bereits existierenden Basis-Image.
 
-\subsection{Docker Build-Cache}
+\subsection{Docker Build-Cache} \label{sec:bg-docker-cache}
 
 Docker verfügt über Caching-Mechanismen, welche subsequente Builds beschleunigen \cite{dockerCache}. Das Caching funktioniert, indem Docker jedes einzelne "Layer" zwischenspeichert. Wenn sich die definition eines Layers in der Dockerfile ändert, müssen nur die Layer, welche direkt oder indirekt auf dem Layer aufbauen, neu ausgeführt werden. 
 
