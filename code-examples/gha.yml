@@ -1,35 +1,23 @@
-on:  
-  push:
-    branches:
-      - master
-
+name: GitHub Actions Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions
+# Ausführen, wenn ein neuer Commit gepusht wird
+on: [push]
 jobs:
-  build-container:
-    name: Build & Publish Julea Containers
-    # Angabe des Betriebssystems
+  Explore-GitHub-Actions:
+    # Betriebssystem, auf dem der Job ausgeführt wird
     runs-on: ubuntu-latest
-    
-    # Angabe der Schritte, die ausgeführt werden sollen
+    # Schritte, die der Job ausführt
     steps:
-      # Schritt 1: Bereitstellen und auschecken der Repository 
-      - name: Checkout
-        # Uses gibt an welche Aktion man ausführen möchte. Es gibt eine weite reihe an offiziellen und "community" Aktionen 
+      # Verwendung von vordefinierter Variable "github.event_name"
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      # Auschecken des Repository-Codes 
+      - name: Check out repository code
         uses: actions/checkout@v4
-
-      # Schritt 2: Authentifizieren bei der GitHub Container Registry (um Container zu pushen)
-      - name: Login to GitHub Container Registry
-        if: ${{ github.event_name != 'pull_request' }}
-        uses: docker/login-action@v3
-        
-        # With ermöglicht das übergeben von Parametern an die Aktion
-        with:
-          registry: ghcr.io
-          # Es wird ein JINJA-Template verwendet, um auf (vordefinierte) variablen zuzugreifen
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      # Schritt 3: Bauen und Pushen des Containers
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: ghcr.io/finnhering/julea:latest
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "This job's status is ${{ job.status }}."

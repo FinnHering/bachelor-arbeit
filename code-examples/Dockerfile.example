@@ -1,36 +1,7 @@
-FROM ubuntu:latest AS julea
-
-# Definiert die Shell für die RUN, CMD und ENTRYPOINT Anweisungen
-SHELL [ "/bin/bash", "-c" ]
-
-# Setzt argumente, die zur Buildzeit übergeben werden können
-ARG JULEA_SPACK_COMPILER="gcc"
-ARG CC="gcc"
-
-# Set Arbeitsverzeichnis im OCI-Container-Image
-WORKDIR /app
+FROM ubuntu:latest
 
 # Installiert die benötigten Pakete
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && apt-get -y upgrade
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install \ 
-    git \
-    python3 \
-    build-essential \
-    zstd \
-    ca-certificates \
-    git \
-    gnupg \
-    patchelf \
-    unzip \
-    clang 
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y update && DEBIAN_FRONTEND=noninteractive apt-get -y install cowsay
 
-# Kopiert den "scripts" order vom Host-Rechner in das Arbeitsverzeichnis /app des OCI-Container-Images
-COPY ./scripts/ /app/scripts/
-
-# Installiert die Abhängigkeiten für Julea und Kompiliert Julea
-RUN JULEA_SPACK_COMPILER=${JULEA_SPACK_COMPILER} JULEA_SPACK_DIR="/app/dependencies" /app/scripts/install-dependencies.sh
-
-RUN CC=${CC} . /app/scripts/environment.sh && \
-    meson setup --prefix="/app/julea-install" --buildtype="release" --werror "-Dgdbm_prefix=$(spack location --install-dir gdbm)" bld && \
-    ninja -C bld && \
-    ninja -C bld install 
+ENTRYPOINT [ "/usr/games/cowsay" ]
+CMD [ "Hello, Docker!" ]

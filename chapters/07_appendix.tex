@@ -1,7 +1,46 @@
-\chapter{Anhang}
+\chapter{Benchmarkskripts} \label{cha:appendix-benchmarkskripts}
+
+\section{Apptainer Benchmarkskripts}
+
+\begin{listing}[H]
+    \caption{"benchmark-apptainer-slurm.sh": Slurm Benchmarkskript für die Apptainer Ausführung}
+    \label{lst:appdx-slurm-benchmark-apptainer}
+    \inputminted{bash}{./code-examples/benchmark-apptainer-slurm.sh}
+\end{listing}
+
+\begin{listing}[H]
+    \caption{"benchmark-apptainer.sh": Benchmarkskript für die Apptainer Ausführung (durch Slurm-Skript aufgerufen)}
+    \label{lst:appdx-benchmark-apptainer}
+    \inputminted{bash}{./code-examples/benchmark-apptainer.sh}
+\end{listing}
+
+\section{System Benchmarkskripts}
+
+\begin{listing}[H]
+    \caption{"benchmark-system-slurm.sh": Slurm Benchmarkskript für die native Ausführung}
+    \label{lst:appdx-slurm-benchmark-system}
+    \inputminted{bash}{./code-examples/benchmark-system-slurm.sh}
+\end{listing}
+\pagebreak
+
+\begin{listing}[H]
+    \caption{"benchmark-system.sh" Benchmarkskript für die native Ausführung (durch Slurm-Skript aufgerufen)}
+    \label{lst:appdx-benchmark-system}
+    \inputminted{bash}{./code-examples/benchmark-system.sh}
+\end{listing}
 
 
-\input{./benchmark/apptainer/all_performance.tex}
+\chapter{Benchmarkdaten} \label{cha:appendix-benchmarkdaten}
+
+\section{Benchmarkdaten Apptainer}
+
+\csvautolongtabularray[respect all]{./benchmark/apptainer/all_performance.csv}
+
+\section{Benchmarkdaten System} 
+
+\csvautolongtabularray[respect all]{./benchmark/system/all_performance.csv}
+%\input{./benchmark/apptainer/all_performance.tex}
+
 
 
 % \csvreader[

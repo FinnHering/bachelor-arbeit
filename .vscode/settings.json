@@ -7,6 +7,10 @@
     "latex-workshop.docker.enabled": false,
     "cSpell.words": [
         "Benchmarkergenisse",
-        "containerisierte"
+        "containerisierte",
+        "Entwickungscontainers",
+        "kleinzuhalten",
+        "Kompilierungsartefakte",
+        "Kompilierungszeitpunkt"
     ]
 }

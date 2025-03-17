@@ -76,7 +76,7 @@
       \verb https://apptainer.org/
       \endverb
     \endentry
-    \entry{apptainerSecurityApptainerApptainer}{online}{}{}
+    \entry{apptainerApptainerMPIApplications}{online}{}{}
       \name{author}{1}{}{%
         {{hash=79ec40623b09578724f5e88e75630f03}{%
            family={Apptainer},
@@ -95,6 +95,42 @@
       \field{sortinit}{A}
       \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
       \field{extraalpha}{2}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Apptainer and {{MPI}} Applications — {{Apptainer User Guide}} 1.0 Documentation}
+      \field{urlday}{17}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/UVGDP8ZL/mpi.html
+      \endverb
+      \verb{urlraw}
+      \verb https://apptainer.org/docs/user/1.0/mpi.html
+      \endverb
+      \verb{url}
+      \verb https://apptainer.org/docs/user/1.0/mpi.html
+      \endverb
+    \endentry
+    \entry{apptainerSecurityApptainerApptainer}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=79ec40623b09578724f5e88e75630f03}{%
+           family={Apptainer},
+           familyi={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{fullhash}{79ec40623b09578724f5e88e75630f03}
+      \strng{fullhashraw}{79ec40623b09578724f5e88e75630f03}
+      \strng{bibnamehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authorbibnamehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authornamehash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authorfullhash}{79ec40623b09578724f5e88e75630f03}
+      \strng{authorfullhashraw}{79ec40623b09578724f5e88e75630f03}
+      \field{extraname}{3}
+      \field{labelalpha}{App}
+      \field{sortinit}{A}
+      \field{sortinithash}{2f401846e2029bad6b3ecc16d50031e2}
+      \field{extraalpha}{3}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{title}{Security in {{Apptainer}} — {{Apptainer User Guide}} Main Documentation}
@@ -322,6 +358,7 @@
       \field{labelalpha}{00}
       \field{sortinit}{D}
       \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{extraalpha}{1}
       \field{labeltitlesource}{title}
       \field{abstract}{Find all the available commands you can use in a Dockerfile and learn how to use them, including COPY, ARG, ENTRYPOINT, and more.}
       \field{langid}{english}
@@ -457,6 +494,47 @@
       \endverb
       \keyw{Building Time,Docker Image,Optimization,Size,Vulnerability}
     \endentry
+    \entry{githubSchnellstartFuerGitHub}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=d3b7c913cd04ebfec0e9ec32cb6fd58c}{%
+           family={GitHub},
+           familyi={G\bibinitperiod}}}%
+      }
+      \list{organization}{1}{%
+        {GitHub Docs}%
+      }
+      \strng{namehash}{d3b7c913cd04ebfec0e9ec32cb6fd58c}
+      \strng{fullhash}{d3b7c913cd04ebfec0e9ec32cb6fd58c}
+      \strng{fullhashraw}{d3b7c913cd04ebfec0e9ec32cb6fd58c}
+      \strng{bibnamehash}{d3b7c913cd04ebfec0e9ec32cb6fd58c}
+      \strng{authorbibnamehash}{d3b7c913cd04ebfec0e9ec32cb6fd58c}
+      \strng{authornamehash}{d3b7c913cd04ebfec0e9ec32cb6fd58c}
+      \strng{authorfullhash}{d3b7c913cd04ebfec0e9ec32cb6fd58c}
+      \strng{authorfullhashraw}{d3b7c913cd04ebfec0e9ec32cb6fd58c}
+      \field{extraname}{1}
+      \field{labelalpha}{Git}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extraalpha}{1}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Probiere die Features von GitHub Actions in fünf Minuten oder weniger aus.}
+      \field{langid}{ngerman}
+      \field{title}{Schnellstart für GitHub Actions - GitHub-Dokumentation}
+      \field{urlday}{17}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/2WX2TGIP/quickstart.html
+      \endverb
+      \verb{urlraw}
+      \verb https://docs-internal.github.com/de/actions/writing-workflows/quickstart
+      \endverb
+      \verb{url}
+      \verb https://docs-internal.github.com/de/actions/writing-workflows/quickstart
+      \endverb
+    \endentry
     \entry{githubGitHubActions}{online}{}{}
       \name{author}{1}{}{%
         {{hash=b79b798b2812cfe1c1431894a617897d}{%
@@ -476,9 +554,11 @@
       \strng{authornamehash}{b79b798b2812cfe1c1431894a617897d}
       \strng{authorfullhash}{b79b798b2812cfe1c1431894a617897d}
       \strng{authorfullhashraw}{b79b798b2812cfe1c1431894a617897d}
+      \field{extraname}{2}
       \field{labelalpha}{Git}
       \field{sortinit}{G}
       \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{extraalpha}{2}
       \field{labelnamesource}{author}
       \field{labeltitlesource}{title}
       \field{abstract}{Easily build, package, release, update, and deploy your project in any language—on GitHub or any external system—without having to run code yourself.}
@@ -744,6 +824,40 @@
       \endverb
       \keyw{Research management,Software}
     \endentry
+    \entry{pythonInstallingPackagesPython}{online}{}{}
+      \name{author}{1}{}{%
+        {{hash=a7f5f35426b927411fc9231b56382173}{%
+           family={Python},
+           familyi={P\bibinitperiod}}}%
+      }
+      \strng{namehash}{a7f5f35426b927411fc9231b56382173}
+      \strng{fullhash}{a7f5f35426b927411fc9231b56382173}
+      \strng{fullhashraw}{a7f5f35426b927411fc9231b56382173}
+      \strng{bibnamehash}{a7f5f35426b927411fc9231b56382173}
+      \strng{authorbibnamehash}{a7f5f35426b927411fc9231b56382173}
+      \strng{authornamehash}{a7f5f35426b927411fc9231b56382173}
+      \strng{authorfullhash}{a7f5f35426b927411fc9231b56382173}
+      \strng{authorfullhashraw}{a7f5f35426b927411fc9231b56382173}
+      \field{labelalpha}{Pyt}
+      \field{sortinit}{P}
+      \field{sortinithash}{ff3bcf24f47321b42cb156c2cc8a8422}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Installing {{Packages}} - {{Python Packaging User Guide}}}
+      \field{urlday}{17}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/4E7XK353/installing-packages.html
+      \endverb
+      \verb{urlraw}
+      \verb https://packaging.python.org/en/latest/tutorials/installing-packages/
+      \endverb
+      \verb{url}
+      \verb https://packaging.python.org/en/latest/tutorials/installing-packages/
+      \endverb
+    \endentry
     \entry{rajaramanFrontierWorldsFirst2023}{article}{}{}
       \name{author}{1}{}{%
         {{hash=5006f22b22cc881544e74908a57f048a}{%
@@ -793,6 +907,33 @@
       \verb https://doi.org/10.1007/s12045-023-1583-7
       \endverb
       \keyw{Exascale computers,Frontier HPC architecture,GPGPUs in HPC,HPC benchmarks}
+    \endentry
+    \entry{ResourceConstraints0200}{online}{}{}
+      \list{organization}{1}{%
+        {Docker Documentation}%
+      }
+      \field{labelalpha}{00}
+      \field{sortinit}{R}
+      \field{sortinithash}{5e1c39a9d46ffb6bebd8f801023a9486}
+      \field{extraalpha}{2}
+      \field{labeltitlesource}{title}
+      \field{abstract}{Specify the runtime options for a container}
+      \field{langid}{english}
+      \field{title}{Resource Constraints}
+      \field{urlday}{17}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{year}{12:14:28 +0200 +0200}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/9QB4FA2S/resource_constraints.html
+      \endverb
+      \verb{urlraw}
+      \verb https://docs.docker.com/engine/containers/resource_constraints/
+      \endverb
+      \verb{url}
+      \verb https://docs.docker.com/engine/containers/resource_constraints/
+      \endverb
     \endentry
     \entry{stengelStatistikUndAufbereitung2011}{book}{}{}
       \name{author}{3}{}{%

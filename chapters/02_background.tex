@@ -1,96 +1,121 @@
 \chapter{Hintergrund} \label{cha:background}
 
-\textit{In diesem Kapitel werden die genutzten Technologien erläutert}
-
 \section{Containervirtualisierung}
 
-Containervisualisierung (auch Containerisierung genannt) beschreibt das Bereitstellen einer Applikation, indem die Applikation und alles, was diese zum Laufen benötigt ((System-)Bibliotheken, ausführbare Dateien, (System-)Konfigurationen, etc.) in Form eines Container-Images bereitgestellt wird. Das ermöglicht es, die Applikation isoliert, schnell und zuverlässig auf unterschiedlichen Host-Systemen auszuführen.
+Containervisualisierung (auch Containerisierung genannt) beschreibt das Bereitstellen einer Applikation und dessen Abhängigkeiten ((System-)Bibliotheken, ausführbare Dateien, (System-)Konfigurationen, etc.) als eine Einheit in Form eines "Container-Images". Das ermöglicht es, die Applikation isoliert, schnell und zuverlässig auf unterschiedlichen Host-Systemen auszuführen. Die einzige Anforderung an das Host-System ist dabei eine funktionierende Container-Laufzeitumgebung (z. B. Docker, Apptainer, Portainer, etc.).
 
-Im Gegensatz zur klassischen Virtualisierung wird nicht die Hardware-Ebene abstrahiert und ein komplett eigenständiges Betriebssystem hochgefahren, sondern lediglich die Betriebssystem-Ebene abstrahiert.
+Im Gegensatz zur klassischen Hardwarevirtualisierung wird bei der Containervirtualisierung nicht die Hardware-Ebene abstrahiert und ein komplett eigenständiges Betriebssystem hochgefahren, sondern lediglich die Betriebssystem-Ebene abstrahiert.
 
-Das hat zur Folge, dass Containervirtualisierung weniger Speicher verbraucht und performanter im Vergleich zu Hardwarevirtualisierung ist.
+Das hat zur Folge, dass Containervirtualisierung in der Regel weniger Speicher verbraucht und performanter im Vergleich zu Hardwarevirtualisierung ist. \todo{Zitat}
 
 \section{OCI-Container-Image Spezifikation}
 
-Die Open Container Initiative (OCI) ist eine Organisation, welche sich auf die Standardisierung von Containern spezialisiert hat. Mitglieder dieser Initiative sind u.A. Microsoft, Amazon Web Services, Google und Red Hat. Die von OCI bereitgestellte Spezifikation definiert den aufbau eines Container-Images.
+Die Open Container Initiative (OCI) ist eine Organisation, welche sich auf die Standardisierung von Container spezialisiert hat. Mitglieder dieser Initiative sind u.A. Microsoft, Amazon Web Services, Google und Red Hat. Die von OCI bereitgestellte Spezifikation definiert den aufbau eines Container-Images. OCI kompatible Container-Images können von unterschiedlichen Containervisualisierungs-Lösungen ausgeführt werden, welche die OCI-Spezifikation unterstützen. Dazu zählen unter anderem Docker, ContainerD und Podman.
 
 \section{ContainerD}
 
-ContainerD ist ein System-Daemon, welcher die OCI-Image-Spezifikation unterstützt und die Verwaltung Containern übernimmt. Docker nutzt ContainerD als Backend für die Containervisualisierung. Das Unternehmen hinter Docker hat ContainerD als Open-Source-Projekt veröffentlicht und arbeitet an diesem.
+ContainerD ist ein System-Daemon, welcher die OCI-Image-Spezifikation unterstützt und die Verwaltung von Containern übernimmt. Docker nutzt ContainerD als Backend für die Containervisualisierung. Das Unternehmen, welches hinter Docker steht, hat ContainerD initial entwickelt und später als Open-Source-Projekt veröffentlicht.
 
 \begin{figure}[H]
     \includegraphicsWeb[width=\linewidth]{https://containerd.io/img/architecture.png}
     \captionof{figure}{ContainerD Architektur: https://containerd.io/img/architecture.png}
+    \label{fig:containerd-architecture}
 \end{figure}
 
 
-ContainerD selber ist in mehrere Komponenten aufgeteilt. Diese beinhalten unter anderem:
+ContainerD selber ist in mehrere Komponenten aufgeteilt. Der Aufbau von ContainerD, kann aus der \cref{fig:containerd-architecture} entnommen werden. Diese beinhalten unter anderem:
 
-Eine API um mit unterschiedlichen ContainerD-Clients (Frontends) zu kommunizieren. Hierzu zählen CRI und die native ContainerD-Schnittstelle. CRI ist selber nur ein Wrapper um die native ContainerD-Schnittstelle. Die CRI-Schnittstelle wird größtenteils von Kubernetes genutzt, um ContainerD zu steuern. Die native ContainerD-Schnittstelle wird unter anderem von Docker genutzt.
+Eine API um mit unterschiedlichen ContainerD-Clients (Frontends) zu kommunizieren. Hierzu zählen CRI und die native ContainerD-Schnittstelle. CRI ist selber nur ein Wrapper um die native ContainerD-Schnittstelle. Die CRI-Schnittstelle wird größtenteils von Kubernetes genutzt, um ContainerD für die Containerverwaltung zu verwenden. Die native ContainerD-Schnittstelle wird unter anderem von Docker genutzt.
 
 Der ContainerD-Core, welcher alle nötigen Metadaten und Funktionalitäten bereitstellt, um Container zu verwalten. Dieser kommuniziert wiederrum mit dem ContainerD-Backend.
 
-Das ContainerD-Backend ist wiederrum für die eigentliche Ausführung der Container zuständig. Es abstrahiert die dafür nötigen OS-Funktionalitäten für den ContainerD-Core. Diese Abstraktionen müssen durch einen sogenannten "Shim" implementiert werden. Der Shim ist ein kleines, plattformspezifisches Programm. Runc und d-shim sind Beispiele für Shims, welche auf Linux laufen. Runhcs wiederrum ist ein Shim, welches auf Windows läuft und Windows-Container unterstützt.  
+Das ContainerD-Backend ist für die eigentliche Ausführung der Container zuständig. Es abstrahiert die dafür nötigen Betriebssystem-Funktionalitäten für den ContainerD-Core. Diese Abstraktionen müssen durch einen sogenannten "Shim" implementiert werden. Der Shim ist ein kleines, plattformspezifisches Programm. Runc und d-shim sind Beispiele für Shims, welche auf Linux laufen. Runhcs wiederrum ist ein Shim, welches auf Windows läuft und Windows-Container unterstützt.  
 
-ContainerD benötigt erweiterte rechte auf dem Host-System. Aus diesem Grund läuft ContainerD standardmäßig als Root-Prozess. Es ist mlglich diesen ohne Root-Rechte zu verwenden, allerdings nur mit einem deutlichen Mehraufwand.
+ContainerD benötigt erweiterte rechte auf dem Host-System. Aus diesem Grund läuft ContainerD standardmäßig als Root-Prozess. Es ist mitlerweile auch möglich ContainerD als unprivilegierten Nutzer auszuführen. Dafür sind allerdings einige Systemkonfigurationsschritte notwendig, welche das Ausführen von ContainerD mit einem unprivilegierten Nutzer erschweren.
+
+\pagebreak
 
 \section{Docker}
 
-Docker ist eine der bekanntesten Containervisualisierungs-Lösungen. Sie beinhaltet eine Reihe von Werkzeugen zum Erstellen, verwalten und ausführen von Containern. Docker ist ein Frontend für ContainerD.
+Docker ist eine der weitverbreitetsten Containervisualisierungs-Lösungen \cite{LeadingContainerizationTechnologiesa}. Sie beinhaltet eine Reihe von Werkzeugen zum Erstellen, verwalten und ausführen von Containern. Docker ist ein Frontend für ContainerD.
 
 \subsection{Dockerfile}
 
-Eine Dockerfile ist die Definition, welche Docker benötigt, um ein Container-Image zu erstellen . In ihr werden alle nötigen Schritte sowie Metainformation definiert, um einen Container mit einer lauffähigen Applikation zu haben. Die in der Dockerfile definierten Schritte werden isoliert auf einem Basis-Image ausgeführt. Das durch die Dockerfile erstelle Image ist somit das Resultat alle Schritte, aus dem das Basis-Image entsteht und den in der Dockerfile definierten Schritten \cite{dockerDockerfileOverview}.
+Eine Dockerfile ist die Definition, welche Docker benötigt, um ein Container-Image zu erstellen. In dieser Datei werden alle nötigen Schritte sowie Metainformation definiert, um einen Container mit einer lauffähigen Applikation zu erstellen. Die in der Dockerfile definierten Schritte werden isoliert auf einem Basis-Image ausgeführt. Das durch die Dockerfile erstelle Image ist somit das Resultat aller Schritte, welche das Basis-Image darstellen und den Schritten, die in der Dockerfile definierten wurden \cite{dockerDockerfileOverview}.
 
-Hier ist ein simples Dockerfile Beispiel für das Erstellen eines Julea Container-Images:
+In \cref{lst:dockerfile-example} ist ein simples Dockerfile Beispiel, welches "Hello, Docker" mit cowsay ausgibt.
 
-\inputminted{docker}{./code-examples/Dockerfile.example}
+\begin{listing}[H]
+    \caption{Dockerfile Beispiel}
+    \label{lst:dockerfile-example}
+    \inputminted{docker}{./code-examples/Dockerfile.example}
+\end{listing}
+
 
 \subsection{OCI-Container-Image Layer}
 
-Ein OCI-Container-Image setzt sich aus Schichten (Layer) zusammen, welche stapelweise angeordnet sind. In jeder Schicht werden Änderungen an der vorherigen Schicht vorgenommen. Jedes OCI-Container-Image hat ein sogenanntes "Base-Image". Dieses ist die erste Schicht. Ein "Base-Image" ist üblicherweise ein spezifisches Betriebssystem (z. B.: Debian, Ubuntu, Windows, etc.).
+Ein OCI-Container-Image besteht aus Schichten (Layer), welche stapelweise angeordnet sind. In jeder Schicht werden Änderungen an der vorherigen Schicht vorgenommen. 
+
+Jedes OCI-Container-Image hat die gleiche erste Schicht. Diese heißt "scratch". Auf dieser Schicht wird in der Regel eine spezifische Linux-Distribution aufgebaut. Ein Container-Image, welches nur ein Betriebssystem innehält, wird in der Regel als Grundlage für die erstellung von Applikations-Container-Images verwendet. Aus diesem Grund nennt man solche Container-Images "Base image". Übliche Basis-Images sind z. B. Ubuntu, Debian und Alpine. 
+
+Es ist unüblich, dass man bei der Containerisierung einer Applikation mit dem "scratch"-Layer startet. Stattdessen startet man mit einem bereits existierenden Basis-Image.
 
 \subsection{Docker Build-Cache}
 
-Docker verfügt über Caching-Mechanismen, welche subsequente Builds beschleunigen \cite{dockerCache}. Das Caching funktioniert, indem Docker jedes einzelne "Layer" zwischenspeichert. Wenn sich ein Layer ändert, müssen nur die Layer, welche direkt oder indirekt auf dem Layer aufbauen, neu ausgeführt werden. Um das caching möglichst effektiv zu verwenden, sollte man also sicherstellen, dass Layer, welche besonders lange zum Erstellen brauchen, möglichst nur dann neu erstellt werden, wenn dies auch notwendig ist.
+Docker verfügt über Caching-Mechanismen, welche subsequente Builds beschleunigen \cite{dockerCache}. Das Caching funktioniert, indem Docker jedes einzelne "Layer" zwischenspeichert. Wenn sich die definition eines Layers in der Dockerfile ändert, müssen nur die Layer, welche direkt oder indirekt auf dem Layer aufbauen, neu ausgeführt werden. 
+
+Um das Caching von Docker möglichst effektiv zu verwenden, sollte man also sicherstellen, dass Layer, welche besonders lange zum Erstellen brauchen, möglichst nur dann neu erstellt werden, wenn dies tatsächlich notwendig ist.
+
+Das heißt, dass besonders lange Schritte, wie z. B. das Kompilieren von Abhängigkeiten, möglichst weit oben in der Dockerfile definiert werden sollten. So wird sichergestellt, dass nur die Schritte von dem der besonders lange Schritt abhängt einfluss, auf dessen erneute Ausführung haben.
 
 \subsection{Docker BuildKit}
 
 Docker BuildKit ist das neue Backend um OCI-Container-Images mit Docker zu erstellen. Ziel von BuildKit ist es, den Docker Legacy Builder zu ersetzen \cite{dockerBuildKit}.
 
-Docker BuildKit hat viele Verbesserungen, um Docker Builds, im Vergleich zum Docker Legacy Builder, performanter zu machen. Dazu zählen: Parallelisierung von Build-Stages, Auslassen von unbenutzten Build-Stages, mehr Caching Möglichkeiten wie z. B. Cache-Mounts, u. v. m.
+Docker BuildKit hat viele Verbesserungen, um Docker Builds, im Vergleich zum Docker Legacy Builder, performanter zu machen. Dazu zählen: Parallelisierung von Build-Stages, Auslassen von unbenutzten Build-Stages, mehr Caching Möglichkeiten wie z. B. Cache-Mounts, u. v. m.
 
 Docker BuildKit Backends müssen nicht explizit auf dem Computer installiert werden, auf dem man entwickelt. Docker kann auch BuildKit Backend von Remote-Servern einbinden. Das ermöglicht es, Builds auf leistungsstärkeren Servern, sowie auf Servern mit einer anderen CPU-Architektur auszuführen, um die Build-Zeit zu verkürzen.
 
 \subsubsection{Docker Buildx}
 
-Um das Docker BuildKit Backend mit Docker zu verwenden, nutzt man Docker Buildx \cite{dockerDockerBuildx}. Docker Buildx ist eine offizielle Docker Erweiterung. Docker Buildx hat einige Funktionalitäten um Docker BuildKit Backends einzubinden, sowie festzulegen welche BuildKit Backends man verwenden möchte.
+Um das Docker BuildKit Backend mit Docker vollwertig zu verwenden, nutzt man Docker Buildx \cite{dockerDockerBuildx}. Docker Buildx ist eine offizielle Docker Erweiterung. Docker Buildx hat einige Funktionalitäten um Docker BuildKit Backends einzubinden, sowie festzulegen welche BuildKit Backends man verwenden möchte.
 
 \subsubsection{Docker Buildx Bake}
 
-Eine weitere Funktionalität von Docker Buildx ist Docker Buildx Bake \cite{dockerBake}. Docker Buildx Bake ermöglicht es mithilfe einer sog. Bakefile das erstellen und mehrerer OCI-Container-Images zu vereinfachen.
+Eine weitere Funktionalität von Docker Buildx ist Docker Buildx Bake \cite{dockerBake}. Docker Buildx Bake ermöglicht es mithilfe einer sogenannten Bakefile das Erstellen mehrerer OCI-Container-Images zu vereinfachen.
 
-Momentan wird Julea in mehreren Ubuntu-Versionen sowie mit mehreren Compilern kompiliert und getestet. Somit müssten mehrere Dockerfiles ertellt werden, um alle Kombinationen zu testen. Mit Docker Buildx Bake kann man das Erstellen mehrerer Docker-Container-Images vereinfachen.
+Momentan wird Julea in mehreren Ubuntu-Versionen sowie mit mehreren Kompilierern kompiliert und getestet. Somit müssten mehrere Dockerfiles ertellt werden, um alle Kombinationen für die Tests bereitzustellen. Mit Docker Buildx Bake kann man das Erstellen dieser großen Anzahl an Variationen von Docker-Container-Images in einer standardisierten Art und Weise definieren und mithilfe von Docker Buildx erstellen lassen. 
 
-\inputminted{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.example.hcl}
+In \cref{lst:docker-bake-example} ist ein extensives Beispiel für eine Docker Buildx Bakefile.
 
-\section{Container-Images für Entwicklungsumgebungen}
+\begin{listing}[H]
+    \caption{Docker Buildx Bakefile Beispiel}
+    \label{lst:docker-bake-example}
+    \inputminted{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.example.hcl}
+\end{listing}
 
-Während sich die "klassische" Containerisierung darauf fokussiert eine produktive Applikation zuverlässig auszurollen, fokussieren sich die Container-Images für Entwicklungsumgebungen darauf Entwicklern eine einheitliche Container-Umgebung zum Testen und Entwickeln bereitzustellen. Im Idealfall sollte ein Entwicklungs-Container den einstieg in ein Projekt/eine Entwicklungsumgebung erleichtern, indem im Container bereits alles eingerichtet ist, um an einem Projekt effektiv zu arbeiten.
+\section{Container-Images für Entwicklungsumgebungen} \label{sec:bg-dev-container}
+
+Während sich die "klassische" Containerisierung darauf fokussiert eine produktive Applikation zuverlässig auszurollen, fokussieren sich die Container-Images für Entwicklungsumgebungen darauf Entwicklern eine einheitliche Container-Umgebung zum Testen und Entwickeln einer Applikation bereitzustellen. Im Idealfall sollte ein Entwicklungs-Container den Einstieg für neue Entwickler in ein Projekt erleichtern, indem dieser eine bereits vorkonfigurierte Entwicklungsumgebung bereitstellt.
 
 Solche Container-Images sollten alle nötigen Abhängigkeiten, welche man zum Entwickeln benötigt, enthalten. Dazu zählen z. B. Compiler, Interpreter, Bibliotheken, Tools.
 
-Im fall von Julea muss ein solcher Entwicklungs-Container alle Abhängigkeiten enthalten, um an oder mit Julea zu entwickeln. Diese Abhängigkeiten müssen kompiliert werden. Das Kompilieren ist sehr zeitaufwendig. Darum sollte ein fertiges Container-Image diese Abhängigkeiten beinhalten, sodass das initiale Kompilieren der Abhängigkeiten übersprungen werden kann.
+Im fall von Julea muss ein solcher Entwicklungs-Container alle Abhängigkeiten enthalten, um an oder mit Julea zu entwickeln. Diese Abhängigkeiten müssen kompiliert werden. Das Kompilieren ist sehr zeitaufwendig. Darum sollte ein fertiges Container-Image diese Abhängigkeiten beinhalten, sodass das initiale Kompilieren der Abhängigkeiten durch den Entwickler übersprungen werden kann.
 
-Ein Container-Image alleine müsste allerdings immernoch vom Entwickler selber in den Editor/IDE integriert werden, da das Denutzen des Containers sonst sehr aufwändig wär. Um die integration in den Editor/IDE zu vereinfachen, bietet Microsoft eine offene Spezifikation ("Development Container") an. Wenn ein Editor/IDE diese Spezifikation unterstützt, kann der Entwickler mit einem Klick den Container in den Editor/IDE integrieren.
+Ein Container-Image alleine müsste allerdings immernoch vom Entwickler selbst in den Editor/IDE integriert werden, da das Benutzen des Containers ohne eine solche Integration mit mehr Aufwand verbunden wäre. Um die integration in den Editor/IDE zu vereinfachen und zu standardisieren, bietet Microsoft eine offene Spezifikation ("Development Container") an \cite{DevelopmentContainers}. Wenn ein Editor/IDE diese Spezifikation unterstützt und ein Projekt eine Development Container konfiguration erstellt hat, kann der Entwickler mit einem Klick den Container in den Editor/IDE integrieren und wie gewohnt mit dem Projekt arbeiten.
 
-Neben der einfachen Integration in den Editor/IDE ermöglicht die Spezifikation eine reihe an einstellungsmöglichkeiten. So kann der Entwickler z. B. festlegen, welche Extensions installiert werden sollen, welche Umgebungsvariablen gesetzt werden sollen, welche Ports nach außen freigegeben werden sollen, welche Editor/IDE-Einstellungen gesetzt werden sollen, u. v. m.
+Neben der einfachen Integration eines Containers in den Editor/IDE bietet die Development-Container-Spezifikation eine Reihe an Einstellungsmöglichkeiten an. So kann man z. B. festlegen, welche Extensions installiert werden sollen, welche Umgebungsvariablen gesetzt werden sollen, welche Ports nach außen freigegeben werden sollen, welche Editor/IDE-Einstellungen gesetzt werden sollen, u. v. m.
 
+\pagebreak
 
 \subsection{Editor/IDE-Unterstützung}
 
+In \cref{tbl:editor-ide-support} ist eine Übersicht über die aktuelle Editor/IDE-Unterstützung der Development-Container-Spezifikation.
+
 \begin{table}[H]
-    \begin{NiceTabular}{X|X|X[4]}[hlines]
+    \caption{Devcontainer Spezifikation Editorunterstützung}
+    \label{tbl:editor-ide-support}
+    \begin{tblr}{colspec={|X[3]|X[2]|X[6]|}, hlines, width=\linewidth}
         IDE/Editor Name    & Unterstützung & Anmerkung \\
         Visual Studio Code & Ja            & Vollständige Unterstützung                                                                                                                                                                                              \\
         CLI                & Ja            & Es existiert ein offizielles CLI in form eines NPM-Paketes @devcontainer/cli. Dadurch ist es auch möglich \(Neo-\)VIM und andere Terminal-Texteditoren mit Devcontainern zu verwenden                                   \\
@@ -103,28 +128,45 @@ Neben der einfachen Integration in den Editor/IDE ermöglicht die Spezifikation 
         Code::Blocks       & Nein          & Stand 01.12.2024: Es gibt keine offizielle Aussage, ob oder wann es eine Devcontainer unterstzüng geben soll                                                                                                            \\
         Notepad++          & Nein          & Stand 01.12.2024: Es gibt keine offizielle Aussage, ob oder wann es eine Devcontainer unterstzüng geben soll                                                                                                            \\
         Emacs              & Nein          & Stand 01.12.2024: Es gibt keine offizielle Aussage, ob oder wann es eine Devcontainer unterstzüng geben soll                                                                                                            \\
-    \end{NiceTabular}
+\end{tblr}
 \end{table}
 
-\section{Apptainer (früher: Singularity)}
 
-Apptainer ist eine alternative Container-Lösung. Sie nutzt im Gegensatz zu Docker keine OCI-Container-Images, kann diese aber konvertieren. Apptainer-Container-Images werden als einzelne Datei gespeichert, das erleitert das Verteilen des Container-Images ohne einen Registry-Server. Es werden keine erweiterten Berechtigungen durch Apptainer benötigt, um Container auszuführen. Dies ist insbesondere für HPC-Umgebungen relevant, da das Ausführen von Applikationen als root-Benutzer hier ungewöhnlich ist \cite{apptainerApptainerPortableReproducible}.
+\section{Apptainer (früher: Singularity)} \label{sec:bg-apptainer}
 
-\section{CI/CD}
+Apptainer ist eine alternative Container-Lösung. Apptainer nutzt im Gegensatz zu Docker keine OCI-Container-Images, kann allerdings OCI-Container zu Apptainer-Container konvertieren. Apptainer-Container-Images werden als einzelne Datei gespeichert, das erleichtert das Verteilen von Container-Images ohne einen dedizierten Registry-Server. 
+
+Im gegensatz zu einer üblichen ContainerD-Installation werden keine erweiterten Berechtigungen durch Apptainer benötigt, um Container auszuführen. Dies ist insbesondere für HPC-Umgebungen relevant, da das Ausführen von Applikationen als root-Benutzer hier ungewöhnlich ist \cite{apptainerApptainerPortableReproducible}. 
+
+Außerdem hat Appatainer eine extensive Dokumentation, wie man MPI mit Apptainer nutzen kann, was für HPC-Umgebungen von relevanz ist \cite{apptainerApptainerMPIApplications}. 
+
+Ein weiteres wichtiges merkmal von Apptainer ist die weniger strikte Isolierung von Containern zum Host-System \cite{apptainerSecurityApptainerApptainer} verglichen mit z. B. ContainerD. Das ermöglicht es u. A. unkompliziert auf spezielle Resourcen, wie z. B. GPUs zuzugreifen, was in HPC-Umgebungen üblich ist. Zugriff auf GPUs ist mit Docker nur dann möglich, wenn man Docker entsprechend konfiguriert hat \cite{ResourceConstraints0200}.
+
+\section{CI/CD-Pipeline} \label{sec:ci-cd-pipeline}
 
 \begin{figure}[H]
-    \includegraphics[width=\textwidth]{julea-ci-cd-full.png}
+    \includegraphics[width=\textwidth]{./figures/ci-julea-exmaple-full.png}
+    \label{fig:ci-cd-julea-example-full}
     \caption{CI/CD-Pipeline von Julea. \newline
         Siehe: https://github.com/parcio/julea/actions/runs/8318540808}
 \end{figure}
 
-CI/CD, auch CI/CD-Pipeline genannt, ist die Kombination von Contiguous Integration (CI) und Contiguous Deployment/Contiguous Delivery (CD). Eine CI/CD-Pipeline ist eine automatisierte Abfolge von Schritten, welche das Testen, Kompilieren, Bereitstellen und Ausrollen von Artefakten automatisiert. Oftmals sind solche CI/CD-Pipelines direkt teil einer modernen Versiom-Control-System-Plattform wie z. B. GitHub, GitLab, BitBucket, etc. und regieren somit vollautomatisch auf Code-Änderungen.
+CI/CD ist die Kombination von Continuous Integration (CI) und Continuous Deployment/Continuous Delivery (CD). Eine CI/CD-Pipeline ist eine automatisierte Ausführung der CI- und CD-Prozesse. Dies ist üblicherweise das automatisierte Testen von Applikationskomponenten, Kompilieren der Applikation, das Bereitstellen und Ausrollen von Artefakten. 
 
-\subsection{Contiguous Integration (CI)}
+Oftmals sind solche CI/CD-Pipeline-Funktionalitäten direkt Teil einer modernen Version-Control-System-Plattform wie z. B. GitHub, GitLab, BitBucket, etc. und integrieren sich in das Version-Control-System der Platform, indem sie z. B. vollautomatisch auf Code-Änderungen reagieren können. 
 
-Unter Contiguous Integration (CI) versteht man unter anderem das automatisierte testen und/oder kompilieren von Code.  Dieser automatismus dient dazu den Software-Entwickern Zeit zu erspaaren, wodurch sie sich auf das eigentliche entwickeln fokussieren können.
+In \cref{fig:ci-cd-julea-example-full} ist eine Visualisierung der bereits existierenden CI/CD-Pipeline von Julea zu sehen. Man sieht mehrere Schritte, welche aufeinander aufbauen. Die Abhängigkeiten untereinander werden durch die Kanten, welche die einzelnen Schritte (Knoten) verbinden, dargestellt.
 
-Im gezeigten Beispiel gehören alle bis auf den letzten Schritt "Publish" zur Contiguous Integration (CI).
+
+\pagebreak
+
+\subsection{Continuous Integration (CI)}
+
+Unter continuous integration (CI) versteht man alle Prozesse, welche die einzelnen Softwareteile kontinuierlich zu einer Software zusammenführt. Üblicherweise zählt dazu das regemäßige Kompilieren und Testen einer Applikation.
+
+Wie bereits in \cref{sec:ci-cd-pipeline} erwähnt, kann CI ein Teil der CI/CD-Pipeline sein.
+
+Im gezeigten Beispiel gehören alle bis auf den letzten Schritt "Publish" zur Continuous Integration (CI).
 
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{julea-ci-cd-ci-focus.png}
@@ -132,40 +174,59 @@ Im gezeigten Beispiel gehören alle bis auf den letzten Schritt "Publish" zur Co
         Siehe: https://github.com/parcio/julea/actions/runs/8318540808}
 \end{figure}
 
-\subsection{Contiguous Delivery (CD)}
+\pagebreak
 
-Unter Contiguous Deployment (CD) versteht man das automatisierte bereitstellen von Artefakt. Üblicherweise sind Artefakte Container-Images, ausführbare Dataien, Archive, etc.
+\subsection{Continuous Delivery (CD)}
 
-Im gezeigten Beispiel gehört nur der letzte Schritt "Publish" zu Contiguous Delivery (CD). In diesem Schritt wird die Dokumentation von Julea automatisch veröffentlicht.
+Continuous delivery (CD) baut auf dem Konzept von continuous integration auf. Anstelle die Applikation nur zu kompilieren und zu testen wird bei continous delivery ein Artefakt – welches üblichweise ein neuer Release der Applikation ist – bereitgestellt, sobald eine gewisse Qualität erreicht worden ist z. B. alle definierten Tests der Applikation erflogreich waren. 
+
+Continous devlivery kann – wie bereits in \cref{sec:ci-cd-pipeline} erwähnt – ein Teil einer CI/CD-Pipeline sein. 
+
+Im gezeigten Beispiel in \cref{fig:julea-ci-cd-cd-focus} macht der letzte Schritt "Publish" diese Pipeline erst zu einer Continuous-Delivery-Pipeline. Im genannten Schritt wird die Dokumentation von Julea automatisch veröffentlicht. Hier ist allerdings zu erwähnen, dass die Veröffentlichung der Dokumentation nicht zwingend ein Release der Applikation bedeutet. Außerdem ist die Veröffentlichung der Dokumentation nicht abhängig von den ausgeführten Tests. 
+
+Eine Continuous-Delivery-Pipeline – wie sie in diesem Abschnitt beschrieben ist – würde die Veröffentlichung der Dokumentation nur dann ausführen, wenn alle Tests erfolgreich waren und es würde neben der Dokumentation auch ein neues Release der Applikation veröffentlicht werden.
 
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{julea-ci-cd-cd-focus.png}
     \caption{CI/CD-Pipeline von Julea. \newline
         Siehe: https://github.com/parcio/julea/actions/runs/8318540808}
+    \label{fig:julea-ci-cd-cd-focus}
 \end{figure}
 
-\subsection{Contiguous Deployment (CD)}
+\subsection{Continuous Deployment}
 
-Unter Contiguous Deployment (CD) nimmt das konzept von Contiguous Delivery (CD) auf und rollt das bereitgestellte Artefakt automatisiert aus. In der regel wird das paket auf eine Testumgebung ausgerollt, um sicherzustellen, dass das Artefakt auch tatsächlich stabil lauffähig ist. In der umgebung werden in der Regel automatisierte und/order manuelle Integrationtests durchgeführt. Sollten die tests erfolgreich sein, wird das artefakt sofort oder zu einem release-zeitpunkt auf die Produktivumgebung ausgerollt.
+Continuous deployment baupt auf dem Konzept von Continuous Delivery auf. Anstelle Artefakte nur bereitzustellen wird bei continuous deployment das bereitgestellte Artefakt auch auf das Produktivsystem ausgerollt.
+
+Das automatisierte Ausrollen kann auch in mehreren Schritten durchgeführt werden, indem es zuerst in ein Staging-System ausgerollt wird. Erst nach einer problemfreien Testphase werden dann im Anschluess die Änderungen auf das Produktivsystem ausgerollt. 
+
+Continuous deployment kann – wie bereits in \cref{sec:ci-cd-pipeline} erwähnt – ein Teil einer CI/CD-Pipeline sein.
 
 \subsection{GitHub-Actions}
 
-Github-Actions (GHA) ist die GitHub-eigene CI/CD-Pipeline-Lösung. GitHub-Actions ermöglicht es mithilfe einer YML-Datei CI/CD-Pipelines zu definieren. Diese YML-Datei wird im Repository abgelegt und von GitHub-Actions ausgeführt. GitHub-Actions bietet eine Vielzahl von Funktionsbausteinen, welche häufig in CI/CD-Pipelines benötigt werden in einer abstrahierten Form an. Diese bausteine werden entweder von GitHub oder Dritten zur verfügung gestellt. Die bausteine werden in einer isolierten Container-Umgebung ausgeführt, um möglichst reproduzierbare Ergebnisse zu erzielen \cite{githubGitHubActions}.
+Github-Actions (GHA) ist die GitHub-eigene CI/CD-Pipeline-Lösung. GitHub-Actions ermöglicht es mithilfe einer YML-Datei CI/CD-Pipelines zu definieren. Diese YML-Datei wird im Repository abgelegt und von GitHub-Actions ausgeführt. 
 
-GitHub-Actions werden als teil dieser Arbeit genutzt, um automatisiert die Julea-Container-Images zu erstellen und zu veröffentlichen.
+GitHub-Actions bietet eine Vielzahl von vordefinierten Funktionsbausteinen an. Diese Funktionsbausteine haben häufig in CI/CD-Pipelines benötigte Logiken schon vordefiniert und erleichtern somit das Erstellen von CI/CD-Pipelines. Diese Bausteine werden entweder von GitHub oder Dritten zur verfügung gestellt. Die Bausteine werden in einer isolierten Container-Umgebung ausgeführt, um möglichst reproduzierbare Ergebnisse zu erzielen \cite{githubGitHubActions}.
 
-Diese pipeline baut und veröffentlicht ein Dockerimage, immer wenn ein neuer commit in die "master" Branch gepusht wurde:
-\inputminted{yaml}{./code-examples/gha.yml} 
+GitHub-Actions wird in dieser Arbeit genutzt, um automatisiert die Julea-Container-Images zu erstellen und zu veröffentlichen.
+
+In \cref{lst:gha-example} wird eine beispielhafte GitHub-Actions-Workflow-Datei geizeigt. Diese Datei ist Teil der GitHub-Dokumentation \cite{githubSchnellstartFuerGitHub}
+
+\begin{listing}[H]
+    \caption{GitHub-Actions Beispiel}
+    \label{lst:gha-example}
+    \inputminted{yaml}{./code-examples/gha.yml}
+\end{listing}
+
 
 \section{Julea}
 
-In dieser Arbeit wird Julea als Beispiel für eine Applikation verwendet, welche in einem Container-Image bereitgestellt werden soll. Julea ist ein Speicher-Framework, welches mehrere Speicher-Backends wie z. B. Datei-Speicher, MySQL, MongoDB, u. v. m. unterstützt. Julea ist ein Open-Source-Projekt und wird von der Arbeitsgruppe "Parallel Computing and I/O" an der Otto-von-Guericke-Universität Magdeburg entwickelt \cite{kuhnJULEAFlexibleStorage2017}.
+In dieser Arbeit wird Julea als Beispiel für eine Applikation verwendet, welche in einem Container-Image bereitgestellt werden soll. Julea ist ein Speicher-Framework, welches mehrere Speicher-Backends wie z. B. Datei-Speicher, MySQL, MongoDB, u. v. m. unterstützt. JULEA soll das Testen von verschiedenen Speichertechnologien erleichtern, indem es eine einheitliche API bereitstellt, welche unabhängig von der unterliegenden Speichertechnologie ist. JULEA ist ein Open-Source-Projekt und wird unter anderem von der Arbeitsgruppe "Parallel Computing and I/O" an der Otto-von-Guericke-Universität Magdeburg entwickelt \cite{kuhnJULEAFlexibleStorage2017}.
 
 Der Quellcode von Julea wird auf GitHub bereitgestellt: \url{https://github.com/parcio/julea}
 
 \section{HPC}
 
-HPC steht für High Performance Computing. HPC-Systeme sind spezielle Computer-Systeme, welche besonders leistungsstark sind. HPC-Systeme werden für berechgnungen mit besonders hohen CPU oder Speicheranforderungen genutzt. Oft werden HPC-Systeme in Forschungseinrichtungen, Universitäten, oder in der Industrie genutzt. HPC-Applikationen sind häufig hochkomplex und greifein auf große mengen von Abhängigkeiten zurück, welche entweder zur Kompilierungszeit, oder zur Laufzeit benötigt werden. Eine hohe anzahl an Abhängigkeiten erschwert das Erstellen von reproduzierbaren Laufzeit-, sowie Kompilierungsergebnissen, da die mögliche kombination von Abhängigkeiten, welche zur Laufzeit und/oder zur Kompilierzeit benötigt werden. 
+HPC steht für High Performance Computing. HPC-Systeme sind spezielle Computer-Systeme, welche besonders leistungsstark sind. HPC-Systeme werden für berechgnungen mit besonders hohen CPU oder Speicheranforderungen genutzt. Oft finden HPC-Systeme in Forschungseinrichtungen, Universitäten, oder in der Industrie gebrauch. HPC-Applikationen sind häufig hochkomplex und greifein auf große mengen von Abhängigkeiten zurück, welche entweder zur Kompilierungszeit, oder zur Laufzeit benötigt werden. Eine hohe anzahl an Abhängigkeiten erschwert das Erstellen von reproduzierbaren Laufzeit-, sowie Kompilierungsergebnissen, da die mögliche kombination von Abhängigkeiten, welche zur Laufzeit und/oder zur Kompilierzeit benötigt werden. 
 
 Die Komplexität von Abhängigkeiten in einer Applikation lässt sich folgendermaßen moddellieren:
 \begin{flalign*}
@@ -210,6 +271,8 @@ Dann stellt $g(n)$ die Anzahl der unterschiedlichen Umgebungen für $n$ Abhängi
     \end{axis}
 \end{tikzpicture}
 
-Es wird ersichtlich, dass die Anzahl der unterschiedlichen Umgebungen exponentiell mit der Anzahl der akzeptierten Variationen wächst. 
+Es wird ersichtlich, dass die Anzahl der unterschiedlichen Umgebungen exponentiell mit der Anzahl der akzeptierten Abhängigkeiten (Variationen) wächst. 
 
-Dies bedeutet, dass Applikationen, welche sehr viele Abhängigkeiten haben, und diese Abhängigkeiten selbst mehrere variationen (Versionen, Kompilierung-Flags, etc.) haben ist es unmöglich jede mögliche Umgebung zu testen. Es ist in diesen Fall einfacher eine möglich konsistente Umgebung zu schaffen. Übliche mechanismen eine solche konsistente Umgebung zu schaffen ist Virtualisierung oder das Eliminieren von mehreren akzeptierten Abhängigkeitsvariationen durch Version-Pinning. Hierbei ist allerdings zu beachten, dass Version-Pinning nicht indirekte Abhängigkeiten konsistent hält. Dies ist bei der Virtualisierung anders. Die Hardwarevirtualisierung stellt sicher, dass alles bis zur Hardware-Ebende konsistent gehalten werden kann, dies kommt üblicherweise mit performance-einbußen einher und einem großen Paket, welches ausgerollt werden müsste. Hier bietet die Containervisualisierung einen mittelweg, indem es alles bis zum Betriebssystem konsistent hält und somit kaum bis garkein Performanceoverhead, sowie eine – im Vergleich zur Hardwarevirtualisierung – kleinere Paketgröße.
+Dies bedeutet, dass Applikationen, welche über sehr viele Abhängigkeiten mit sehr vielen Abhängigkeitsvariationen (Versionen, Kompilierung-Flags, etc.) verfügen schwer zu testen sind. Dies liegt daran, dass es so gut wie unmöglich ist, jede mögliche Umgebung mit jeder möglichen Applikationsvariante zu testen, da es effektiv unendlich viele mögliche Kombinationen aus Umgebungen und Applikationsvarianten gibt.
+
+Das Schaffen einer konsistenten Umgebung mithilfe von Containervisualisierung kann hierbei helfen, da es die Anzahl der möglichen Kombibinationen auf die Anzahl der akzeptierten Applikationsvarianten reduziert. Diese Anzahl lässt sich wiederrum durch den Entwickler durch z. B. Version-Pinning oder durch das Reduzieren der Abhängigkeiten reduzieren.

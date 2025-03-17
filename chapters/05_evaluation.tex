@@ -36,7 +36,7 @@ Abschließend lässt sich sagen, dass die Benchmarkergebnisse sehr wahrscheinlic
 
 \section{Ausführung des Benchmarks}
 
-Für die Ausführung des Benchmarks auf dem HPC-Cluster müssen die Ressourcen allokiert und die Ausführung der Programme gescheduled werden. Auf dem HPC-Cluster der OvGU wird das über das Slurm-System realisiert. Die ausführlichen SLURM-Skripte sind im Anhang zu finden. \todo[inline]{SLURM skripte in den anhang packen und backref}
+Für die Ausführung des Benchmarks auf dem HPC-Cluster müssen die Ressourcen allokiert und die Ausführung der Programme gescheduled werden. Auf dem HPC-Cluster der OvGU wird das über das Slurm-System realisiert. Die ausführlichen SLURM-Skripte sind im Anhang zu finden.
 
 Für das SLURM-Skript wurde folgende Parameter gesetzt
 
@@ -49,6 +49,8 @@ Für das SLURM-Skript wurde folgende Parameter gesetzt
     \item --output=./res/apptainer/benchmark-\%a.out: Datei in welches das STDOUT geschrieben wird
     \item --error=./res/apptainer/benchmark-\%a.err: Datei in welches das STDERR geschrieben wird 
 \end{itemize}
+
+Die SLURM-Skripte, welche für die Ausführung des Benchmarks verwendet wurden, sind im Anhang in \cref{cha:appendix-benchmarkskripts} vorhanden.
 
 \section{Erörterung der Benchmarkarkmetriken}
 
@@ -87,8 +89,11 @@ Die Benchmarkmetriken Message ("/message"), Cache ("/cache") und Background Oper
 
 \section{Vor-Auswertung der Benchmarkergenisse}
 
-\todo[inline]{Hier nochmal auf die Appendix verweisen und vollständige Auswertung im Appendix anhängen}
 Um die Benchmarkergebinsse effektiv auswerten zu können ist im ersten Schritt wichtig sich die Verteilung der Messwerte anzusehen. Ein Boxplot, ist eine populäre Möglichkeit Verteilungen zu analysieren \cite[Vgl. 1]{majawExploringDataDistributions2023}. Nachfolgend werden die Verteilungen der nativen sowie containerisierten Benchmarkergebnisse an einem Beispiel betrachtet. Ein vollumfängliche Betrachtung aller Verteilungen wird nicht vorgenommen, da die Verteilungen sich alle ähnlich verhalten.
+
+Die gesammten Benchmarkergebnisse sind im Anhang in \cref{cha:appendix-benchmarkdaten} vorhanden.
+
+\pagebreak
 
 \subsection{Native}
 
@@ -116,6 +121,8 @@ Die Schlüsse, welche bei der Betrachtung der nativen Ausführung des Benchmarks
 
 Es ist bereits bei Betrachtung der Boxplots ersichtlich, dass beide Ergebnisse größtenteils ähnlich sind. Um noch genauer die Performance-Unterschiede zu erkennen, wird im nächsten Schritt der Speedup $S_(\text{system}, \text{apptainer})$ für die einzelnen Benchmarkmetriken betrachtet.
 
+\pagebreak
+
 \section{Vergleich der Benchmarkergebnisse}
 
 Um einen besseren Überblick über den Unterschied zwischen beiden Benchmarkergebnissen zu erhalten, wird der errechnete Speedup um -1 verschoben. Das hat zur Folge, dass anstelle vom Wert 1, nun der Wert 0 identische Performance bedeutet. 
@@ -125,7 +132,7 @@ Die übergeordneten Kategorien der Benchmarkmetriken, werden nachfolgend einzeln
 
 \subsection{Objektspeicher}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/object/difference_operations.svg}
     \caption{Speedup der Benchmarkergebnisse für den Objektspeicher}
@@ -134,14 +141,20 @@ Die übergeordneten Kategorien der Benchmarkmetriken, werden nachfolgend einzeln
 
 \FloatBarrier
 
-Als Erstes wird der Speedup der Benchmarkmetrik "object" betrachtet. Hier ist zu erkennen, dass die Containerisierte ausführung des Benchmarks stets zwischen $1\%$ bis $3\%$ langsamer ist. Die Benchmarkmetrik "object" misst dabei die Performance der Objektverwaltung. Diese Objektverwaltung läuft bei diesem Benchmark über das Dateisystem. Somit ist es naheliegend, dass, in diesem Fall, das Dateisystem ein Bottleneck sein könnte. Allerdings ist diese sehr konsistente Performance-Verschlechterung im Vergleich zur nativen Ausführung auf dem ersten Blick nicht erklärbar, da beide Ausführungsweisen auf das gleiche Verzeichnis im Host-Dateisystem zugegriffen haben (/tmp). Im Fall von Apptainer wurde das Verzeichnis mithilfe eines bind-mounts in den Container eingebunden. Allerdings gab es für die Containertechnologie Docker bereits eine Performance-Analyse von bind-mounts und es konnte keine Signifikaten Performance-Einbußen festgestellt werden \cite[Vgl. 4]{dordevicFileSystemPerformance2022}. Somit lässt sich darauf schließen, dass die bind-mounts nicht die Ursache für die Performance-Einbußen sind. Allerdings gibt es bei Apptainer noch die besonderheit, dass die Container-Images ein SquashFS-Dateisystem verwenden. Dieses Dateisystem wird beim Start des Containers in das Host-Dateisystem eingehängt. Hier gibt es bei Apptainer zwei möglichkeiten, wie dieses Containerimage eingehangen wird. Entweder wird das Image mit dem Kernel-SquashFS-Treiber eingehangen, was allerdings priviligierte Rechte benötigt, oder es wird mithilfe des SquashFS-FUSE-Treibers eingehangen. Hierfür werden keine privilegierten Rechte benötigt. Allerdings ist laut eigenen aussagen von Apptainer die Performance des FUSE-Treibers schlechter als die des Kernel-Treibers. Somit könnte dies eine mögliche Ursache für die Performance-Einbußen sein \cite{apptainerSecurityApptainerApptainer}.  
+Als Erstes wird der Speedup der Benchmarkmetrik "object" betrachtet. Hier ist zu erkennen, dass die Containerisierte ausführung des Benchmarks stets zwischen $1\%$ bis $3\%$ langsamer ist. Die Benchmarkmetrik "object" misst dabei die Performance der Objektverwaltung. Diese Objektverwaltung läuft bei diesem Benchmark über das Dateisystem. Somit ist es naheliegend, dass, in diesem Fall, das Dateisystem ein Bottleneck sein könnte. Allerdings ist diese sehr konsistente Performance-Verschlechterung im Vergleich zur nativen Ausführung auf den ersten Blick nicht erklärbar, da beide Ausführungsweisen auf das gleiche Verzeichnis im Host-Dateisystem zugegriffen haben (/tmp). 
+
+Im Fall von Apptainer wurde das Verzeichnis mithilfe eines bind-mounts in den Container eingebunden. Für die Containertechnologie Docker gab es bereits eine Performance-Analyse von bind-mounts und es konnte keine Signifikaten Performance-Einbußen festgestellt werden \cite[Vgl. 4]{dordevicFileSystemPerformance2022}. 
+
+Somit lässt sich darauf schließen, dass die bind-mounts nicht die Ursache für die Performance-Einbußen sind. Bei Apptainer besteht jedoch noch die Besonderheit, dass die Container-Images ein SquashFS-Dateisystem verwenden. Dieses Dateisystem wird beim Start des Containers in das Host-Dateisystem eingehängt. 
+
+Hier gibt es bei Apptainer zwei möglichkeiten, wie dieses Containerimage eingehangen wird. \\
+Entweder wird das Image mit dem Kernel-SquashFS-Treiber eingehangen, was priviligierte Rechte benötigt, oder es wird mithilfe des SquashFS-FUSE-Treibers eingehangen. Hierfür werden keine privilegierten Rechte benötigt. Allerdings ist laut eigenen aussagen von Apptainer die Performance des FUSE-Treibers schlechter als die des Kernel-Treibers. Somit könnte dies eine mögliche Ursache für die Performance-Einbußen sein \cite{apptainerSecurityApptainerApptainer}.  
 
 \subsection{Key-Value (lmdb)}
 
-
-\begin{figure}
+\begin{figure}[H]
     \centering
-    \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/kv/difference_operations.svg}
+    \includesvg[width=0.7\linewidth]{benchmark/vis/compressed/differences/kv/difference_operations.svg}
     \caption{Speedup der Benchmarkergebnisse für Key-Value}
     \label{fig:speedup_kv}
 \end{figure}
@@ -152,7 +165,7 @@ Die Key-Value-Komponente von Julea ("kv"), hingegen weist kaum eine Veränderung
 
 \subsection{Item-Store}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/item/difference_operations.svg}
     \caption{Speedup der Benchmarkergebnisse für den Item-Store}
@@ -162,7 +175,6 @@ Die Key-Value-Komponente von Julea ("kv"), hingegen weist kaum eine Veränderung
 \FloatBarrier
 
 Der Item-Store ist im vergleich zu den vorherigen Benchmarkmetriken anders. Er baut auf beiden Implementierungen auf.
-\todo[inline]{Mal schauen, ob man das auch in dem Paper zu JULEA findet, dann hier zitieren. Ansonsten auf den JULEA-Source-Code verweisen.}
 
 \subsubsection{Item}
 
@@ -175,7 +187,7 @@ Die Metrik "/item/item/delete" hat einen positiven Speedup. Dieser ist jedoch se
 
 Wesentlich auffälliger ist hingegen die Metrik "/item/collection/create". Diese hat Performance-Zunahmen von fast $2\%$. Um dieses Ergebnis besser zu verstehen werden nachstehend die Messwertverteilungen der beiden Benchmarkergenisse analysiert. 
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/comparisons/run_to_run_distribution__item_collection_create.svg}
     \caption{Speedup der Benchmarkergebnisse für den Item-Store}
@@ -193,7 +205,7 @@ Trotz dieser Unterschiede sieht man allerdings hier auch wie identisch die beide
 
 \subsection{Datenbank (SQLite)}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/db/difference_operations.svg}
     \caption{Speedup der Benchmarkergebnisse für Datenbanken}
@@ -206,7 +218,7 @@ Die Speedups der Datenbank-Benchmarkergebnisse für die Metriken "/db/entry/dele
 
 Die Metrik "/db/entry/update" hingegen ist beinahe $3\%$ performanter. Um hier eine genauere Aussage zu treffen, wird im nächsten Schritt die Verteilung der Messwerte der Benchmarkergebnisse analysiert.
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/comparisons/run_to_run_distribution__db_entry_update.svg}
     \caption{Verteilung Benchmarkergebnisse für "/db/entry/update"}
@@ -222,22 +234,21 @@ Allerdings sieht man auch hier, dass sich die Ergebnisse von der containierisier
 
 Dies ist ein weiteres Beispiel dafür, wie ähnlich die beiden Benchmarkergebnisse sind. Die Messwerte liegen so weit bei einander, dass man in Anbetracht der geringen Messwertanzahl keinen Signifikanten Speedup feststellen kann.
 
-
-Für "/db/schema\{create, delete\}" ist anschließend auch ersichtlich, dass sich bei betrachtung der Messwertvertilung kein signifikanter Speedup festgestellt werden kann. Die Ergebnisse liegen soweit beieinander, dass nicht auszuschließen ist, dass es sich um Messungenauigkeiten handelt.
-
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/comparisons/run_to_run_distribution__db_schema_create.svg}
     \caption{Verteilung Benchmarkergebnisse für "/db/schema/create"}
     \label{fig:mdist_db_schema_create}
 \end{figure}
 
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/comparisons/run_to_run_distribution__db_schema_delete.svg}
     \caption{Verteilung Benchmarkergebnisse für "/db/schema/delete"}
     \label{fig:mdist_db_schema_delete}
 \end{figure}
+
+Für "/db/schema\{create, delete\}" ist anschließend auch ersichtlich, dass sich bei betrachtung der Messwertvertilung kein signifikanter Speedup festgestellt werden kann. Die Ergebnisse liegen soweit beieinander, dass nicht auszuschließen ist, dass es sich um Messungenauigkeiten handelt.
 
 \FloatBarrier
 

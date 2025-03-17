@@ -1,34 +1,31 @@
 \chapter{Implementierung und Design}
 \label{cha:implementation_design}
 
-\textit{In diesem Kapitel wird die Implementierung und das Design der Containerisierung von JULEA erläutert. Zu Beginn wird noch einmal kurz auf den Ist-Zustand eingegangen.}
-
-\section{Ist-Zustand}
+\section{Ist-Zustand} \label{sec:ist-zustand}
 
 Eine JULEA-Entwicklungsumgebung kann aktuell in zweierlei Formen aufgesetzt werden:
 
-Zum einen kann man die nötigen Abhängigkeiten manuell über das Betriebssystem installieren. Dies bring den vorteil mit sich, dass diese automatisiert korrekt installiert werden und man diese üblicherweise auch bereits fertig kompiliert bereitgestellt bekommt. Der Nachteil ist, dass man nur ein begrenztes Spektrum an Versionen zur Verfügung hat und man nicht entscheiden kann, welche Features bei der Abhängigkeit aktiviert oder deaktiviert seien sollen. Des Weiteren ist es durchaus möglich, dass die benötigte Abhängigkeiten nicht in der Paketrepository des Betriebssystems vorhanden sind. 
+Zum einen kann man die nötigen Abhängigkeiten manuell über den Paketmanager des Betriebssystems installieren. Dies bringt den Vorteil mit sich, dass diese automatisiert korrekt installiert werden und man diese üblicherweise auch bereits fertig kompiliert bereitgestellt bekommt. Der Nachteil ist, dass man nur ein begrenztes Spektrum an Versionen zur Verfügung hat und man nicht entscheiden kann, welche Features bei der Abhängigkeit aktiviert oder deaktiviert seien sollen. Des Weiteren ist es durchaus möglich, dass die benötigte Abhängigkeiten nicht in der Paketrepository des Betriebssystems vorhanden sind. In diesem fall, müsste man die Abhängigkeiten manuell kompilieren und installieren. 
 
-Zum anderen kann man die Abhängigkeiten über ein mitgeliefertes Skript installieren ("install-dependencies.sh"). Dieses Skript nutzt den Paketmanager "spack" um die Abhängigkeiten zu installieren. Dadurch ist man nicht mehr auf das Paketrepository des Betriebssystems angewiesen und könnte auch spezifische Versionen der Abhängigkeiten installieren. Der Nachteil ist, dass diese Abhängigkeiten kompiliert werden müssen. Dies benötigt Zeit und Rechenleistung. 
+In der zweiten Form kann man die Abhängigkeiten über ein von JULEA mitgeliefertes Skript installieren ("install-dependencies.sh"). Dieses Skript nutzt den Paketmanager "spack" um die Abhängigkeiten zu installieren. Dadurch ist man nicht mehr auf das Paketrepository des Betriebssystems angewiesen und könnte auch spezifische Versionen der Abhängigkeiten installieren. Der Nachteil ist, dass diese Abhängigkeiten (und wiederrum dessen Abhängigkeiten) kompiliert werden müssen. Dies benötigt Zeit und Rechenleistung. 
 
-JULEA wird bereits mit GitHub-Actions automatisiert kompiliert und getestet. Es gibt bereits eine Pipeline, welche Ubuntu-Container mit den benötigten Abhängigkeiten für JULEA erstellt. Momentan finden dies Container keine Verwendung, in den nachgelagerten CI-Pipelines. 
+JULEA wird bereits mit GitHub-Actions automatisiert kompiliert und getestet. Außerdem gibt es bereits eine rudimentäre Pipeline, welche Ubuntu-Container mit den benötigten Abhängigkeiten für JULEA erstellt. Momentan finden diese Container keine Verwendung, in den nachgelagerten CI-Pipelines. 
 
-\todo[inline]{Vergleich von Compilezeiten zwischen unterschiedlichen maschinen}
-
-Um die Entwicklung von JULEA zu erleichtern wäre es sinnvoll eine Betriebssystemagnostische Entwicklungsumgebung zu haben, wo die Abhängigkeiten bereits vorinstalliert sind. Nachfolgend wird erläutert wie dies umgesetzt wurde und welche Containervisualisierungssoftware dafür verwendet wurde.
+Um die Entwicklung von JULEA zu erleichtern wäre es sinnvoll eine Betriebssystemagnostische Entwicklungsumgebung zu haben, wo JULEAs Abhängigkeiten bereits vorinstalliert sind. \\
+Nachfolgend wird erläutert wie dies umgesetzt wurde und welche Containervisualisierungssoftware dafür verwendet wurde.
 
 \section{Benötigte Containerimages}
 
 Um die Containerimages möglichst effizient zu gestalten, ist es sinnvoller mehrere domänenspezifische Containerimages zu erstellen, als ein großes Containerimage, welches dann ggf. Komponenten beinhaltet, welche man nicht benötigt.
 
-Bei Betrachtung der JULEA-Repository fallen zwei Domänen auf. Zu einem ist es eine Entwicklungsumgebung, welche alle optionalen und nicht-optionalen Abhängigkeiten von JULEA zum Kompilieren benötigt, sowie eine Testumgebung, um JULEA zu testen. Außerdem sollte man eine Deploymentumgebung haben, worin eine bereits kompilierte version JULEA mit den benötigten laufzeitabhängigkeiten enthalten ist.
+Bei Betrachtung der JULEA-Repository fallen zwei bzw. drei Domänen auf. Zu einem ist es eine Entwicklungsumgebung, welche alle optionalen und nicht-optionalen Abhängigkeiten von JULEA zum Kompilieren benötigt, sowie eine Testumgebung, um JULEA zu testen. Außerdem sollte man eine Deploymentumgebung haben, worin eine bereits kompilierte Version von JULEA mit den benötigten laufzeitabhängigkeiten enthalten ist.
 
 \subsection{Kompilierer}
 
 JULEA und dessen Abhängigkeiten werden gegen 2 Kompilierer getestet und kompiliert. Zum einen GCC und zum anderen CLang.
-Es diese Variation sollte auch in den Containerimages abgebildet werden. 
+Diese Variation sollte auch mit den Containerimages abbildbar sein. 
 
-Hierbei gilt allerdings zu beachten, dass stets beide Kompilierer während der Kompilierung verfügbar sind. Welcher Kompilierer verwendet wird, wird durch u. A. die Umgebungsvariable "CC" festgelegt.  
+Hierbei gilt allerdings zu beachten, dass stets beide Kompilierer während der Kompilierung verfügbar sind. Welcher Kompilierer für das Kompilieren verwendet wird, wird durch Umgebungsvariablen (z. B. "CC") festgelegt.  
 
 \subsection{Betriebssystem(-Versionen)}
 
@@ -36,11 +33,13 @@ Momentan wird JULEA exklusiv – während der CI-Pipeline – auf Ubuntu kompili
 
 \subsection{Abhängigkeitsquelle}
 
-Des Weiteren gibt es zwei Möglichkeiten um die benötigten Abhängigkeiten, welche JULEA zum Kompilierungszeitpunkt benötigt, zu installieren. Entweder nutzt man das mitgelieferte Skript "install-dependencies.sh", oder man stellt die Abhängigkeiten über das Betriebssystem bereit. Somit muss der Entwicklungs- sowie der Produktivcontainer in jeder Kombination von Betriebssystem, Kompilierer und Abhängigkeits-Installationsmethode vorhanden sein.
+Wie bereits in \cref{sec:ist-zustand} beschrieben, gibt es zwei Möglichkeiten um die benötigten Abhängigkeiten, welche JULEA zum Kompilierungszeitpunkt, sowie zur Runtime, benötigt zu installieren. Entweder nutzt man das mitgelieferte Skript "install-dependencies.sh", oder man stellt die Abhängigkeiten mithilfe des Betriebssystem-Paketmanagers bereit. Somit muss der Entwicklungs- sowie Produktiv-Container in jeder Kombination von Betriebssystem, Kompilierer und Abhängigkeits-Installationsmethode vorhanden sein.
 
-\subsection{Entwicklungs- und Produktivcontainer}
+\subsection{Entwicklungs- und Produktiv-Container}
 
-Container können verwendet werden, um das Ausrollen von Applikationen zu vereinfachen. Dieses Konzept kann man auch auf die Entwicklungsumgeung erweitern. Somit wird auch eine Containierisierte Entwicklungsumgebung für JULEA erstellt, welche alle Nötigen Abhängigkeiten zum Kompilieren von JULEA enthält.
+Wie bereits in \cref{sec:bg-dev-container} erläutert können Container nicht nur verwendet werden, um das Ausrollen von Applikationen zu vereinfachen. Man kann diese auch benutzen, um eine reproduzierbare Entwicklungsumgebung zu haben. 
+
+Somit wird neben den konventionellen Produktivcontainern auch eine containerisierte Entwicklungsumgebung für JULEA erstellt, welche mindestens alle nötigen Abhängigkeiten zum Kompilieren von JULEA enthält.
 
 \subsection{Namensschema}
 
@@ -77,7 +76,7 @@ Als "latest"-Version wird das Image "JULEA:gcc-system-ubuntu-24.04" verwendet.
 
 \subsubsection{Entwicklungs-Containerimages}
 
-Desweiteren gibt es noch die Entwicklungscontainer. Diese haben das Namensschema: \\
+Des Weiteren gibt es noch die Entwicklungscontainer. Diese haben das Namensschema: \\
 JULEA-dev:\{Kompilierer\}-\{abhängigkeitsquelle\}-\{betriebssystem(version)\}
 
 Somit gibt es folgende Entwicklungscontainer:
@@ -96,184 +95,232 @@ Somit gibt es folgende Entwicklungscontainer:
     \end{itemize} 
 \end{multicols}
 
-Eine besonderheit ist, dass es für die "system" Variante des Entwickungscontainers keine Kompilierer-Variation gibt. Das liegt daran, dass bei der "system" variation keine Abhängigkeiten kompiliert werden müssen. Außerdem sind stets beide Kompilierer in der Entwicklungsumgebung vorhanden. Somit wären die Kompilierer-Variationen renundant und könnten für Verwirrung sorgen. 
+Eine Besonderheit ist, dass es für die "system" Variante des Entwickungscontainers keine Kompilierer-Variation gibt. Das liegt daran, dass bei der "system" variation keine Abhängigkeiten kompiliert werden müssen. Außerdem sind stets beide Kompilierer in der Entwicklungsumgebung vorhanden. Somit wären die Kompilierer-Variationen redundant und könnten für Verwirrung sorgen. 
 
 Es ist üblich, dass es für ein Image-Tag immer eine "latest" version existiert. Diese wird automatisch ausgewählt, sollte keine spezifische Version angegeben werden.
 
 Als "latest"-Version wird das Image "JULEA:gcc-system-ubuntu-24.04" verwendet. 
 
-\section{Aufbau der Dockerfiles}
+\section{Allgemeiner Aufbau der Dockerfiles} \label{sec:allgemeiner-aufbau-der-dockerfiles}
 
-Der de-facto standard um Containerimages zu bauen, ist das Erstellen einer Containerfile (umgansprachlich Dockerfile). Diese werden von verschiedenen OCI-Containervisualisierungssoftwares, wie Docker, Podman, Buildah unterstützt. Ein alternatives Format stellt Apptainer dar, dass sogennante "Apptainer definition file" Dateiformat. Von der benutzung wird abgesehen, da dieses Format nicht sehr weit verbreitet ist und Apptainer die aus der Containerfile herforgehenden OCI-Containerimages unterstützt. Somit erzieht man mit der Containerfile eine hohe Kompatibilität innerhalb der Containerisierungslandschaft, währenddessen man Apptainer unterstützt welche eine weitverbreitete Containerlösung innerhalb des HPC darstellt.
+Der de-facto Standard um Containerimages zu bauen, ist das Erstellen einer Containerfile (Dockerfile). Diese werden von verschiedenen OCI-Containervisualisierungssoftwares, wie Docker, Podman, Buildah unterstützt. 
 
-Der generische Aufbau der Stages, welcher hier Anwendung findet, ist wie folgt: 
+Ein alternatives Format stellt Apptainer dar: das sogennante "Apptainer definition file" Dateiformat. Von der Benutzung wird abgesehen, da dieses Format nicht sehr weitverbreitet ist und Apptainer – wie in \cref{sec:bg-apptainer} bereits erläutert – die aus der Containerfile hervorgehenden OCI-Containerimages unterstützt. 
+
+Somit erzielt man mit der Containerfile eine hohe Kompatibilität innerhalb der Containerisierungslandschaft, währenddessen man Apptainer indirekt unterstützt welche eine weitverbreitete Containerlösung innerhalb der HPC-Langschaft darstellt.
+
+Der generische Aufbau der Stages, welcher hier Anwendung findet, kann aus \cref{fig:containerfile-stage-graph} entnommen werden.
 
 \begin{figure}[!htbp]
     \centering
     \includesvg[width=400pt]{./figures/modell-containerfile.drawio.svg}
     \caption{Containerfile Stage-Graf}
+    \label{fig:containerfile-stage-graph}
 \end{figure}
 
 \FloatBarrier
 
-\subsection{Stage 0: Basis}
+Die in \cref{fig:containerfile-stage-graph} dargestellten Stages werden nachfolgend im Detail erläutert.
 
-Diese stage dient als Grundlage. Hier wird ausgewählt welches Image als basis verwendet wird, welche Argumente es geben soll und anderweitige grundlegende Konfigurationen. \
-Besonders wichtig ist es hier die Argumente zu definieren. Da Argumente, welche nicht in dieser Basis-Stage definiert werden, auch nicht in den anderen Stages verfügbar \cite[Vgl. "Understand how ARG and FROM interact"]{DockerfileReference0100}. Man müsste also die Argumente in jeder Stage – wo man sie benötigt – erneut definieren.  
+\subsection{Stage 0: Basis} \label{sec:generic-stage-0}
 
-
-\subsection{Stage 1: Runtime Abhängigkeiten installieren}
-
-In dieser Stage, welche direkt auf der Basis-Stage aufbaut, werden alle Abhängigkeiten installiert, welche man zur laufzeit benötigt. Dazu gehören Bibliotheken oder andere Programme, welche zur Laufzeit von JULEA benötigt werden.
+Diese Stage dient als Grundlage. Hier wird ausgewählt welches Image als Basis verwendet wird, welche Argumente es geben soll und anderweitige grundlegende Konfigurationen. \
+Besonders wichtig ist es hier die Argumente zu definieren. Da Argumente, welche nicht in dieser Basis-Stage definiert werden, auch nicht in den anderen Stages verfügbar sind \cite[Vgl. "Understand how ARG and FROM interact"]{DockerfileReference0100}. Würde man die Argumente nicht in dieser Stage definieren, müsste man die Argumente in jeder Stage – wo sie benötigt werden – erneut definieren, was zu Redundanz und dadurch zu Fehleranfälligkeit führen kann.
 
 
-\subsection{Stage 2: Compiletime Abhängigkeiten installieren}
+\subsection{Stage 1: Runtime Abhängigkeiten installieren} \label{sec:generic-stage-1}
 
-In dieser Stage, welche direkt auf der Runtime-Stage aufbaut, werden alle Abhängigkeiten installiert welche man exklusiv nur zur Kompilierung von JULEA benötigt. Das Trennen von Stage 1 und Stage 2 ist eine bewusste Entscheidung mit dem Ziel, dass im resultierendem Containerimage nur die Abhängigkeiten enthalten sind, welche auch wirklich für die Ausführung benötigt werden. Dies spart Platz.
+In dieser Stage, welche direkt auf der Basis-Stage (\cref{sec:generic-stage-0}) aufbaut, werden alle Abhängigkeiten installiert, welche man zur laufzeit benötigt. Dazu gehören Bibliotheken oder andere Programme, welche zur Laufzeit von JULEA benötigt werden.
 
-\subsection{Stage 3: Konfigurieren und Kompilieren}
 
-In dieser Stage, welche direkt auf der "Compiletime Abhängigkeiten installieren"-Stage aufbaut, wird JULEA konfiguriert und kompiliert. Hier wird u. A. der Kompilierer verwendet, welcher über ein Argument übergeben wird. Hier wird das Kompilat an einen spezifischen Ort bereitgestellt, jedoch noch nicht installiert.
+\subsection{Stage 2: Compiletime Abhängigkeiten installieren} \label{sec:generic-stage-2}
 
-\subsection{Stage 4a: Entwicklungsabhängigkeiten installieren}
+In Stage 2, welche direkt auf der Stage 1 (\cref{sec:generic-stage-1}) aufbaut, werden alle Abhängigkeiten installiert welche man exklusiv zur Kompilierung von JULEA benötigt. Das Trennen von Stage 1 und Stage 2 ist eine bewusste Entscheidung mit dem Ziel, dass im resultierendem Containerimage nur die Abhängigkeiten enthalten sind, welche auch wirklich für die Ausführung von JULEA benötigt werden. Dies spart Platz.
 
-Diese stage baut auf der Stage 3 auf, da wir das in Stage 3 erstellte Kompilat nicht benötigen. 
+\subsection{Stage 3: Konfigurieren und Kompilieren} \label{sec:generic-stage-3}
+
+Stage 3, welche direkt auf der "Compiletime Abhängigkeiten installieren"-Stage (\cref{sec:generic-stage-2}) aufbaut, wird JULEA konfiguriert und kompiliert. Hier wird u. A. der Kompilierer verwendet, welcher über ein Argument festgelegt wird. Das resultierende Kompilat wird an einem spezifischen Ort bereitgestellt, jedoch noch nicht installiert. Die installation des Kompilats erfolgt in der in \cref{sec:generic-stage-4b} beschriebenen Stage.
+
+\subsection{Stage 4a: Entwicklungsabhängigkeiten installieren} \label{sec:generic-stage-4a}
+
+Diese stage baut auf der Stage 2 (\cref{sec:generic-stage-3}) auf, da wir das in Stage 3 erstellte Kompilat in der Entwicklungsumgebung nicht benötigen. 
 In dieser Stage werden für die Entwicklung nützliche oder benötigte Abhängigkeiten installiert. 
 
 Die Stage 4a wird ausgewählt, wenn man einen JULEA Entwicklungscontainer (JULEA-dev) erstellen möchte. 
 
-\subsection{Stage 4b: Kompilat installieren}
+\subsection{Stage 4b: Kompilat installieren} \label{sec:generic-stage-4b}
 
-Diese stage baut auf der Stage 1 auf, da wir lediglich die Laufzeitabhängigkeiten benötigen. Anschließend werden die in Stage 4 erstellten Kompilate installiert, indem man sie an den richtigen Ort kopiert.
+Diese stage baut auf der Stage 1 (\cref{sec:generic-stage-1}) auf, da wir lediglich die Laufzeitabhängigkeiten benötigen. Anschließend werden die in Stage 4 erstellten Kompilate installiert, indem man sie an den richtigen Ort kopiert. 
+
+Das Trennen der Stages für das Kompilieren und das Installieren des Kompilats ist eine bewusste Entscheidung, um das resultierende Containerimage möglichst kleinzuhalten. Würde man diese Trennung nicht vornehmen, hätte man im resultierenden Containerimage auch die Compiletime-Abhängigkeiten und ggf. nicht relevante Kompilierungsartefakte. 
 
 Die Stage 4b wird ausgewählt, wenn man einen JULEA Entwicklungscontainer (JULEA) erstellen möchte.
 
-\subsection{"System" Containerfile}
+\section{Aufbau "System" Containerfile}
 
-Der Layer-Graf für das Containerfile "System" sieht wie folgt aus. 
+Der in \cref{sec:allgemeiner-aufbau-der-dockerfiles} beschriebene Aufbau wird nun auf das Containerfile "System" angewendet. 
+
+Der Layer-Graf für das Containerfile "System" kann aus \cref{fig:system-layer-graph} entnommen werden.
 \begin{figure}[!htbp]
     \centering
     \includesvg[width=400pt]{./figures/modell-system-containerfile.drawio.svg}
     \caption{Containerfile "System" Layer-Graf}
+    \label{fig:system-layer-graph}
 \end{figure}
 \FloatBarrier
 
-Man erkennt, dass dieser identisch zum generischen Aufbau ist. Anschließend wird das Dockerfile in den Selben Schritten wie oben beschrieben aufgebaut.
+In \cref{fig:system-layer-graph} erkennt man, dass dieser identisch zum generischen Aufbau ist. Anschließend wird das Dockerfile in denselben Schritten wie oben beschrieben aufgebaut.
 
-\subsubsection{Stage 0: Basis}
+\subsection{Stage 0: Basis} \label{sec:system-stage-0}
 
-\inputminted[firstline=0,lastline=7]{dockerfile}{./code-examples/Dockerfile.system}
+\begin{listing}
+    \inputminted[firstline=0,lastline=7]{dockerfile}{./code-examples/Dockerfile.system}
+    \caption{Ausschnitt aus "Dockerfile.system"}
+    \label{lst:system-dockerfile-0-7}
+\end{listing}
 
-Die Basis-Stage ist kompakt und beinhaltet alle nötigen Argumente, wie die zu verwendende Ubuntu-Version, den "Buildtype" und den Kompilierer. Außerdem wird die Standard-Shell auf "bash" gesetzt. Dies hat u. A. einfluss auf die Shell, indem die "RUN" befehle ausgeführt werden. Es wird später ein Befehl ausgeführt, welcher ohne die verwendung einer bash-shell nicht funktionieren würde.
+
+Die Basis-Stage (siehe \cref{lst:system-dockerfile-0-7}) ist kompakt und beinhaltet alle nötigen Argumente, wie die zu verwendende Ubuntu-Version, den "Buildtype" und den Kompilierer. Außerdem wird die Standard-Shell auf "bash" gesetzt. Dies hat u. A. einfluss auf die Shell, indem die "RUN" befehle ausgeführt werden. Es wird später ein Befehl ausgeführt, welcher ohne die verwendung einer bash-shell nicht funktionieren würde.
 
 Außerdem wird das Ubuntu-Versions-Argument zweimal definiert. Es erscheint renundant, ist jedoch nicht anders zu bewerkstelligen. Das Argument wird in Zeile 1 definiert, um es in Zeile 3 zu verwenden. Da in Zeile 3 ein "FROM"-Statement ist, verfällt die Gültigkeit des Arguments. Deshalb wird es in Zeile 4 erneut definiert, um es später in anderen Stages zu verwenden. 
 
 Die Entscheidung alle Argumente in einer Stage "global" zu definieren, hat den Vorteil, dass diese Argumente an einem Ort zu finden sind und man davon ausgehen kann, dass in allen Stages die gleichen Argumente verwendet werden können. Dies macht das Dockerfile übersichtlicher und erleichtert die Wartung. 
 
-\subsubsection{Stage 1: Runtime Abhängigkeiten installieren}
+\subsection{Stage 1: Runtime Abhängigkeiten installieren} \label{sec:system-stage-1}
 
-\inputminted[firstline=10,lastline=25]{dockerfile}{./code-examples/Dockerfile.system}
+\begin{listing}[H]
+    \inputminted[firstline=10,lastline=25]{dockerfile}{./code-examples/Dockerfile.system}
+    \caption{Ausschnitt aus "Dockerfile.system"}
+    \label{lst:system-dockerfile-10-25}
+\end{listing}
 
-Diese Stage besteht aus einem sehr langen Befehl. Hier werden alle Abhängigkeiten installiert, welche auch zur Laufzeit von JULEA benötigt werden. Zum installieren wird hier der Standard-Paketmanager von Ubuntu "apt-get" verwendet. 
+Die Stage, welche in \cref{lst:system-dockerfile-10-25} definiert ist, besteht aus einem sehr langen Befehl. Hier werden alle Abhängigkeiten installiert, welche auch zur Laufzeit von JULEA benötigt werden. Zum Installieren wird hier der Standard-Paketmanager von Ubuntu "apt-get" verwendet. 
 
-In dieser Stage gibt es einige Unterschiede im Vergleich zu dem wie man die Pakete interaktiv installieren würde. 
+In dieser Stage sind einige Besonderheitn erkennbar im Vergleich zu einer interaktiven Intallation von Paketen. 
 
-Zum einen wird "apt-get update" und "apt-get install" in einem "RUN"-Befehl ausgeführt. Dies ist eine technische Notwendigkeit. Wie bereits im technischen Hintergrund erläutert, nutzt Docker Caching um die Build-Zeit in subsequenten Builds zu verringern. Würde man "apt-get update" und "apt-get install" in zwei "RUN"-Befehlen ausführen, würde "apt-get update" separat von "apt-get install" ausgeführt und gecached werden. Initial würde dies kein Problem darstellen, sobald man allerdings im "apt-get install" Schritt Pakete hinzufügt oder entfernt, würde "apt-get install" nicht mehr gecached sein und müsste neu ausgeführt werden. Da sich "apt-get update" allerdings nicht geändert hat, würde das immernoch gecached sein. Dies würde zu Problemen führen, da die Paketinformationen, welche "apt-get install" benötigt, nicht mehr aktuell sind. Typische symptome sind hierbei, dass Pakete nicht mehr gefungen werden können, da sie nicht mehr im Paketrepository vorhanden sind. Beide Befehle in einem "RUN"-Befehl auszuführen, löst dieses Problem, da bei jeder Änderung der "apt-get install" Zeile, auch "apt-get update" ausgeführt wird.
+Zum einen wird "apt-get update" und "apt-get install" in einem "RUN"-Befehl ausgeführt. Dies ist eine technische Notwendigkeit. Wie bereits im technischen Hintergrund erläutert, nutzt Docker Caching um die Build-Zeit in subsequenten Builds zu verringern. Würde man "apt-get update" und "apt-get install" in zwei "RUN"-Befehlen ausführen, würde "apt-get update" separat von "apt-get install" ausgeführt und zwischengespeichert werden. Initial würde dies kein Problem darstellen, sobald man allerdings im "apt-get install" Schritt Pakete hinzufügt oder entfernt, würde "apt-get install" nicht mehr zwischengespeichert sein und müsste neu ausgeführt werden. Da sich "apt-get update" allerdings nicht geändert hat, würde das immernoch zwischengespeichert sein. Dies würde zu Problemen führen, da die Paketinformationen, welche "apt-get install" benötigt, nicht mehr aktuell sind. Typische symptome sind hierbei, dass Pakete nicht mehr gefungen werden können, da sie nicht mehr im Paketrepository vorhanden sind. Beide Befehle in einem "RUN"-Befehl auszuführen, löst dieses Problem, da bei jeder Änderung der "apt-get install" Zeile, auch "apt-get update" ausgeführt wird.
 
 Des Weiteren wird DEBIAN\_FRONTEND=noninteractive und "--yes" gesetzt. Beide diese Optionen sind notwendig, um "apt-get install" im nicht-interaktiven Modus auszuführen. Ohne diese optionen kann es dazu kommen, dass "apt-get install" nachfragen stellt und eine Nutzereingabe erwartet. Dies ist in einem Dockerfile nicht möglich, da es keine Nutzereingabe gibt.
 
 Außerdem werden die "dev"-Pakete der Varianten installiert. Diese Pakete enthalten nicht nur die Bibliotheken, sondern auch die Header-Dateien, welche für das Kompilieren von JULEA benötigt werden. Es werden also nicht nur die Laufzeitabhängigkeiten installiert, sondern auch teile der Kompilierzeitabhängigkeiten. \
 Ubuntu stellt selbstverständlich auch die Pakete als reine Bibliotheken zur Verfügung. Hier besteht allerdings das Problem, dass diese eine spezifische Version im Paketnamen haben. Diese Versionen ändern sich von Ubuntu-Version zu Ubuntu-Version. Somit ist es nicht möglich diese Paketnamen hart zu kodieren. Man müsste diese dynamisch generieren. Dies würde das Containerfile verkomplizieren und die Wartungsintensivität erhöhen. Als Kompromiss werden die "dev"-Pakete installiert und etwas mehr Speicherplatz verbraucht.
 
-\subsubsection{Stage 2: Compiletime Abhängigkeiten installieren}
+\pagebreak
 
-\inputminted[firstline=28,lastline=43]{dockerfile}{./code-examples/Dockerfile.system}
+\subsection{Stage 2: Compiletime Abhängigkeiten installieren} \label{sec:system-stage-2}
 
-Wie zu erwarten sieht diese Stage ähnlich zur stage 3 aus. Hier werden wie in Stage 2 auch Abhängigkeiten installiert. 
+\begin{listing}[H]
+    \inputminted[firstline=28,lastline=43]{dockerfile}{./code-examples/Dockerfile.system}
+    \caption{Ausschnitt aus "Dockerfile.system"}
+    \label{lst:system-dockerfile-28-43}
+\end{listing}
 
-Allerdings sieht man in Zeile 43 eine Besonderheit. In Ubuntu-Versionen älter als 22.04 ist die installierte Meson Version älter als die von JULEA benötigte Version. Deshalb muss hier die Meson-Version für die älteren Versionen mit pip installiert werden. 
+Wie zu erwarten sieht die Stage, welche in \cref{lst:system-dockerfile-28-43} dargestellt ist, ähnlich zur Stage 1 (\cref{sec:system-stage-1}) aus. Hier werden wie in Stage 2 des Containerfile Aufbaus bereits beschrieben (\cref{sec:generic-stage-2}) alle Abhängigkeiten, welche zum Kompilieren benötigt werden, installiert. 
 
-\subsubsection{Stage 3: Konfigurieren und Kompilieren}
+Allerdings sieht man in Zeile 43 eine Besonderheit. In Ubuntu-Versionen älter als 22.04 ist die installierte Meson-Version älter als die von JULEA benötigte Meson-Version. Deshalb muss hier die Meson-Version für die älteren Ubuntu-Versionen (vor Version 22.04) mit pip \cite{pythonInstallingPackagesPython} installiert werden. 
 
-\inputminted[firstline=46,lastline=52]{dockerfile}{./code-examples/Dockerfile.system}
+\subsection{Stage 3: Konfigurieren und Kompilieren} \label{sec:system-stage-3}
 
-In dieser Stage sieht man das erste mal die Verwendung von "WORKDIR" und "COPY". "WORKDIR" setzt das Arbeitsverzeichnis für alle folgenden Befehle. "COPY" kopiert standardmäßig Dateien von dem Build-Context in das Arbeitsverzeichnis.
+\begin{listing}[H]
+    \inputminted[firstline=46,lastline=52]{dockerfile}{./code-examples/Dockerfile.system}
+    \caption{Ausschnitt aus "Dockerfile.system"}
+    \label{lst:system-dockerfile-46-52}
+\end{listing}
 
-Nachdem das Arbeitsverzeichnis gesetzt wurde wird das gesamte JULEA Repository in das Arbeitsverzeichnis /app kopiert. Nicht alle Dateien, die kopiert werden, sind für die Kompilierung notwendig. Allerdings ist diese Stage auch nicht dafür vorgesehen als ein Containerimage bereitgestellt zu werden. Dadurch macht es keinen Unterschied im Speicherverbrauch des resultierenden Containerimages und es ist einfacher und wartbarer das gesamte Repository zu kopieren. \
-Sollte es große mengen nicht relevanter Dateien geben und dies einen einfluss auf die Build-Geschwindigkeit haben, was es aktuell nicht der fall ist, kann man mithilfe einer .dockerignore Datei die Dateien, welche nicht kopiert werden sollen, definieren. Diese Dateien werden von Docker ignoriert und werden somit auch nicht in den Build-Context kopiert. 
+In der in \cref{lst:system-dockerfile-46-52} abgebildeten Stage sieht man das erste Mal die Verwendung von "WORKDIR" und "COPY". "WORKDIR" setzt das Arbeitsverzeichnis für alle folgenden Befehle. "COPY" kopiert standardmäßig Dateien von dem Build-Context in das Arbeitsverzeichnis.
+
+Nachdem das Arbeitsverzeichnis gesetzt wurde, wird das gesamte JULEA Repository in das Arbeitsverzeichnis /app kopiert. Nicht alle Dateien, die kopiert werden, sind für die Kompilierung notwendig. Allerdings ist diese Stage auch nicht dafür vorgesehen, als ein Containerimage bereitgestellt zu werden, sondern dient nur als ein Zwischenschritt. Dadurch macht es keinen Unterschied im Speicherverbrauch des resultierenden Containerimages und es ist einfacher und wartbarer das gesamte Repository zu kopieren. \
+Sollte es große mengen nicht relevanter Dateien geben und dies einen einfluss auf die Build-Geschwindigkeit haben, was es aktuell nicht der fall ist, kann man mithilfe einer ".dockerignore" Datei die Dateien, welche nicht kopiert werden sollen, definieren. Diese Dateien werden von Docker ignoriert und werden somit auch nicht in den Build-Context kopiert. 
 
 Im anschluss wird JULEA konfiguriert, konfiguriert und mithilfe von "ninja install" an einen spezifischen Ort installiert (kopiert). Dadurch, dass in Zeile 50 das Präfix auf "/usr/local" und in Zeile 52 "DESTDIR" auf "/app/julea-install" gesetzt wird, werden die JULEA Bibliotheken und Binaries mit der richtigen Ordernerstruktur in "/app/julea-install/usr/local" kopiert. Dadurch, dass die Ordnerstruktur nun bereits korrekt vorliegt und die Dateien in einem bekannten Ordner liegen, können Stages die Kompilate aus dieser Stage problemlos kopieren und unkompliziert installieren.
 
-\subsubsection{Stage 4a: Entwicklungsabhängigkeiten installieren}
+\subsection{Stage 4a: Entwicklungsabhängigkeiten installieren} \label{sec:system-stage-4a}
 
-\inputminted[firstline=61,lastline=65]{dockerfile}{./code-examples/Dockerfile.system}
+\begin{listing}[H]
+    \inputminted[firstline=61,lastline=65]{dockerfile}{./code-examples/Dockerfile.system}
+    \caption{Ausschnitt aus "Dockerfile.system"}
+    \label{lst:system-dockerfile-61-65}
+\end{listing}
 
-In dieser Stage, welche direkt auf der Stage "Compiletime Abhängigkeiten installieren" aufbaut, werden in einem Befehl die Entwicklungsabhängigkeiten installiert.
+In \cref{lst:system-dockerfile-61-65} wird eine Stage aufgezeigt, welche direkt auf der Stage "Compiletime Abhängigkeiten installieren" (\cref{sec:system-stage-2}) aufbaut, werden in einem Befehl die Entwicklungsabhängigkeiten installiert.
 
-\subsubsection{Stage 4b: Kompilat installieren}
+\subsection{Stage 4b: Kompilat installieren} \label{sec:system-stage-4b}
 
-\inputminted[firstline=55,lastline=58]{dockerfile}{./code-examples/Dockerfile.system}
+\begin{listing}[H]
+    \inputminted[firstline=55,lastline=58]{dockerfile}{./code-examples/Dockerfile.system}
+    \caption{Ausschnitt aus "Dockerfile.system"}
+    \label{lst:system-dockerfile-55-58}
+\end{listing}
 
-In dieser Stage, welche direkt auf der Stage "Runtime Abhängigkeiten installieren" aufbaut wird aus der Stage "Konfigurieren und Kompilieren" das Kompilat kopiert, sodass nun die kompilate in den richtigen verzeichnisse unter "/usr/local" liegen.
 
-Anschließend muss "ldconfig" ausgeführt werden. Ohne "ldconfig" würde das System nicht wissen, wo die Bibliotheken liegen. "ldconfig" aktualisiert die liste verfügbarer Bibliotheken und deren Pfade, sodass die JULEA-Binärdateien die JULEA-Bibliotheken finden können.
+\cref{lst:system-dockerfile-55-58} zeigt eine Stage, welche direkt auf der Stage "Runtime Abhängigkeiten installieren" (\cref{sec:system-stage-1}) aufbaut. Aus der der Stage "Konfigurieren und Kompilieren" (\cref{sec:system-stage-3}) werden die Kompilate kopiert, sodass diese nun in den richtigen verzeichnisse unter "/usr/local" liegen.
 
-\subsection{"Spack" Containerfile}
-Der Layer-Graf für das Containerfile "Spack" sieht wie folgt aus.
+Anschließend muss "ldconfig" ausgeführt werden. "ldconfig" aktualisiert die liste verfügbarer Bibliotheken und deren Pfade, sodass die JULEA-Bibliotheken, die von den JULEA-Programmen benötigt werden, gefunden werden können.
+
+\pagebreak
+
+\section{Aufbau "Spack" Containerfile}
+Der Layer-Graf für das Containerfile "Spack" sieht wird in \cref{fig:spack-layer-graph} dargestellt.
 \begin{figure}[!htbp]
     \centering
     \includesvg[width=400pt]{./figures/modell-spack-containerfile.drawio.svg}
     \caption{Containerfile "Spack" Layer-Graf}
+    \label{fig:spack-layer-graph}
 \end{figure}
 
 Es sind strukturelle Ähnlichkeiten zum generischen Aufbau zu erkennen, jedoch mit einigen unterschieden. Anschließend wird das Dockerfile in denselben Schritten wie oben illustriert beschrieben.
 
-\subsubsection{Stage 0: Basis}
+\subsection{Stage 0: Basis}
 
 \begin{listing}[H]
     \inputminted[firstline=0,lastline=8]{dockerfile}{./code-examples/Dockerfile.spack}
     \caption{Ausschnitt aus "Dockerfile.spack"}
+    \label{lst:spack-dockerfile-0-8}
 \end{listing}
 
-Die Basis-Stage ist größtenteils identisch, wie die Basis-Stage des "System" Dockerfiles. Es gibt hier allerdings ein weiteres Argument "JULEA\_SPACK\_COMPILER". Dieses Argument definiert mit welchem Kompilierer Spack die abhänngigkeiten kompilieren soll. 
+Die Basis-Stage (\cref{lst:spack-dockerfile-0-8}) ist größtenteils identisch zu der Basis-Stage des "System" Dockerfiles \cref{sec:system-stage-0}. Es gibt hier allerdings ein weiteres Argument "JULEA\_SPACK\_COMPILER". Dieses Argument definiert mit welchem Kompilierer Spack die abhänngigkeiten kompilieren soll. 
 
-\subsubsection{Stage 1: Runtime Abhängigkeiten für Spack installieren}
+\subsection{Stage 1: Runtime Abhängigkeiten für Spack installieren}
 
 \begin{listing}[H]
     \inputminted[firstline=10,lastline=13]{dockerfile}{./code-examples/Dockerfile.spack}
     \caption{Ausschnitt aus "Dockerfile.spack"}
+    \label{lst:spack-dockerfile-10-13}
 \end{listing}
 
+Die in \cref{lst:spack-dockerfile-10-13} dargestellte Stage ist im vergleich zur "System" Dockerfile Stage 1 (\cref{sec:system-stage-1}) sehr kompakt.
 Die einzig benötigte Runtime-Abhängigkeit ist hier "python3". Alle anderen abhängigkeiten werden durch Spack bereitgestellt und werden somit nicht über das Betriebssystem installiert. Im gegensatz zum "System" Dockerfile, werden hier nur die Laufzeitabhängigkeiten von Spack installiert, um Spack zu befähigen die eigentlichen Abhängigkeiten zu verwalten.
 
 
-\subsubsection{Stage 2: Spack Compiletime abhängigkeiten installieren, JULEA Run- und Compiletime Abhängigkeiten mit installieren}
+\subsection{Stage 2: Spack Compiletime abhängigkeiten installieren, JULEA Run- und Compiletime Abhängigkeiten mit installieren}
 
 \begin{listing}[H]
     \inputminted[firstline=15,lastline=29]{dockerfile}{./code-examples/Dockerfile.spack}
     \caption{Ausschnitt aus "Dockerfile.spack"}
+    \label{lst:spack-dockerfile-15-29}
 \end{listing}
 
-Zu begin sieht man wie mithilfe von apt die Abhängigkeiten für das Kompilieren der Abhängigkeiten durch Spack installiert werden. 
+Zu begin von \cref{lst:spack-dockerfile-15-29} sieht man wie mithilfe von apt die Abhängigkeiten für das Kompilieren der Abhängigkeiten durch Spack installiert werden. 
 
-Anschließend wird das durch JULEA bereitgestellte "script" verzeichnis in den Container kopiert und das Skript "install\-dependencies.sh" ausgeführt. Dieses Skript installiert die Abhängigkeiten mithilfe von Spack, welche JULEA für die Compiletime sowie die Laufzeit benötigt. Hier wird das "JULEA\_SPACK\_COMPILER" Argument as Umgebungsvariable an das Skript übergeben und beeinflusst damit die verwendung des Kompilierers.
+Anschließend wird das durch JULEA bereitgestellte "script" verzeichnis in den Container kopiert und das Skript "install\-dependencies.sh" ausgeführt. Dieses Skript installiert die Abhängigkeiten mithilfe von Spack, welche JULEA für die Compiletime sowie die Laufzeit benötigt. Hier wird das "JULEA\_SPACK\_COMPILER" Argument as Umgebungsvariable an das Skript übergeben und beeinflusst damit den von Spack verwendeten Kompilierer.
 
 
-\subsubsection{Stage 3: Konfigurieren und Kompilieren}
+\subsection{Stage 3: Konfigurieren und Kompilieren} \label{sec:spack-stage-3}
 
 \begin{listing}[H]
     \inputminted[firstline=32,lastline=40]{dockerfile}{./code-examples/Dockerfile.spack}
     \caption{Ausschnitt aus "Dockerfile.spack"}
+    \label{lst:spack-dockerfile-32-40}
 \end{listing}
 
-In dieser Stage wird JULEA konfiguriert und kompiliert. Im vergleich zum "System" Dockerfile, ist diese stage recht identisch. Ein unterschied ist, dass hier das konfigurieren und kompilieren in einem Schritt ausgeführt wird. Dies wird gemacht, da man die Umgebungsvariablen welche in der "environment.sh" gesetzt werden, auch für das Kompilieren benötigt werden. 
+In der in \cref{lst:spack-dockerfile-32-40} aufgezeigten Stage wird JULEA konfiguriert und kompiliert. Im Vergleich zum "System" Dockerfile (\cref{sec:system-stage-3}), ist diese Stage ähnlich. Ein Unterschied ist, dass in \cref{lst:spack-dockerfile-32-40} das Konfigurieren und Kompilieren in einem Schritt ausgeführt wird. Dies wird gemacht, da man die Umgebungsvariablen welche mithilfe des von JULEA bereitgestellen "environment.sh" Skripts gesetzt werden, für das Konfigurieren, sowie für das Kompilieren benötigt. 
 
 Außerdem ist der Prefix auf "/app/julea-install" gesetzt. Dies wird getan, da die Bibliotheks- und Binärdateien nicht in "/usr/local" installiert werden, sondern in "/app/julea-install". Dies wird gemacht, da die JULEA-Binärdateien und Bibliotheken von den durch Spack bereitgestellten Bibliotheken abhängen und diese nicht in "/usr/local" installiert sind. Würde man nun JULEA in "/usr/local" installieren, würde es nicht funktionieren, da die Bibliotheken welche durch Spack installiert wurden, nicht gefunden werden können. Man müsse erst Spack die Umgebung laden lassen, damit JULEA funktioniert. \
-Ein installieren von JULEA in "/usr/local" wäre also eher verwirrend, da alle JULEA komponenten standardmäßig verfügbar wären, jedoch nicht funktionieren würden. Wenn man JULEA nun in ein nicht standardisiertes Verzeichnis installiert, ist JULEA auch nicht standardmäßig über den "PATH" verfügbar. 
+Das Installieren von JULEA in "/usr/local" wäre also eher verwirrend, da alle JULEA komponenten standardmäßig verfügbar wären, jedoch nicht funktionieren würden. Wenn man JULEA nun in ein nicht standardisiertes Verzeichnis installiert, ist JULEA auch nicht standardmäßig über den "PATH" verfügbar. 
 
-Um JULEA verfügbar zu machen werden in der Stage 4b weitere schritte vorgenommen.
+Um JULEA trotzdem für den Endnutzer unkompliziert in den Spack-Container-Varianten verfügbar zu machen werden in \cref{sec:spack-stage-4b} weitere Schritte vorgenommen.
 
-\subsubsection{Stage 4a: Entwicklungsabhängigkeiten installieren}
+\subsection{Stage 4a: Entwicklungsabhängigkeiten installieren}
 
 
 \begin{listing}[H]
@@ -282,10 +329,10 @@ Um JULEA verfügbar zu machen werden in der Stage 4b weitere schritte vorgenomme
 \end{listing}
 
 
-Diese stage ist identisch zu der vom "System" Dockerfile. Hier werden die Entwicklungsabhängigkeiten installiert.
+Diese Stage ist identisch im Vergleich zu der "System" Dockerfile Stage (\cref{sec:system-stage-4a}). Hier werden die Entwicklungsabhängigkeiten installiert.
 
 
-\subsubsection{Stage 4b: Kompilat installieren}
+\subsection{Stage 4b: Kompilat installieren} \label{sec:spack-stage-4b}
 
 \begin{listing}[H]
 \inputminted[firstline=42,lastline=48]{dockerfile}{./code-examples/Dockerfile.spack}
@@ -293,7 +340,7 @@ Diese stage ist identisch zu der vom "System" Dockerfile. Hier werden die Entwic
 \end{listing}
 
 
-In dieser Stage werden die Abhängigkeiten aus der Stage 3 kopiert, die JULEA Kompilate werden in "/app/julea-install" installiert und es werden die "scripts" in "/app/scripts" kopiert.
+In dieser Stage werden die Abhängigkeiten aus der Stage 3 (\cref{sec:spack-stage-3}) kopiert, die Kompilate von JULEA werden in "/app/julea-install" installiert und es werden die von JULEA bereitgestellten Skripte ("scripts") in "/app/scripts" kopiert.
 
 Danach wird "docker-spack-entrypoint.sh" in den Container kopiert und als "ENTRYPOINT" gesetzt. 
 
@@ -308,11 +355,13 @@ Den Inhalt dieses Skripts kann man aus \cref{lst:docker-spack-entrypoint.sh} ent
 In \cref{lst:docker-spack-entrypoint.sh} sieht man, dass zu begin die Spack Umgebung sowie JULEA über das Skript "environment.sh" geladen werden.
 Anschließend werden die Argumente, die an das Skript übergeben werden, ausgeführt.
 
-Das ausführen der übergebenen Argumente ist eher ungewöhnlich, allerdings ist dies hier erwünscht, denn Docker hat neben dem "ENTRYPOINT" auch noch den "CMD" Befehl. Der "CMD" Befehl definiert die Argumente, welche an das "ENTRYPOINT" übergeben werden. 
+Das Ausführen der übergebenen Argumente ist eher ungewöhnlich, allerdings ist dies hier erwünscht, denn Docker hat neben dem "ENTRYPOINT" auch noch den "CMD" Befehl. Der "CMD" Befehl definiert die Argumente, welche an das "ENTRYPOINT" übergeben werden. 
 
-Der CMD Befehl wird unter anderem über das starten des Containers mit "docker run" übergeben. "docker run <container> echo "Hello, World!" würde folgenden Befehl im Container ausführen: "<ENTRYPOINT> echo "Hello, World!". Das bedeutet, dass "ENTRYPOINT" den gegebenen Befehl als Argumente erhält. Somit muss "ENTRYPOINT" die Argumente ausführen.
+Der CMD Befehl wird unter anderem über das Starten des Containers mit "docker run" übergeben. "docker run <container> echo "Hello, World!" würde folgenden Befehl im Container ausführen: "<ENTRYPOINT> echo "Hello, World!". Das bedeutet, dass "ENTRYPOINT" den gegebenen Befehl als Argumente erhält. Somit muss "ENTRYPOINT" die Argumente ausführen.
 
 Ein Skript welches die Spack und JULEA Umgebung läd als ENTRYPOINT zu verwenden, ist somit ideal. Dadurch kann der Endnutzer der Containers JULEA im Container verwenden, ohne sich mit den technischen details auseinanderzusetzen, um die Umgebung korrekt zu laden.
+
+\pagebreak
 
 \section{Docker Bakefile}
 
@@ -324,20 +373,21 @@ Die Bakefile selber kann in 5 Teile unterteilt werden.
 
 \subsection{Bakefile Header}
 
-In diesem Teil werden Variablen, Gruppen und generische Targets definiert.
+In dem, durch \cref{lst:docker-bake-header} dargestellten, Teil werden Variablen, Gruppen und generische Targets definiert.
 
 \begin{listing}[H]
     \inputminted[firstline=1,lastline=7]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
     \caption{Ausschnitt aus "docker-bake.hcl"}
+    \label{lst:docker-bake-header}
 \end{listing}
 
-Das target "base" ist das basis-target. Hier können alle generellen einstellungen gesetzt werden, ohne, dass man diese in jeder target-definition wiederholen muss. 
+Das Target "base" ist das basis-target. Hier können alle generellen einstellungen gesetzt werden, ohne, dass man diese in jeder target-definition wiederholen muss. 
 
 Anschließen werden zwei Variablen definiert. 
 
 "BAKE\_IMAGE\_NAME" ist der festgelegte Basisname aller resultierenden Containerimages. Sprich alle Containerimages werden wie folgt benannt: "BAKE\_IMAGE\_NAME*:TAG".
 
-Diese Variable macht es einfach von außen dynamisch festzulegen, wo das image veröffentlicht werden soll. Als default-wert, wird der JULEA-Fork für diese Arbeit verwendet.
+Diese Variable macht es einfach von außen dynamisch festzulegen, wo das image veröffentlicht werden soll. Als Standartwert, wird der JULEA-Fork für diese Arbeit verwendet.
 
 "COMMIT\_SHA" wird genutzt, um von außen (üblicherweise von einer CI-Pipeline) den Commit-Hash zu übergeben. Dieser wird dann benutzt, um Containerimages für spezifische Commits zu erstellen. Diese können dann für das einfache debugging von spezifischen Commits zu verwenden.
 
@@ -345,11 +395,12 @@ Zuletzt gibt es die Gruppe "ubuntu". Den Namen braucht man keine weitere Bedeutu
 
 \subsection{Bakefile Target "ubuntu-spack"} \label{ubuntu-spack-target}
 
-In diesem Target werden die Containerimages für die produktiven JULEA-Container, welche Spack für das Abhängigkeitsmanagement verwenden, definiert.
+In \cref{lst:docker-bake-ubuntu-spack} wird das Target "ubuntu-spack" definiertt. In diesem Target werden die Containerimages für die produktiven JULEA-Container, welche Spack für das Abhängigkeitsmanagement verwenden, definiert.
 
 \begin{listing}[H]
-    \inputminted[firstline=9,lastline=33]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+    \inputminted[firstline=9,lastline=27]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
     \caption{Ausschnitt aus "docker-bake.hcl"}
+    \label{lst:docker-bake-ubuntu-spack}
 \end{listing}
 
 
@@ -367,31 +418,37 @@ Zuletzt wird noch das caching aktiviert, um die hier besonders langen Compile-Ze
 
 \subsection{Bakefile Target "ubuntu-system"} \label{ubuntu-system-target}
 
-Dieses target ist fast identisch zum "ubuntu-system" target (\cref{ubuntu-spack-target}). Der einzige Unterschied ist, dass hier nicht gecached wird, da das Bauen dieser Container ohne Caching bereits sehr schnell ist und die Cache-Größe von GitHub-Actions begrenzt ist. Außerdem wird hier das Dockerfile "Dockerfile.system" verwendet und die Tags haben andere Namen. Es wird des Weiteren kein Spack compiler Argument an das Dockerfile übergeben, da das Dockerfile.system bereits die Abhängigkeiten über das Betriebssystem installiert und kein Spack verwendet wird. 
-
 \begin{listing}[H]
-    \inputminted[firstline=35,lastline=50]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+    \inputminted[firstline=30,lastline=44]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
     \caption{Ausschnitt aus "docker-bake.hcl"}
 \end{listing}
+
+Dieses Target ist fast identisch zum "ubuntu-system" target (\cref{ubuntu-spack-target}). Der einzige Unterschied ist, dass hier nicht zwischengespeichert wird, da das Bauen dieser Container ohne Caching bereits sehr schnell ist und die Cache-Größe von GitHub-Actions begrenzt ist. Außerdem wird hier das Dockerfile "Dockerfile.system" verwendet und die Tags haben andere Namen. Es wird des Weiteren kein Spack compiler Argument an das Dockerfile übergeben, da das Dockerfile.system bereits die Abhängigkeiten über das Betriebssystem installiert und kein Spack verwendet wird. 
+
 
 \subsection{Bakefile Target "ubuntu-latest"}
 
-Dieses Target sehr ähnlich zum "ubuntu-system" target (\cref{ubuntu-system-target}). Hier wird allerdings der "latest"-Tag erzeugt. 
-Der rest ist identisch zum "ubuntu-system" target. Es wäre auch möglich diesen mit dem "ubuntu-system" target zu kombinieren, allerdings würde das die Lesbarkeit des Bakefiles verringern, da man nun spezielle Funktionen und konditionelle Anweisungen im Bakefile-Target verwenden müsste.
-
 \begin{listing}[H]
-    \inputminted[firstline=52,lastline=62]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+    \inputminted[firstline=47,lastline=56]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
     \caption{Ausschnitt aus "docker-bake.hcl"}
 \end{listing}
+
+
+Dieses Target ist sehr ähnlich zum "ubuntu-system" target (\cref{ubuntu-system-target}). Hier wird allerdings der "latest"-Tag erzeugt. 
+Der rest ist identisch zum "ubuntu-system" target. Es wäre auch möglich diesen mit dem "ubuntu-system" target zu kombinieren, allerdings würde das die Lesbarkeit des Bakefiles verringern, da man nun spezielle Funktionen und konditionelle Anweisungen im Bakefile-Target verwenden müsste.
+
+
 
 \subsection{Bakefile Target "ubuntu-dev-container"}
 
-Dieses Target ist das letzte Target und erstellt die Entwicklungscontainer. Diese Container sind identisch zum Spack-Produktionscontainer, allerdings wird hier ein anderes Target verwendet ("JULEA\_dependncies"). Dieses Target hat JULEA noch nicht kompiliert und lediglich die nötigen Abhängigkeiten mit Spack installiert.
-
 \begin{listing}[H]
-    \inputminted[firstline=64]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
+    \inputminted[firstline=58]{./lexers/docker-bake-lexer.py}{./code-examples/docker-bake.hcl}
     \caption{Ausschnitt aus "docker-bake.hcl"}
 \end{listing}
+
+Dieses Target ist das letzte Target und erstellt die Entwicklungscontainer. Diese Container sind identisch zum Spack-Produktionscontainer, allerdings wird hier ein anderes Target verwendet ("JULEA\_dependncies"). Dieses Target hat JULEA noch nicht kompiliert und lediglich die nötigen Abhängigkeiten mit Spack installiert.
+
+\pagebreak
 
 \section{CI}
 
@@ -400,6 +457,7 @@ Um das Erstellen der Container noch komfortabler zu machen, werden diese mithilf
 Es wird ein neuer Workflow erstellt, welcher bei jedem Push auf dem "main" Branch den Docker-Bakefile-Target "ubuntu" erstellt und in die GitHub Container-Registry veröffentlicht.
 
 Der Workflow kann in zwei Teilen illustriert werden 
+
 
 \subsection{Workflow Kopf}
 
@@ -425,7 +483,7 @@ Im anschluss folgt das Setzen von Variablen für den Workflow. Hier wird "REGIST
 
 Die eigentlichen Schritte des Workflows befinden sich im zweiten Teil des Workflows. Im Körper sind 2 "Jobs" definiert. Diese werden folgend erläutert.
 
-\subsubsection{Job "Prepare"}
+\subsubsection{Job "Prepare"} \label{ssec:job-prepare}
 
 Der erste ausgeführter Job ist der "Prepare" Job. Dieser Job generiert die nötigen Daten aus dem Bakefile, um anschließend die einzelnen Containertargets parallel zu erstellen.
 
@@ -435,7 +493,7 @@ Der erste ausgeführter Job ist der "Prepare" Job. Dieser Job generiert die nöt
     \label{lst:containers-ci-12-23}
 \end{listing}
 
-In Zeile 14 wird definiert, auf welchem Betriebssystem der Job laufen soll. Hierbei wurde sich für Ubuntu entschieden. 
+In Zeile 14 von \cref{lst:containers-ci-12-23} wird definiert, auf welchem Betriebssystem der Job laufen soll. Hierbei wurde sich für Ubuntu entschieden. 
 Anschließend wird die Ausgabe des Jobs definiert. Diese Ausgabe gibt der Job weiter an alle Jobs, welche vom Job abhängig sind.
 
 Anschließend kommen die Schritte (Engl. "Steps"). Der erste Schritt "Checkout", läd das repository in das aktuelle Arbeitsverzeichnis.
@@ -450,32 +508,40 @@ Da dieser Code-Abschnitt etwas länger ist, wird er in mehreren Teilen erläuter
 
 \paragraph{Kopf}
 
-\begin{listing}
+\begin{listing}[H]
     \inputminted[firstline=25,lastline=35]{yaml}{./code-examples/containers-ci.yml}
     \caption{Ausschnitt aus "containers-ci.yml"}
     \label{lst:containers-ci-25-35}
 \end{listing}
 
-Im Kopf des Jobs werden wieder Name und Betriebssystem definiert. Anschließend wird mit "needs" die Abhängigkeit zum vorherigen "Prepare"-Job gesetzt. Im anschluss in Zeile 30 bis 33 wird die Matrixstrategie definiert. Hierbei wird die Ausgabe des Jobs "Prepare" verwendet, was in Zeile 33 explizit definiert wird. In Zeile 31 wird "fail-fast" deaktiviert. Fail-Fast ist ein feature der Matrixstrategie, welches alle parallelen Ausführungen des Jobs stoppt, sobald einer fehlschlägt. Dies ist in diesem Fall nicht erwünscht.
+Der Codeausschnitt \cref{lst:containers-ci-25-35} kann als "Kopf" des Jobs definiert werden. Im Kopf des Jobs werden wieder Name und Betriebssystem definiert. Anschließend wird mit "needs" die Abhängigkeit zum vorherigen "Prepare"-Job (\cref{ssec:job-prepare}) gesetzt. Im anschluss in Zeile 30 bis 33 wird die Matrixstrategie definiert. Hierbei wird die Ausgabe des Jobs "Prepare" verwendet, was in Zeile 33 explizit definiert wird. In Zeile 31 wird "fail-fast" deaktiviert. Fail-Fast ist ein feature der Matrixstrategie, welches alle parallelen Ausführungen des Jobs stoppt, sobald einer fehlschlägt. Dies ist in diesem Fall nicht erwünscht.
 
 In Zeile 34 und 35 werden die benötigten Berechtigungen definiert. Dies ist zwingend notwendig, da ansonsten der GitHub API-Token nicht die ausreichenden Berechtigungen hätte. Die Berechtigung "packages: write" erlaubt es dem Job Pakete/Container in der Registry des Repositoriums zu veröffentlichen.
 
+
 \paragraph{Initialisierung}
 
-\inputminted[firstline=36,lastline=49]{yaml}{./code-examples/containers-ci.yml}
+\begin{listing}[H]
+    \inputminted[firstline=36,lastline=49]{yaml}{./code-examples/containers-ci.yml}
+    \caption{Ausschnitt aus "containers-ci.yml"}
+    \label{lst:containers-ci-36-49}
+\end{listing}
 
-Im Anschluss folgen die Schritte des Jobs. Im ersten Schritt wird das Repository geladen. Danach loggt sich der Job bei der GitHub Container Registry ein, um darin die erstellten Containerimages zu veröffentlichen. 
+Im Anschluss folgen im Codeausschnitt \cref{lst:containers-ci-36-49} die Schritte des Jobs, welche die Umgebung für das Erstellen von Docker-Containern vorbereiten (initialisieren). Im ersten Schritt wird das Repository geladen. Danach loggt sich der Job bei der GitHub Container Registry ein, um darin die erstellten Containerimages zu veröffentlichen. 
 
 Anschließend wird QEMU initialisiert. Dies ist eine indirekte Abhängigkeit von Docker, wenn man Containerimages für eine Host-Fremde CPU-Architektur erstellen möchte. Dies ist zum aktuellen Zeitpunkt nicht vorgesehen, allerdings in der Zukunft eine mögliche Erweiterung, welche man dann – ohne die Job-Definition zu verändern – hinzufügen könnte.
 
 Nun wird Docker Buildx initialisiert, um später die Docker-Bakefile Targets zu erstellen. Diese benötigen Docker Buildx, da sie ein Docker Buildx Feature sind. 
 
+
+
 \paragraph{Erstellen der Containertargets}
+
+Nach der Initialisierung erfolgt nun das Erstellen der Containerimages in \cref{lst:containers-ci-50-60}. Es werden mit dem "env" Schlüssel die Variablen "COMMIT\_SHA" und "BASE\_IMAGE\_NAME" der Docker-Bakefile gesetzt. Danach werden die Docker-Bakefile-Argumente in Zeile 55 bis 60 gesetzt. Es wird der Target aus der Matrixstrategie gesetzt, das Veröffentlichen der erstellten Dockerimages aktiviert und die Docker-Bake-File definiert.
 
 \begin{listing}[H]
     \inputminted[firstline=50,lastline=60]{yaml}{./code-examples/containers-ci.yml}
     \caption{Ausschnitt aus "containers-ci.yml"}
     \label{lst:containers-ci-50-60}
 \end{listing}
-
-Nach der Initialisierung erfolgt nun das Erstellen der Containerimages. Es werden mit dem "env" Schlüssel die Variablen "COMMIT\_SHA" und "BASE\_IMAGE\_NAME" der Docker-Bakefile gesetzt. Danach werden die Docker-Bakefile-Argumente in Zeile 55 bis 60 gesetzt. Es wird der Target aus der Matrixstrategie gesetzt, das Veröffentlichen der erstellten Dockerimages aktiviert und die Docker-Bake-File definiert.
+\FloatBarrier

@@ -1,17 +1,14 @@
 \chapter{Einführung}
 \label{cha:introduction}
 
-\textit{In diesem Kapitel wird die Motivation, Zielsetzung und Struktur der Arbeit erläutert.}
-
-
 \section{Motivation}
 Im Jahr 2022 überstieg der erste Supercomputer – "Frontier" – die 1-ExaFLOP-Marke \cite[Vgl. 567ff]{rajaramanFrontierWorldsFirst2023}. Dies ist ein Meilenstein der HPC-Entwicklung und bring neue Möglichkeiten für die Forschung und Wissenschaft.
 
-Die immer steigende Rechenleistung in fast allen Bereichen der Informationstechnologie – nicht nur im HPC-Bereich – ermöglicht es, Applikationen mit immer steigenden Anforderungen und Komplexität zu entwickeln und somit auch komplexere Probleme zu lösen. Ein Indiz für die steigende Komplexität vom Applikationen kann die Anzahl der Verwendung von Abhängigkeiten sein, welche die Komplexität der Applikation auf Code Dritter auslagern \cite[Vgl. Abbildung 2.4]{2024StateSoftware}. Die Verwendung von Abhängigkeiten birgt einige logistische Probleme. Eines dieser logistischen Probleme ist das Ausrollen von Applikationen in heterogenen Umgebungen, welches mit steigender Anzahl von Abhängigkeiten steigt. Um das Problem zu minimieren, können Virtualisierungstechnologien immens helfen. Virtualisierungstechnologien ermöglichen es auf heterogenen Systemen eine homogene Umgebung zu schaffen. Diese kann dann als Basis für die Applikation dienen und eine einfach replizierbare Ausrollung zu schaffen. Davon profitieren nicht nur die Systemadministratoren, sondern auch die Entwickler, welche diese Umgebung für die Entwicklung nutzen können und somit das Aufsetzen einer Entwicklungsumgebung vereinfacht. Bei der Virtualisierung gibt es zweierlei populäre Technologien: Containervirtualisierung und Hardwarevirtualisierung. 
+Die immer steigende Rechenleistung in fast allen Bereichen der Informationstechnologie – nicht nur im HPC-Bereich – ermöglicht es, Applikationen mit immer steigenden Anforderungen und Komplexität zu entwickeln. Dies ermöglicht es immer komplexer werdene Probleme zu lösen. Ein Indiz für die steigende Komplexität vom Applikationen kann die Anzahl der Verwendung von Abhängigkeiten sein, welche die Komplexität der Applikation auf Code Dritter auslagern \cite[Vgl. Abbildung 2.4]{2024StateSoftware}. Die Verwendung von Abhängigkeiten birgt einige logistische Probleme. Eines dieser logistischen Probleme ist das Ausrollen von Applikationen in heterogenen Umgebungen, welches mit steigender Anzahl von Abhängigkeiten steigt. Um das Problem zu minimieren, können Virtualisierungstechnologien immens helfen. Virtualisierungstechnologien ermöglichen es auf heterogenen Systemen eine homogene Umgebung zu schaffen. Diese kann dann als Basis für die Applikation dienen und eine einfach replizierbare Ausrollung zu schaffen. Davon profitieren nicht nur die Systemadministratoren und die Endanwender, sondern auch die Entwickler, welche die virtualisierte Umgebung für die Entwicklung nutzen können. Das erspart den Entwicklern das Aufsetzen einer eigenen Entwicklungsumgebung, was durchaus Zeitintensiv sein kann. Bei der Virtualisierung gibt es zweierlei populäre Technologien: Containervirtualisierung und Hardwarevirtualisierung. 
 
 \section{Ziel der Arbeit}
 
-Das Ziel dieser Arbeit ist es, die Containervirtualisierung einer komplexeren Applikation – JULEA – zu Implementieren und zu Untersuchen. JULEA \cite{kuhnJULEAFlexibleStorage2017} ist ein Framework, welches Arbiträre Client-Schnitstellen und eine hohe Flexibilität bietet, um das Evaluieren von verschiedenen Speicher-Lösungen und Ansätzen zu beschleunigen \cite[Vgl. 1]{kuhnJULEAFlexibleStorage2017}. JULEA ist eine Applikation, welche viele Abhängigkeiten hat und eignet sich somit gut für die Untersuchung der Containervirtualisierung.
+Das Ziel dieser Arbeit ist es, die Containervirtualisierung einer komplexeren Applikation – JULEA – zu implementieren und zu Untersuchen. JULEA \cite{kuhnJULEAFlexibleStorage2017} ist ein Framework, welches Arbiträre Client-Schnitstellen und eine hohe Flexibilität bietet, um das Evaluieren von verschiedenen Speicher-Lösungen und Ansätzen zu beschleunigen \cite[Vgl. 1]{kuhnJULEAFlexibleStorage2017}. JULEA ist eine Applikation, welche viele Abhängigkeiten hat und eignet sich somit gut für die Untersuchung der Containervirtualisierung.
 
 \section{Struktur der Arbeit}
 
@@ -21,10 +18,6 @@ Die Arbeit wird folgendermaßen strukturiert sein:
 
 Im technischen Hintergrund (\cref{cha:background}) werden alle verwendeten Technologien und Konzepte, welche für das Verständnis der Arbeit notwendig sind, erläutert.
 
-\paragraph{Verwandte Arbeiten}
-
-In den verwandten Arbeiten (\cref{cha:related-work}) werden Arbeiten vorgestellt, welche sich mit der Containerisierung von Applikationen beschäftigen und inwiefern diese Arbeiten sich von dieser Arbeit unterscheiden.
-
 \paragraph{Implementierung und Design}
 
 In der Implementierung und Design (\cref{cha:implementation_design}) wird die Implementierung der Containerisierung von JULEA beschrieben und das Design der Containerisierung erläutert.
@@ -32,6 +25,10 @@ In der Implementierung und Design (\cref{cha:implementation_design}) wird die Im
 \paragraph{Evaluation}
 
 In der Evaluation (\cref{cha:evaluation}) wird die Performance der Containerisierung von JULEA untersucht und mit der nativen Installation von JULEA verglichen.
+
+\paragraph{Verwandte Arbeiten}
+
+In den verwandten Arbeiten (\cref{cha:related-work}) werden Arbeiten vorgestellt, welche sich mit der Containerisierung von Applikationen beschäftigen und inwiefern diese Arbeiten sich von dieser Arbeit unterscheiden.
 
 \paragraph{Fazit}
 

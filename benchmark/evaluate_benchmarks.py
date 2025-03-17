@@ -16,6 +16,7 @@ def compress_benchmark(df: pd.DataFrame) -> pd.DataFrame:
     df = df[~df["name"].str.contains("batch", case=False, na=False)]
     df = df[~df["name"].str.contains("index-single", case=False, na=False)]
     df = df[~df["name"].str.contains("index-mixed", case=False, na=False)]
+    df = df[~df["name"].str.contains("index-all", case=False, na=False)]
     return df   
 
 
@@ -50,10 +51,13 @@ def write_full_performance_result(dir: Path):
         k["iteration"] = i + 1
 
     pfs = pd.concat(performances, ignore_index=True)
+    pfs = pfs[["iteration", "name", "operations"]]
+    pfs = pfs.rename(columns={"operations": "Operationen/s", "name": "Benchmarkmetrik", "iteration": "Iteration"})
+
     print(pfs)
 
     pfs.to_latex(dir / "all_performance.tex", index=False, escape=True, longtable=True)
-    pfs.to_csv(dir / "all_performance.csv", index=False)
+    pfs.to_csv(dir / "all_performance.csv", index=False, columns=["Iteration", "Benchmarkmetrik", "Operationen/s"])
 
 
 def create_performance_result(dir: Path) -> pd.DataFrame:
@@ -227,10 +231,10 @@ def plot_compressed_subname_differences():
             continue
 
         subres = pd.merge(subres, system, on="name")
-        metrics = ["operations", "total_elapsed"]
+        metrics = ["operations"]
 
         for metric in metrics:
-            subres[f"difference_{metric}"] = ( subres[f"{metric}_x"] / subres[f"{metric}_y"] ) - 1
+            subres[f"Speedup"] = ( subres[f"{metric}_x"] / subres[f"{metric}_y"] ) - 1
 
 
         sub_dir_name = sub.strip("/")
@@ -241,7 +245,7 @@ def plot_compressed_subname_differences():
             plt.subplots_adjust(left=0.5)
             fig, ax = plt.subplots(figsize=(8.0, 8.0))#figsize=(30, 40))
 
-            ax = sns.barplot(data=subres, y="name", x=f"difference_{metric}", orient='h', width=0.7)
+            ax = sns.barplot(data=subres, y="name", x=f"Speedup", orient='h', width=0.7)
             ax.xaxis.set_ticks_position('bottom')
             ratio = 0.9
             x_left, x_right = ax.get_xlim()
@@ -428,6 +432,49 @@ def plot_full_subname_boxplots_raw():
         plt.savefig(p / "boxplot.svg")
 
 
+def create_unaggregated_performance_result(dir: Path) -> pd.DataFrame:
+     performances = parse_all_files(dir)
+ 
+     pfs = pd.concat(performances, ignore_index=True).reset_index()
+     return compress_benchmark(pfs)
+ 
+
+def plot_compare_disribution_hist(metric: str, bins: int = 15):
+
+    sns.set_theme(rc={"xtick.bottom" : True, "ytick.left" : True}, font_scale=2.5, style="whitegrid")
+
+    apptainer_data = create_unaggregated_performance_result(Path("benchmark/apptainer"))
+    apptainer_data = apptainer_data.assign(dir='apptainer')
+    system_data = create_unaggregated_performance_result(Path("benchmark/system"))
+    system_data = system_data.assign(dir='system')
+    
+    full_data = pd.concat([apptainer_data, system_data], ignore_index=True)
+    full_data = full_data[full_data["name"] == metric]
+
+    full_data = full_data.rename(columns={"operations": "Operationen/s", "dir": "Typ"})
+
+    if full_data.empty:
+        print(f"Metric {metric} not found")
+        return
+    
+    
+    
+
+    p = Path(f"benchmark/vis/compressed/differences/comparisons/")
+    p.mkdir(parents=True, exist_ok=True)
+
+    plt.figure(figsize=(20, 10))
+    ax = sns.histplot(data=full_data, x="Operationen/s", hue="Typ", multiple="stack", bins=bins, stat="count")
+    ax.set(ylabel='Anzahl der Ergebnisse')
+    ax.title.set_text(f"Verteilung der Laufzeitunterschiede zwischen Apptainer und System")
+
+    #sanitize metric 
+    metric = metric.replace("/", "_")
+
+    plt.tight_layout()
+    plt.savefig(p / f"run_to_run_distribution_{metric}.svg")
+
+
 import textwrap
 def wrap_labels(ax, width, break_long_words=False):
 
@@ -470,6 +517,18 @@ if __name__ == "__main__":
 
     write_full_performance_result(Path("benchmark/system"))
     write_full_performance_result(Path("benchmark/apptainer"))
+
+    plot_compare_disribution_hist("/item/collection/create")
+    plt.close('all')
+
+    plot_compare_disribution_hist("/db/entry/update", bins=30)
+    plt.close('all')
+
+    plot_compare_disribution_hist("/db/schema/create", bins=10)
+    plt.close('all')
+
+    plot_compare_disribution_hist("/db/schema/delete", bins=10)
+    plt.close('all')
 
 
 
