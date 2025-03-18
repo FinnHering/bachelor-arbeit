@@ -1,5 +1,7 @@
 \chapter{Evaluation} \label{cha:evaluation}
 
+In diesem Kapitel wird die Containerisierung von JULEA evaluiert. Dabei werden die Testumgebung und die verwendeten Benchmarks vorgestellt sowie die gemessenen Werte diskutiert.
+
 \section{Benchmarkumgebung}
 
 Eines der möglichen Variablen, welches das Benchmarkergebnis substantiell beeinflussen kann, ist die Benchmarkumgebung. Die Benchmarkumgebung lässt sich als drei verschiedene Komponenten betrachten. Das eine ist die Hardware, auf welcher der Benchmark ausgeführt wird. Das zweite ist das unterliegende Betriebssystem und dessen Komponenten auf welchen der Benchmark ausgeführt wird und das dritte sind die anderen Prozesse, welche sich auf dem System Ressourcen mit den Benchmarkprozesse(n) teilen. Bevor detaillierter auf den eigentlichen Benchmark eingegangen wird, werden die drei Komponenten der Benchmarkumgebung genauer betrachtet.
@@ -15,13 +17,13 @@ Der Benchmark wurde auf einem HPC-Cluster der Otto-von-Guericke-Universität Mag
     \item /\*\* (auch /tmp): $1\text{TB}$ SATA-SSD  
 \end{itemize}
 
-In beiden Fällen liegt das Kompilat im /home Verzeichnis, währenddessen die Speicherorte von JULEA unter /tmp liegen. Insbesondere ist zu beachten, dass für Apptainer das /tmp Verzeichnis des "Host" Systems mit einem Bind-Mount in den Container eingebunden wurde. Somit ist hier die Umgebung beider Ausführungsarten, so weit wie möglich, identisch.
+In beiden Fällen liegt das Kompilat im /home-Verzeichnis, währenddessen die Speicherorte von JULEA unter /tmp liegen. Insbesondere ist zu beachten, dass für Apptainer das /tmp-Verzeichnis des "Host"-Systems mit einem Bind-Mount in den Container eingebunden wurde. Somit ist die Umgebung beider Ausführungsarten so weit wie möglich identisch.
 
 Zusammenfassend lässt sich sagen, dass die Hardware in beiden Fällen identisch ist und es somit zu keiner Verzerrung der Benchmarkergebnisse durch unterschiedliche Hardwarekonfigurationen geben sollte. 
 
 \subsection{Betriebssystem und Betriebssystemkomponenten}
 
-Das Betriebssystem, auf welchem der Benchmark ausgeführt wurde, ist CentOS 8. Die Betriebssystemversion im Container ist im gegensatz dazu Ubuntu 24.04. Dieser Unterschied ist allerdings nicht relevant. Der größte Unterschied zwischen den beiden Betriebssystemen würden die unterschiedlichen Library-Versionen sein. Die unterschiedlichen Library-Versionen spielen allerdings keine Rolle, da hier die libraries mit Spack (gcc) kompiliert wurden. Somit gibt es hierbei auch keine Unterschiede. Es wurde in beiden fällen GCC 12 verwendet. Unterschiede in der Performance durch einen deutlich neueren Kompilierer sind somit auch ausgeschlossen. In beiden fällen wird der CentOS 8 Linux-Kernel des Host-Systems verwendet, da in einer Container-Umgebung kein separater Kernel gebootet wird.
+Das Betriebssystem, auf welchem der Benchmark ausgeführt wurde, ist CentOS 8. Die Betriebssystemversion im Container ist im gegensatz dazu Ubuntu 24.04. Dieser Unterschied ist allerdings nicht relevant. Der größte Unterschied zwischen den beiden Betriebssystemen würden die unterschiedlichen Library-Versionen sein. Die unterschiedlichen Library-Versionen spielen allerdings keine Rolle, da hier die Libraries mit Spack (gcc) kompiliert wurden. Somit gibt es hierbei auch keine Unterschiede. Es wurde in beiden fällen GCC 12 verwendet. Unterschiede in der Performance durch einen deutlich neueren Kompilierer sind somit auch ausgeschlossen. In beiden fällen wird der CentOS 8 Linux-Kernel des Host-Systems verwendet, da in einer Container-Umgebung kein separater Kernel gebootet wird.
 
 Hier sind die beiden Umgebungen somit auch in den relevanten Komponenten identisch. Somit sollte hier auch keine Verzerrungen der Benchmarkergebnisse durch unterschiedliche Betriebssystem-Konfigurationen geben.
 
@@ -29,9 +31,9 @@ Hier sind die beiden Umgebungen somit auch in den relevanten Komponenten identis
 
 Der Benchmark musste sich die Umgebung nur mit dem Betriebssystem und dessen Prozessen teilen. Somit ist es unwahrscheinlich, dass das System durch andere Prozesse stark beeinflusst wurde und es dadurch zu Milderungen der Benchmarkergebnissen kam. Der Benchmark-Prozess muss sich mit keinen anderen Programmen anderer Nutzer die Ressourcen teilen, da der Benchmark auf einem dedizierten Knoten ausgeführt wurde. Näheres dazu wird in \cref{sec:benchmark-execution} erläutert.
 
-Hier gibt es keine Unterschiede zwischen den beiden Ausführungsarten und somit sollten sich die Benchmarkergebnisse nicht durch andere Prozesse auf dem System unterschiedlich verhalten.
+Hier gibt es keine Unterschiede zwischen den beiden Ausführungsarten, und somit sollten sich die Benchmarkergebnisse nicht durch andere Prozesse auf dem System unterschiedlich verhalten.
 
-Abschließend lässt sich sagen, dass die Benchmarkergebnisse sehr wahrscheinlich nicht durch unterschiedliche Benchmarkumgebungen verzerrt werden können, da die Benchmarkumgebungen in den relevanten Komponenten (Hardware, Betriebssystem, Betriebssystemkomponenten und anderer Prozesse) identisch sind.   
+Abschließend lässt sich sagen, dass die Benchmarkergebnisse sehr wahrscheinlich nicht durch unterschiedliche Benchmarkumgebungen verzerrt werden, da die Benchmarkumgebungen in den relevanten Komponenten (Hardware, Betriebssystem, Betriebssystemkomponenten und andere Prozesse) identisch sind.   
 
 \section{Ausführung des Benchmarks} \label{sec:benchmark-execution}
 
@@ -271,4 +273,4 @@ Viele der Benchmarkergebnisse sind effektiv – unter Berücksichtigung der Mess
 
 Dies ist kein überraschendes Ergebnis, es wurde bereits in vielen anderen Publikationen ein ähnliches Verhalten wie hier festgestellt \cite[Vgl. S. 2589ff]{huExploringPerformanceSingularity2019}
 
-Sollte man starken Gebrauch von Dateisystemfunktionen machen, so kann es zu Performance-Einbußen kommen. Allerdings ist in vielen Fällen ein Performance-Verlust von unter $3\%$ akzeptabel. 
+Sollte man starken Gebrauch von Dateisystemfunktionen machen, so kann es zu Performance-Einbußen kommen. Allerdings ist in vielen Fällen ein Performance-Verlust von unter $3\%$ akzeptabel.
