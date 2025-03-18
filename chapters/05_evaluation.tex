@@ -37,7 +37,7 @@ Abschließend lässt sich sagen, dass die Benchmarkergebnisse sehr wahrscheinlic
 
 \section{Ausführung des Benchmarks} \label{sec:benchmark-execution}
 
-Für die Ausführung des Benchmarks auf dem HPC-Cluster müssen die Ressourcen allokiert und die Ausführung der Programme geschedult werden. Auf dem HPC-Cluster der OvGU wird das über das SLURM-System realisiert. Die ausführlichen SLURM-Skripte sind im Anhang zu finden (\cref{cha:appendix-benchmarkskripts}).
+Für die Ausführung des Benchmarks auf dem HPC-Cluster müssen die Ressourcen allokiert und die Ausführung der Programme geschedult werden. Auf dem HPC-Cluster der OvGU wird das über das SLURM-System realisiert. Die ausführlichen SLURM-Skripte sind im Anhang zu finden (siehe \cref{cha:appendix-benchmarkskripts}).
 
 Für das SLURM-Skript wurden folgende Parameter gesetzt
 
@@ -53,34 +53,34 @@ Für das SLURM-Skript wurden folgende Parameter gesetzt
 
 \section{Erörterung der Benchmarkmetriken}
 
-Um genauer zu verstehen, welche Faktoren einen Einfluss auf die Benchmarkergebnisse haben, ist es wichtig die Bedeutung der Benchmarkmetriken, sowie dessen unterliegende Technologien zu verstehen. 
+Um genauer zu verstehen, welche Faktoren einen Einfluss auf die Benchmarkergebnisse haben, ist es wichtig die Bedeutung der Benchmarkmetriken, sowie deren unterliegende Technologien zu verstehen. 
 Die hier verwendeten Benchmarks sind in JULEA integriert und in verschiedene Kategorien unterteilt.
 
 Diese Kategorien (Benchmarkmetriken) sind stets in einem spezifischen Format angegeben, dieses Format ist einem POSIX-Pfad ähnlich. Die Benchmarkmetriken sind in verschiedene (Unter-)Kategorien unterteilt. Die Struktur einer Benchmarkmetrik ist somit in folgender Form: /Kategorie/Unterkategorie-0/../Unterkategorie-n-1/Unterkategorie-n.
 
 JULEAs Benchmarkergebnisse liefern einige Kennzahlen. Die aussagekräftigste Kennzahl, um die Performance zweier Systeme zu vergleichen ist die Anzahl der Operationen pro Sekunde (operations). Eine Operation ist eine Ausführung der beschriebenen Benchmarkmetrik. So ist z. B. "/kv/get" eine "get" anfrage an das KV-Backend von JULEA. 
 
-Folgend werden die Benchmarkmetriken nach ihren Kategorien unterteilt und erläutert.
+Nachfolgend werden die Benchmarkmetriken in Kategorien unterteilt und erläutert.
 
 \subsection{Objektspeicher}
 
-JULEAs Objektspeicher-Backends werden unter den Benchmarkmetriken, welche "/object" als Präfix besitzen, gebenchmarkt.
+JULEAs Objektspeicher-Backends werden durch Benchmarkmetriken mit dem Präfix "/object" getestet.
 
 Dabei gibt es eine Differenzierung zwischen "/object/object" und "/object/distributed-object". "/object/object" repräsentiert die Operationen auf Objekten, welche an einem einzelnen Dateisystem gespeichert sind. "/object/distributed-object" repräsentiert die Operationen auf Objekten, welche verteilt gespeichert sind \cite[Vgl. S. 718]{kuhnJULEAFlexibleStorage2017}
 
 \subsection{Key-Value}
 
-Die Benchmark zu der Key-Value-Komponente von JULEA haben "/kv" als Prefix. 
+Die Benchmarks für die Key-Value-Komponente in JULEA haben das Präfix "/kv".
 
-Hierbei werden alle üblichen Operationen einer Key-Value-Datenbank gebenchmarkt. Dazu gehören das Einfügen, Aktualisiere, Löschen, sowie Lesen von Key-Value-Paaren \cite[Vgl. S. 718]{kuhnJULEAFlexibleStorage2017}.
+Hierbei werden alle üblichen Operationen einer Key-Value-Datenbank gebenchmarkt. Dazu gehören das Einfügen, Aktualisieren, Löschen, sowie Lesen von Key-Value-Paaren \cite[Vgl. S. 718]{kuhnJULEAFlexibleStorage2017}.
 
 \subsection{Item-Store}
 
-Der Item-Store – alle Benchmarkmetriken, welche mit "/item" beginnen – repräsentieren die von JULEA unterstützten Operationen auf dem Item-Store. Dieser soll ein cloud-ähnliches Interface bereitstellen und nutzt den Key-Value-Store sowie den Objektspeicher um das zu erzielen \cite[Vgl. 718]{kuhnJULEAFlexibleStorage2017}.
+Der Item-Store – alle Benchmarkmetriken, welche mit "/item" beginnen – repräsentieren die von JULEA unterstützten Operationen auf dem Item-Store. Dieser soll ein cloud-ähnliches Interface bereitstellen und nutzt den Key-Value-Store sowie den Objektspeicher um dies zu erzielen \cite[Vgl. 718]{kuhnJULEAFlexibleStorage2017}.
 
 \subsection{Datenbank}
 
-Die Datenbank-Benchmarkmetriken haben "/db" als Präfix. Hier werden übliche Datenbankoperationen wie das Einfügen, Löschen, Aktualisieren von Einträgen, sowie das Erstellen und Löschen von Schemas gebenchmarkt \cite[Vgl. 718]{kuhnJULEAFlexibleStorage2017}.
+Die Datenbank-Benchmarkmetriken haben "/db" als Präfix. Hier werden übliche Datenbankoperationen wie das Einfügen, Löschen, Aktualisieren von Einträgen, sowie das Erstellen und Löschen von Schemas gebenchmarkt \cite[Vgl. S. 718]{kuhnJULEAFlexibleStorage2017}.
 
 \subsection{Ausgeschlossene Benchmarkmetriken}
 
@@ -88,9 +88,9 @@ Die Benchmarkmetriken Message ("/message"), Cache ("/cache") und Background Oper
 
 \section{Vor-Auswertung der Benchmarkergenisse}
 
-Um die Benchmarkergebnisse effektiv auswerten zu können ist im ersten Schritt wichtig sich die Verteilung der Messwerte anzusehen. Ein Boxplot, ist eine populäre Möglichkeit Verteilungen zu analysieren \cite[Vgl. 1]{majawExploringDataDistributions2023}. Nachfolgend werden die Verteilungen der nativen sowie containerisierten Benchmarkergebnisse an einem Beispiel betrachtet. Eine vollumfängliche Betrachtung aller Verteilungen wird nicht vorgenommen, da die Verteilungen sich alle ähnlich verhalten.
+Um die Benchmarkergebnisse effektiv auswerten zu können, ist im ersten Schritt wichtig, die Verteilung der Messwerte zu betrachten. Ein Boxplot ist eine gängige Methode, Verteilungen darzustellen \cite[Vgl. S. 1]{majawExploringDataDistributions2023}. Nachfolgend werden die Verteilungen der nativen und containerisierten Ergebnisse beispielhaft betrachtet. Auf eine vollständige Darstellung aller Verteilungen wird verzichtet, da sie sich weitgehend ähneln.
 
-Die gesamten Benchmarkergebnisse sind im Anhang in \cref{cha:appendix-benchmarkdaten} vorhanden.
+Die gesamten Benchmarkergebnisse sind im Anhang in \cref{cha:appendix-benchmarkdaten} verzeichnet.
 
 \pagebreak
 
@@ -212,7 +212,7 @@ Wesentlich auffälliger ist hingegen die Metrik "/item/collection/create". Diese
 
 Es ist ersichtlich, dass die Benchmarkergebnisse von der nativen Ausführung deutlich konsistenter sind als die der containerisierten Ausführung. Mehr als die Hälfte der nativen Ergebnisse liegen hier zwischen 5200 und 5300 Operationen/s. Allerdings ist die Streumenge der nativen Ergebnisse deutlich größer. 
 
-Die containerisierten Ergebnisse sind wie bereits angemerkt deutlich inkonsistenter, allerdings ist die Streumenge hier deutlich geringer. Die Verteilung der Messwerte ist – im Vergleich zur nativen Ausführung – in die positive Richtung verzerrt.  
+Die containerisierten Ergebnisse sind wie bereits angemerkt deutlich inkonsistenter, allerdings ist die Streumenge hier deutlich geringer. Die Verteilung der Messwerte ist – im Vergleich zur nativen Ausführung – in die positive Richtung verzerrt. 
 
 Trotz dieser Unterschiede sieht man allerdings hier auch wie identisch die beiden Benchmarkergebnisse im Kern sind. Während bei der nativen Ausführung die meisten Ergebnisse zwischen 5200 und 5300 Operationen/s liegen, liegen die meisten containerisierten Ergebnisse zwischen 5200 und ca. 5325 Operationen/s. Das ist in Anbetracht der Insgesamt 10 Iterationen des Benchmarks pro Ausführungsweise nicht signifikant genug um von einer signifikanten Performance-Änderung zu sprechen. Es handelt sich hierbei sehr wahrscheinlich um Messungenauigkeiten. 
 

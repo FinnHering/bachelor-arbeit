@@ -148,6 +148,25 @@
       \verb https://apptainer.org/docs/user/main/security.html#singularity-image-format-sif
       \endverb
     \endentry
+    \entry{DevelopmentContainers}{online}{}{}
+      \field{sortinit}{D}
+      \field{sortinithash}{6f385f66841fb5e82009dc833c761848}
+      \field{labeltitlesource}{title}
+      \field{title}{Development Containers}
+      \field{urlday}{17}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/HVE63YWZ/containers.dev.html
+      \endverb
+      \verb{urlraw}
+      \verb https://containers.dev/
+      \endverb
+      \verb{url}
+      \verb https://containers.dev/
+      \endverb
+    \endentry
     \entry{dockerBake}{online}{}{}
       \name{author}{1}{}{%
         {{hash=c5fd214cdd0d2b3b4272e73b022ba5c2}{%
@@ -578,6 +597,25 @@
       \verb https://github.com/features/actions
       \endverb
     \endentry
+    \entry{GNUMake}{online}{}{}
+      \field{sortinit}{G}
+      \field{sortinithash}{32d67eca0634bf53703493fb1090a2e8}
+      \field{labeltitlesource}{title}
+      \field{title}{{{GNU}} Make}
+      \field{urlday}{17}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/KVJC9HAR/make.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.gnu.org/software/make/manual/make.html
+      \endverb
+      \verb{url}
+      \verb https://www.gnu.org/software/make/manual/make.html
+      \endverb
+    \endentry
     \entry{huExploringPerformanceSingularity2019}{inproceedings}{}{}
       \name{author}{3}{}{%
         {{hash=edb6375d8764555fde1f62f2a102b653}{%
@@ -706,6 +744,30 @@
       \verb /Users/finn/Zotero/storage/ZV63H426/Kuhn - 2017 - JULEA A Flexible Storage Framework for HPC.pdf
       \endverb
       \keyw{Flexible storage framework,High performance computing,Key-value store,Object store,Parallel file system}
+    \endentry
+    \entry{LeadingContainerizationTechnologiesa}{online}{}{}
+      \list{organization}{1}{%
+        {Statista}%
+      }
+      \field{sortinit}{L}
+      \field{sortinithash}{7c47d417cecb1f4bd38d1825c427a61a}
+      \field{labeltitlesource}{title}
+      \field{abstract}{In 2024, Docker accounted for over 33 percent market share of the containerization technologies market.}
+      \field{langid}{english}
+      \field{title}{Leading Containerization Technologies 2024}
+      \field{urlday}{17}
+      \field{urlmonth}{3}
+      \field{urlyear}{2025}
+      \field{urldateera}{ce}
+      \verb{file}
+      \verb /Users/finn/Zotero/storage/WGVGYUSF/containerization-technologies-software-market-share.html
+      \endverb
+      \verb{urlraw}
+      \verb https://www.statista.com/statistics/1256245/containerization-technologies-software-market-share/
+      \endverb
+      \verb{url}
+      \verb https://www.statista.com/statistics/1256245/containerization-technologies-software-market-share/
+      \endverb
     \endentry
     \entry{majawExploringDataDistributions2023}{inproceedings}{}{}
       \name{author}{2}{}{%
