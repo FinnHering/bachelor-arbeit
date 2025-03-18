@@ -183,21 +183,21 @@ Die Key-Value-Komponente von JULEA ("kv") hingegen weist kaum eine Veränderung 
 
 \FloatBarrier
 
-Der Item-Store ist im Vergleich zu den vorherigen Benchmarkmetriken anders. Er baut auf den Implementierungen des Objektspeichers (\cref{sec:object-speedup}) und Key-Value-Stores (\cref{sec:kv-speedup}) auf.
+Der Item-Store ist im Vergleich zu den vorherigen Benchmarkmetriken anders. Er baut auf den Implementierungen des Objektspeichers (\cref{sec:object-speedup}) und des Key-Value-Stores (\cref{sec:kv-speedup}) auf.
 
 \subsubsection{Item}
 
 Zum einen wird für die Operationen "/item/\{item, collection\}/create", sowie "/item/\{item, collection\}/delete" auf die Mechanismen "/kv/put", "/kv/delete" aufgebaut. Das begründet den insignifikanten Speedup für die Operationen "/item/item/create" und "/item/\{item, collection\}/delete". 
 
-Die Operationen "/item/item/read" und "/item/item/write" hingegen, bauen auf den Objekt-Mechanismen "/object/distributed-object/read" und "/object/distributed-object/write" auf.
+Die Operationen "/item/item/read" und "/item/item/write" bauen hingegen auf den Objekt-Mechanismen "/object/distributed-object/read" und "/object/distributed-object/write" auf.
 
-Bei den Benchmarkmetriken "/item/item/read" und "/item/item/write" ist wie zu erwarten auch ein Performance-Verlust – wie bei den object-read/write Ergebnissen – zu erkennen. 
+Bei den Benchmarkmetriken "/item/item/read" und "/item/item/write" ist – wie zu erwarten – auch ein Performance-Verlust wie bei den object-read/write Ergebnissen – zu erkennen. 
 
 Bei "/item/item/read" ist der Performance-Verlust ca. $0.5\%$. Das ist ein um etwa $1,2\%$ höherer Speedup im Vergleich zu ca. $1,7\%$ Performance-Verlust bei "/object/distributed-object/read". 
 
 Bei "/item/item/write" ist der Performance-Verlust etwa $2\%$. Das ist etwas höher als bei "/object/distributed-object/write", welcher ein Performance-Verlust von ca. $1,5\%$ aufweist. Da es sich hierbei um geringe Unterschiede handelt, ist davon auszugehen, dass dies Messungenauigkeiten sind. 
 
-Die Metrik "/item/item/delete" und "/item/collection/delete" haben einen Speedup, welcher unterhalb von $0,3\%$ liegt. Es wird hierbei davon ausgegangen, dass dies Messungenauigkeiten sind.
+Die Metriken "/item/item/delete" und "/item/collection/delete" haben einen Speedup, welcher unterhalb von $0,3\%$ liegt. Es wird hierbei davon ausgegangen, dass dies Messungenauigkeiten sind.
 
 Wesentlich auffälliger ist hingegen die Metrik "/item/collection/create". Diese hat Performance-Zunahmen von ca. $1,5\%$. Um dieses Ergebnis besser zu verstehen werden nachstehend die Messwertverteilungen der beiden Benchmarkergenisse analysiert. 
 
@@ -210,11 +210,11 @@ Wesentlich auffälliger ist hingegen die Metrik "/item/collection/create". Diese
 
 \FloatBarrier
 
-Es ist ersichtlich, dass die Benchmarkergebnisse von der nativen Ausführung deutlich konsistenter sind als die der containerisierten Ausführung. Mehr als die Hälfte der nativen Ergebnisse liegen hier zwischen 5200 und 5300 Operationen/s. Allerdings ist die Streumenge der nativen Ergebnisse deutlich größer. 
+Es ist ersichtlich, dass die Benchmarkergebnisse der nativen Ausführung deutlich konsistenter sind als die der containerisierten Ausführung. Mehr als die Hälfte der nativen Ergebnisse liegen zwischen 5200 und 5300 Operationen/s. Allerdings ist die Streuung der nativen Ergebnisse deutlich größer. 
 
-Die containerisierten Ergebnisse sind wie bereits angemerkt deutlich inkonsistenter, allerdings ist die Streumenge hier deutlich geringer. Die Verteilung der Messwerte ist – im Vergleich zur nativen Ausführung – in die positive Richtung verzerrt. 
+Die containerisierten Ergebnisse sind, wie bereits angemerkt, deutlich inkonsistenter, jedoch ist die Streuung hier geringer. Die Verteilung der Messwerte ist – im Vergleich zur nativen Ausführung – in die positive Richtung verzerrt. 
 
-Trotz dieser Unterschiede sieht man allerdings hier auch wie identisch die beiden Benchmarkergebnisse im Kern sind. Während bei der nativen Ausführung die meisten Ergebnisse zwischen 5200 und 5300 Operationen/s liegen, liegen die meisten containerisierten Ergebnisse zwischen 5200 und ca. 5325 Operationen/s. Das ist in Anbetracht der Insgesamt 10 Iterationen des Benchmarks pro Ausführungsweise nicht signifikant genug um von einer signifikanten Performance-Änderung zu sprechen. Es handelt sich hierbei sehr wahrscheinlich um Messungenauigkeiten. 
+Trotz dieser Unterschiede zeigt sich, wie ähnlich die beiden Benchmarkergebnisse im Kern sind. Während bei der nativen Ausführung die meisten Ergebnisse zwischen 5200 und 5300 Operationen/s liegen, befinden sich die meisten containerisierten Ergebnisse zwischen 5200 und ca. 5325 Operationen/s. Angesichts der insgesamt 10 Iterationen des Benchmarks pro Ausführungsweise ist dies nicht signifikant genug, um von einer relevanten Performance-Änderung zu sprechen. Es handelt sich hierbei sehr wahrscheinlich um Messungenauigkeiten. 
 
 
 \subsection{Datenbank (SQLite)}
