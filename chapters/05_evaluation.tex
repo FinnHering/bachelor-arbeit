@@ -105,7 +105,7 @@ Die Verteilungen der Messwerte des Benchmarks, welche Nativ auf dem Host-System 
 \end{figure}
 \FloatBarrier
 
-Es ist erkenntlich, dass die Verteilungen der Messwerte oftmals verzerrt sind, und es einige Ausreißer gibt. Bei dieser Benchmarkbetrachtung soll keine genauere Betrachtung der Extremwerte stattfinden. Darum ist die Betrachtung des Medianwertes als statistisches Mittel hier Sinnvoller \cite[Vgl. 15f.]{stengelStatistikUndAufbereitung2011}. 
+Es ist erkenntlich, dass die Verteilungen der Messwerte oftmals verzerrt sind, und es einige Ausreißer gibt. Bei dieser Benchmarkbetrachtung soll keine genauere Betrachtung der Extremwerte stattfinden. Darum ist die Betrachtung des Medianwertes als statistisches Mittel hier Sinnvoller \cite[Vgl. S. 15f]{stengelStatistikUndAufbereitung2011}. 
 
 Des Weiteren liegen die gemittelten Messwerte der einzelnen Benchmarkmetriken zum Teil weit auseinander, was zur Folge hat, dass der grafische Vergleich zwischen den verschiedenen Ausführungsarten des Benchmarks mit absoluten Werten nicht sehr aussagekräftig ist. Darum wird der Vergleich der verschiedenen Ausführungsarten des Benchmarks mithilfe des "Speedups" berechnet. Dieser betrachtet die relative Verbesserung zwischen zwei Messwerten. Die Formel für den Speedup kann man \cref{eq:speedup} entnehmen.
 
@@ -152,7 +152,7 @@ Die übergeordneten Kategorien der Benchmarkmetriken werden nachfolgend einzeln 
 
 Als Erstes wird der Speedup der Benchmarkmetrik "object" betrachtet. Hier ist zu erkennen, dass die containerisierte Ausführung des Benchmarks stets zwischen $1\%$ und $3\%$ langsamer ist. Die Benchmarkmetrik "object" misst dabei die Performance der Objektverwaltung. Diese Objektverwaltung läuft bei diesem Benchmark über das Dateisystem ("POSIX"-Backend) \cite[Vgl. S. 719]{kuhnJULEAFlexibleStorage2017}. Somit ist es naheliegend, dass in diesem Fall das Dateisystem ein Bottleneck sein könnte. Allerdings ist diese sehr konsistente Performance-Verschlechterung im Vergleich zur nativen Ausführung auf den ersten Blick nicht erklärbar, da beide Ausführungsweisen auf das gleiche Verzeichnis im Host-Dateisystem zugegriffen haben (/tmp). 
 
-Im Fall von Apptainer wurde das Verzeichnis mithilfe eines Bind-Mounts in den Container eingebunden. Für die Containertechnologie Docker gab es bereits eine Performance-Analyse von Bind-Mounts, und es konnten keine signifikanten Performance-Einbußen festgestellt werden \cite[Vgl. 4]{dordevicFileSystemPerformance2022}. 
+Im Fall von Apptainer wurde das Verzeichnis mithilfe eines Bind-Mounts in den Container eingebunden. Für die Containertechnologie Docker gab es bereits eine Performance-Analyse von Bind-Mounts, und es konnten keine signifikanten Performance-Einbußen festgestellt werden \cite[Vgl. S. 4f]{dordevicFileSystemPerformance2022}. 
 
 Somit lässt sich darauf schließen, dass die Bind-Mounts nicht die Ursache für die Performance-Einbußen sind. Bei Apptainer besteht jedoch noch die Besonderheit, dass die Container-Images ein SquashFS-Dateisystem verwenden. Dieses Dateisystem wird beim Start des Containers in das Host-Dateisystem eingehängt. 
 
