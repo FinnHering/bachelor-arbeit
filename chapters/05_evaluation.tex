@@ -228,14 +228,14 @@ Trotz dieser Unterschiede zeigt sich, wie ähnlich die beiden Benchmarkergebniss
 
 \FloatBarrier
 
-Die Speedups der Datenbank-Benchmarkergebnisse – welche aus \cref{fig:speedup_db} zu entnehmen sind – für die Metriken "/db/entry/delete", "/db/entry/insert" und "/db/iterator/get-simple" sind deutlich innerhalb von $\pm 1\%$. Die Werte sind zu gering um von einer signifikanten Performance-Änderung zu sprechen. Es wird also davon ausgegangen, dass es keine signifikanten Performance-Änderungen bei den benannten Benchmarkmetriken gibt.
+Die Speedups der Datenbank-Benchmarkergebnisse – welche aus \cref{fig:speedup_db} entnommen werden können – für die Metriken "/db/entry/delete", "/db/entry/insert" und "/db/iterator/get-simple" liegen deutlich innerhalb von $\pm 1\%$. Die Werte sind zu gering, um von einer signifikanten Performance-Änderung zu sprechen. Es wird daher davon ausgegangen, dass es keine signifikanten Performance-Änderungen bei den genannten Benchmarkmetriken gibt.
 
 Die Metrik "/db/entry/update" hingegen ist beinahe $3\%$ performanter. Um hier eine genauere Aussage zu treffen, wird im nächsten Schritt die Verteilung der Messwerte der Benchmarkergebnisse analysiert.
 
 \begin{figure}[H]
     \centering
     \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/comparisons/run_to_run_distribution__db_entry_update.svg}
-    \caption{Verteilung Benchmarkergebnisse für "/db/entry/update"}
+    \caption{Verteilung der Benchmarkergebnisse für "/db/entry/update"}
     \label{fig:mdist_db_entry_update}
 \end{figure}
 
@@ -246,23 +246,23 @@ Die nativen Ergebnisse sind etwas inkonsistenter und haben einen Ausreißer nach
 
 Allerdings sieht man auch hier, dass sich die Ergebnisse von der containerisierten und nativen Lösung zwischen ca. 5100 und 5250 Operationen/s mehrheitlich befinden. 
 
-Dies ist ein weiteres Beispiel dafür, wie ähnlich die beiden Benchmarkergebnisse sind. Die Messwerte liegen so weit bei einander, dass man in Anbetracht der geringen Messwertanzahl keinen Signifikanten Speedup feststellen kann.
+Dies ist ein weiteres Beispiel dafür, wie ähnlich die beiden Benchmarkergebnisse sind. Die Messwerte liegen so nah beieinander, dass man in Anbetracht der geringen Messwertanzahl keinen signifikanten Speedup feststellen kann.
 
 \begin{figure}[H]
     \centering
     \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/comparisons/run_to_run_distribution__db_schema_create.svg}
-    \caption{Verteilung Benchmarkergebnisse für "/db/schema/create"}
+    \caption{Verteilung der Benchmarkergebnisse für "/db/schema/create"}
     \label{fig:mdist_db_schema_create}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includesvg[width=1\linewidth]{benchmark/vis/compressed/differences/comparisons/run_to_run_distribution__db_schema_delete.svg}
-    \caption{Verteilung Benchmarkergebnisse für "/db/schema/delete"}
+    \caption{Verteilung der Benchmarkergebnisse für "/db/schema/delete"}
     \label{fig:mdist_db_schema_delete}
 \end{figure}
 
-Für "/db/schema\{create, delete\}" ist in \cref{fig:mdist_db_schema_create} und \cref{fig:mdist_db_schema_delete} anschließend auch ersichtlich, dass bei Betrachtung der Messwertverteilung kein signifikanter Speedup festgestellt werden kann. Die Ergebnisse liegen so weit beieinander, dass nicht auszuschließen ist, dass es sich um Messungenauigkeiten handelt.
+Für "/db/schema\{create, delete\}" ist in \cref{fig:mdist_db_schema_create} und \cref{fig:mdist_db_schema_delete} ebenfalls ersichtlich, dass bei Betrachtung der Messwertverteilung kein signifikanter Speedup festgestellt werden kann. Die Ergebnisse liegen so nah beieinander, dass nicht ausgeschlossen werden kann, dass es sich um Messungenauigkeiten handelt.
 
 \FloatBarrier
 
