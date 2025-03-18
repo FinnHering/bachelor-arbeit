@@ -137,7 +137,7 @@ Es ist bereits bei Betrachtung beider Boxplots ersichtlich, dass beide Ergebniss
 Um einen besseren Überblick über den Unterschied zwischen beiden Benchmarkergebnissen zu erhalten, wird der errechnete Speedup um -1 verschoben. Das hat zur Folge, dass anstelle vom Wert 1, nun der Wert 0 identische Performance bedeutet. 
 Negative Werte bedeuten, dass die containerisierte Ausführung des Benchmarks schlechter ist als die native Ausführung. Positive Werte bedeuten, dass die containerisierte Ausführung des Benchmarks besser ist als die native Ausführung. 
 
-Die übergeordneten Kategorien der Benchmarkmetriken, werden nachfolgend einzeln betrachtet.
+Die übergeordneten Kategorien der Benchmarkmetriken werden nachfolgend einzeln betrachtet.
 
 \subsection{Objektspeicher (POSIX)} \label{sec:object-speedup}
 
@@ -150,14 +150,14 @@ Die übergeordneten Kategorien der Benchmarkmetriken, werden nachfolgend einzeln
 
 \FloatBarrier
 
-Als Erstes wird der Speedup der Benchmarkmetrik "object" betrachtet. Hier ist zu erkennen, dass die containerisierte Ausführung des Benchmarks stets zwischen $1\%$ bis $3\%$ langsamer ist. Die Benchmarkmetrik "object" misst dabei die Performance der Objektverwaltung. Diese Objektverwaltung läuft bei diesem Benchmark über das Dateisystem ("POSIX"-Backend) \cite[Vgl. S. 719]{kuhnJULEAFlexibleStorage2017}. Somit ist es naheliegend, dass, in diesem Fall, das Dateisystem ein Bottleneck sein könnte. Allerdings ist diese sehr konsistente Performance-Verschlechterung im Vergleich zur nativen Ausführung auf den ersten Blick nicht erklärbar, da beide Ausführungsweisen auf das gleiche Verzeichnis im Host-Dateisystem zugegriffen haben (/tmp). 
+Als Erstes wird der Speedup der Benchmarkmetrik "object" betrachtet. Hier ist zu erkennen, dass die containerisierte Ausführung des Benchmarks stets zwischen $1\%$ und $3\%$ langsamer ist. Die Benchmarkmetrik "object" misst dabei die Performance der Objektverwaltung. Diese Objektverwaltung läuft bei diesem Benchmark über das Dateisystem ("POSIX"-Backend) \cite[Vgl. S. 719]{kuhnJULEAFlexibleStorage2017}. Somit ist es naheliegend, dass in diesem Fall das Dateisystem ein Bottleneck sein könnte. Allerdings ist diese sehr konsistente Performance-Verschlechterung im Vergleich zur nativen Ausführung auf den ersten Blick nicht erklärbar, da beide Ausführungsweisen auf das gleiche Verzeichnis im Host-Dateisystem zugegriffen haben (/tmp). 
 
-Im Fall von Apptainer wurde das Verzeichnis mithilfe eines bind-mounts in den Container eingebunden. Für die Containertechnologie Docker gab es bereits eine Performance-Analyse von bind-mounts und es konnte keine Signifikaten Performance-Einbußen festgestellt werden \cite[Vgl. 4]{dordevicFileSystemPerformance2022}. 
+Im Fall von Apptainer wurde das Verzeichnis mithilfe eines Bind-Mounts in den Container eingebunden. Für die Containertechnologie Docker gab es bereits eine Performance-Analyse von Bind-Mounts, und es konnten keine signifikanten Performance-Einbußen festgestellt werden \cite[Vgl. 4]{dordevicFileSystemPerformance2022}. 
 
-Somit lässt sich darauf schließen, dass die bind-mounts nicht die Ursache für die Performance-Einbußen sind. Bei Apptainer besteht jedoch noch die Besonderheit, dass die Container-Images ein SquashFS-Dateisystem verwenden. Dieses Dateisystem wird beim Start des Containers in das Host-Dateisystem eingehängt. 
+Somit lässt sich darauf schließen, dass die Bind-Mounts nicht die Ursache für die Performance-Einbußen sind. Bei Apptainer besteht jedoch noch die Besonderheit, dass die Container-Images ein SquashFS-Dateisystem verwenden. Dieses Dateisystem wird beim Start des Containers in das Host-Dateisystem eingehängt. 
 
-Hier gibt es bei Apptainer zwei Möglichkeiten, wie dieses Containerimage eingehangen wird. \\
-Entweder wird das Image mit dem Kernel-SquashFS-Treiber eingehangen, was privilegierte Rechte benötigt, oder es wird mithilfe des SquashFS-FUSE-Treibers eingehangen. Hierfür werden keine privilegierten Rechte benötigt. Allerdings ist laut eigenen aussagen von Apptainer die Performance des FUSE-Treibers schlechter als die des Kernel-Treibers. Somit könnte dies eine mögliche Ursache für die Performance-Einbußen sein \cite{apptainerSecurityApptainerApptainer}.  
+Hier gibt es bei Apptainer zwei Möglichkeiten, wie dieses Container-Image eingehängt wird: \\
+Entweder wird das Image mit dem Kernel-SquashFS-Treiber eingehängt, was privilegierte Rechte benötigt, oder es wird mithilfe des SquashFS-FUSE-Treibers eingehängt. Hierfür werden keine privilegierten Rechte benötigt. Allerdings ist laut eigenen Aussagen von Apptainer die Performance des FUSE-Treibers schlechter als die des Kernel-Treibers. Somit könnte dies eine mögliche Ursache für die Performance-Einbußen sein \cite{apptainerSecurityApptainerApptainer}.  
 
 \subsection{Key-Value (lmdb)} \label{sec:kv-speedup}
 
@@ -170,7 +170,7 @@ Entweder wird das Image mit dem Kernel-SquashFS-Treiber eingehangen, was privile
 
 \FloatBarrier
 
-Die Key-Value-Komponente von JULEA ("kv"), hingegen weist kaum eine Veränderung der Performance zwischen der nativen und containerisierten Ausführung auf. Die Performance schwankt innerhalb von $\pm 1\%$ und es kann nicht ausgeschlossen werden, dass dies – aufgrund der geringen Abweichung – nur eine Messungenauigkeit ist. Somit ist es wahrscheinlich, dass die Performance der Key-Value-Komponente von JULEA nicht durch die Containerisierung beeinflusst wird.
+Die Key-Value-Komponente von JULEA ("kv") hingegen weist kaum eine Veränderung der Performance zwischen der nativen und containerisierten Ausführung auf. Die Performance schwankt innerhalb von $\pm 1\%$, und es kann nicht ausgeschlossen werden, dass dies – aufgrund der geringen Abweichung – nur eine Messungenauigkeit ist. Somit ist es wahrscheinlich, dass die Performance der Key-Value-Komponente von JULEA nicht durch die Containerisierung beeinflusst wird.
 
 \subsection{Item-Store}
 
