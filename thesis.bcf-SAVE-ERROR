@@ -2371,26 +2371,26 @@
   </bcf:bibdata>
   <bcf:section number="0">
     <bcf:citekey order="4" intorder="1">rajaramanFrontierWorldsFirst2023</bcf:citekey>
-    <bcf:citekey order="5" intorder="1">2024StateSoftware</bcf:citekey>
+    <bcf:citekey order="5" intorder="1">sonatype2024StateSoftware</bcf:citekey>
     <bcf:citekey order="6" intorder="1">kuhnJULEAFlexibleStorage2017</bcf:citekey>
     <bcf:citekey order="7" intorder="1">kuhnJULEAFlexibleStorage2017</bcf:citekey>
-    <bcf:citekey order="8" intorder="1">LeadingContainerizationTechnologiesa</bcf:citekey>
+    <bcf:citekey order="8" intorder="1">datanyzeLeadingContainerizationTechnologiesa</bcf:citekey>
     <bcf:citekey order="9" intorder="1">dockerDockerfileOverview</bcf:citekey>
     <bcf:citekey order="10" intorder="1">dockerCache</bcf:citekey>
     <bcf:citekey order="11" intorder="1">dockerBuildKit</bcf:citekey>
     <bcf:citekey order="12" intorder="1">dockerDockerBuildx</bcf:citekey>
     <bcf:citekey order="13" intorder="1">dockerBake</bcf:citekey>
-    <bcf:citekey order="14" intorder="1">DevelopmentContainers</bcf:citekey>
+    <bcf:citekey order="14" intorder="1">microsoftDevelopmentContainers</bcf:citekey>
     <bcf:citekey order="15" intorder="1">apptainerApptainerPortableReproducible</bcf:citekey>
     <bcf:citekey order="16" intorder="1">apptainerApptainerMPIApplications</bcf:citekey>
     <bcf:citekey order="17" intorder="1">apptainerSecurityApptainerApptainer</bcf:citekey>
-    <bcf:citekey order="18" intorder="1">ResourceConstraints0200</bcf:citekey>
+    <bcf:citekey order="18" intorder="1">dockerResourceConstraints0200</bcf:citekey>
     <bcf:citekey order="19" intorder="1">githubGitHubActions</bcf:citekey>
     <bcf:citekey order="20" intorder="1">githubSchnellstartFuerGitHub</bcf:citekey>
     <bcf:citekey order="21" intorder="1">kuhnJULEAFlexibleStorage2017</bcf:citekey>
-    <bcf:citekey order="22" intorder="1">DockerfileReference0100</bcf:citekey>
+    <bcf:citekey order="22" intorder="1">dockerDockerfileReference0100</bcf:citekey>
     <bcf:citekey order="23" intorder="1">pythonInstallingPackagesPython</bcf:citekey>
-    <bcf:citekey order="24" intorder="1">GNUMake</bcf:citekey>
+    <bcf:citekey order="24" intorder="1">gnuGNUMake</bcf:citekey>
     <bcf:citekey order="25" intorder="1">kuhnJULEAFlexibleStorage2017</bcf:citekey>
     <bcf:citekey order="26" intorder="1">kuhnJULEAFlexibleStorage2017</bcf:citekey>
     <bcf:citekey order="27" intorder="1">kuhnJULEAFlexibleStorage2017</bcf:citekey>
@@ -2413,4 +2413,55 @@
     <bcf:citekey order="44" intorder="1">moreauContainersComputationalReproducibility2023</bcf:citekey>
     <bcf:citekey order="45" intorder="1">huExploringPerformanceSingularity2019</bcf:citekey>
     <bcf:citekey order="46" intorder="1">huExploringPerformanceSingularity2019</bcf:citekey>
-    <bcf:citekey order=
+    <bcf:citekey order="47" intorder="1">huExploringPerformanceSingularity2019</bcf:citekey>
+    <bcf:citekey order="48" intorder="1">huExploringPerformanceSingularity2019</bcf:citekey>
+    <bcf:citekey order="49" intorder="1">huExploringPerformanceSingularity2019</bcf:citekey>
+    <bcf:citekey order="50" intorder="1">huExploringPerformanceSingularity2019</bcf:citekey>
+    <bcf:citekey order="51" intorder="1">huExploringPerformanceSingularity2019</bcf:citekey>
+    <bcf:citekey order="52" intorder="1">huExploringPerformanceSingularity2019</bcf:citekey>
+    <bcf:citekey order="53" intorder="1">huExploringPerformanceSingularity2019</bcf:citekey>
+    <bcf:citekey order="54" intorder="1">moreauContainersComputationalReproducibility2023</bcf:citekey>
+    <bcf:citekey order="55" intorder="1">huExploringPerformanceSingularity2019</bcf:citekey>
+    <bcf:citekey order="56" intorder="1">fachrudinImplementationAnalysisContainer2025</bcf:citekey>
+  </bcf:section>
+  <!-- SORTING TEMPLATES -->
+  <bcf:sortingtemplate name="nty">
+    <bcf:sort order="1">
+      <bcf:sortitem order="1">presort</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="2" final="1">
+      <bcf:sortitem order="1">sortkey</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="3">
+      <bcf:sortitem order="1">sortname</bcf:sortitem>
+      <bcf:sortitem order="2">author</bcf:sortitem>
+      <bcf:sortitem order="3">editor</bcf:sortitem>
+      <bcf:sortitem order="4">translator</bcf:sortitem>
+      <bcf:sortitem order="5">sorttitle</bcf:sortitem>
+      <bcf:sortitem order="6">title</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="4">
+      <bcf:sortitem order="1">sorttitle</bcf:sortitem>
+      <bcf:sortitem order="2">title</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="5">
+      <bcf:sortitem order="1">sortyear</bcf:sortitem>
+      <bcf:sortitem order="2">year</bcf:sortitem>
+    </bcf:sort>
+    <bcf:sort order="6">
+      <bcf:sortitem order="1">volume</bcf:sortitem>
+      <bcf:sortitem literal="1" order="2">0</bcf:sortitem>
+    </bcf:sort>
+  </bcf:sortingtemplate>
+  <!-- DATALISTS -->
+  <bcf:datalist section="0"
+                name="nty/global//global/global/global"
+                type="entry"
+                sortingtemplatename="nty"
+                sortingnamekeytemplatename="global"
+                labelprefix=""
+                uniquenametemplatename="global"
+                labelalphanametemplatename="global"
+                namehashtemplatename="global">
+  </bcf:datalist>
+</bcf:controlfile>

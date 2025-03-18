@@ -16,10 +16,10 @@
             <mxPoint x="710" y="27.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="78geTzPeZMI0ztwPiqvb-32" value="Hängt vollständig von vorgänger ab&amp;nbsp;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=21;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="78geTzPeZMI0ztwPiqvb-32" value="Hängt vollständig von Vorgänger ab&amp;nbsp;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=21;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="723" y="12.5" width="367" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="78geTzPeZMI0ztwPiqvb-33" value="Hägt von einzelnen Dateien des vorgängers ab&amp;nbsp;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=21;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="78geTzPeZMI0ztwPiqvb-33" value="Hägt von einzelnen Dateien des Vorgängers ab&amp;nbsp;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=21;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="723" y="57.5" width="457" height="30" as="geometry" />
         </mxCell>
         <mxCell id="Q76Fd9BzPuOe0DSTBZtt-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Q76Fd9BzPuOe0DSTBZtt-0" target="Q76Fd9BzPuOe0DSTBZtt-1" edge="1">

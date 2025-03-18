@@ -6,7 +6,7 @@ Containervirtualisierung (auch Containerisierung genannt) beschreibt das Bereits
 
 Im Gegensatz zur klassischen Hardwarevirtualisierung wird bei der Containervirtualisierung nicht die Hardware-Ebene abstrahiert und ein komplett eigenständiges Betriebssystem hochgefahren, sondern lediglich die Betriebssystem-Ebene abstrahiert.
 
-Das hat zur Folge, dass Containervirtualisierung in der Regel weniger Speicher verbraucht und performanter im Vergleich zu Hardwarevirtualisierung ist. \todo{Zitat}
+Das hat zur Folge, dass Containervirtualisierung in der Regel weniger Speicher verbraucht und performanter im Vergleich zu Hardwarevirtualisierung ist.
 
 \section{OCI-Container-Image Spezifikation}
 
@@ -18,7 +18,7 @@ ContainerD ist ein System-Daemon, welcher die OCI-Image-Spezifikation unterstüt
 
 \begin{figure}[H]
     \includegraphicsWeb[width=\linewidth]{https://containerd.io/img/architecture.png}
-    \captionof{figure}{ContainerD Architektur: https://containerd.io/img/architecture.png}
+    \caption{ContainerD Architektur: https://containerd.io/img/architecture.png}
     \label{fig:containerd-architecture}
 \end{figure}
 
@@ -33,11 +33,11 @@ Das ContainerD-Backend ist für die eigentliche Ausführung der Container zustä
 
 ContainerD benötigt erweiterte Rechte auf dem Host-System. Aus diesem Grund läuft ContainerD standardmäßig als Root-Prozess. Es ist mittlerweile auch möglich ContainerD als unprivilegierten Nutzer auszuführen. Dafür sind allerdings einige Systemkonfigurationsschritte notwendig, welche das Ausführen von ContainerD mit einem unprivilegierten Nutzer erschweren.
 
-\pagebreak
+
 
 \section{Docker}
 
-Docker ist eine der am weitesten verbreiteten Containervirtualisierungslösungen \cite{LeadingContainerizationTechnologiesa}. Es beinhaltet eine Reihe von Werkzeugen zum Erstellen, Verwalten und Ausführen von Containern. Docker ist ein Frontend für ContainerD.
+Docker ist eine der am weitesten verbreiteten Containervirtualisierungslösungen \cite{datanyzeLeadingContainerizationTechnologiesa}. Es beinhaltet eine Reihe von Werkzeugen zum Erstellen, Verwalten und Ausführen von Containern. Docker ist ein Frontend für ContainerD.
 
 \subsection{Dockerfile}
 
@@ -102,7 +102,7 @@ Solche Container-Images sollten alle nötigen Abhängigkeiten, welche man zum En
 
 Im Fall von JULEA muss ein solcher Entwicklungs-Container alle Abhängigkeiten enthalten, um an oder mit JULEA zu entwickeln. Diese Abhängigkeiten müssen kompiliert werden. Das Kompilieren ist sehr zeitaufwendig. Darum sollte ein fertiges Container-Image diese Abhängigkeiten beinhalten, sodass das initiale Kompilieren der Abhängigkeiten durch den Entwickler übersprungen werden kann.
 
-Ein Container-Image alleine müsste allerdings immer noch vom Entwickler selbst in den Editor/IDE integriert werden, da das Benutzen des Containers ohne eine solche Integration mit mehr Aufwand verbunden wäre. Um die Integration in den Editor/IDE zu vereinfachen und zu standardisieren, bietet Microsoft eine offene Spezifikation ("Development Container") an \cite{DevelopmentContainers}. Wenn ein Editor/IDE diese Spezifikation unterstützt und ein Projekt eine Development Container Konfiguration erstellt hat, kann der Entwickler mit einem Klick den Container in den Editor/IDE integrieren und wie gewohnt mit dem Projekt arbeiten.
+Ein Container-Image alleine müsste allerdings immer noch vom Entwickler selbst in den Editor/IDE integriert werden, da das Benutzen des Containers ohne eine solche Integration mit mehr Aufwand verbunden wäre. Um die Integration in den Editor/IDE zu vereinfachen und zu standardisieren, bietet Microsoft eine offene Spezifikation ("Development Container") an \cite{microsoftDevelopmentContainers}. Wenn ein Editor/IDE diese Spezifikation unterstützt und ein Projekt eine Development Container Konfiguration erstellt hat, kann der Entwickler mit einem Klick den Container in den Editor/IDE integrieren und wie gewohnt mit dem Projekt arbeiten.
 
 Neben der einfachen Integration eines Containers in den Editor/IDE bietet die Development-Container-Spezifikation eine Reihe an Einstellungsmöglichkeiten an. So kann man z. B. festlegen, welche Extensions installiert werden sollen, welche Umgebungsvariablen gesetzt werden sollen, welche Ports nach außen freigegeben werden sollen, welche Editor/IDE-Einstellungen gesetzt werden sollen, u. v. m.
 
@@ -118,7 +118,7 @@ In \cref{tbl:editor-ide-support} ist eine Übersicht über die aktuelle Editor/I
     \begin{tblr}{colspec={|X[3]|X[2]|X[6]|}, hlines, width=\linewidth}
         IDE/Editor Name    & Unterstützung & Anmerkung \\
         Visual Studio Code & Ja            & vollständige Unterstützung                                                                                                                                                                                              \\
-        CLI                & Ja            & Es existiert ein offizielles CLI in Form eines NPM-Paketes @devcontainer/cli. Dadurch ist es auch möglich \(Neo-\)VIM und andere Terminal-Texteditoren mit Devcontainern zu verwenden                                   \\
+        CLI                & Ja            & Es existiert ein offizielles CLI in Form eines NPM-Paketes @devcontainer/cli. Dadurch ist es auch möglich (Neo-)VIM und andere Terminal-Texteditoren mit Devcontainern zu verwenden                                   \\
         Visual Studio      & Ja*           & Stand 01.12.2024: eingeschränkte Unterstützung. Aktuell sind nur C++-Projekte mit CMake unterstützt                                                                                                                      \\
         JetBrains IDEs     & Ja*           & Stand 01.12.2024 ist die Unterstützung in der Beta-Phase und unvollständig.                                                                                                                                             \\
         VIM                & Ja*           & Stand 01.12.2024 gibt es ein Community-Plugin für Neo-VIM welches Devcontainer-Integration ermöglicht. Die Vollständigkeit dieses Plugins wurde nicht überprüft. Siehe: https://codeberg.org/esensar/nvim-dev-container \\
@@ -140,15 +140,15 @@ Im Gegensatz zu einer üblichen ContainerD-Installation werden keine erweiterten
 
 Außerdem hat Apptainer eine extensive Dokumentation, wie man MPI mit Apptainer nutzen kann, was für HPC-Umgebungen von Relevanz ist \cite{apptainerApptainerMPIApplications}. 
 
-Ein weiteres wichtiges Merkmal von Apptainer ist die weniger strikte Isolierung von Containern zum Host-System \cite{apptainerSecurityApptainerApptainer}, verglichen mit z. B. ContainerD. Das ermöglicht es u. A. unkompliziert auf spezielle Ressourcen, wie z. B. GPUs zuzugreifen, was in HPC-Umgebungen üblich ist. Zugriff auf GPUs ist mit Docker nur dann möglich, wenn man Docker entsprechend konfiguriert hat \cite{ResourceConstraints0200}.
+Ein weiteres wichtiges Merkmal von Apptainer ist die weniger strikte Isolierung von Containern zum Host-System \cite{apptainerSecurityApptainerApptainer}, verglichen mit z. B. ContainerD. Das ermöglicht es u. A. unkompliziert auf spezielle Ressourcen, wie z. B. GPUs zuzugreifen, was in HPC-Umgebungen üblich ist. Zugriff auf GPUs ist mit Docker nur dann möglich, wenn man Docker entsprechend konfiguriert hat \cite{dockerResourceConstraints0200}.
 
 \section{CI/CD-Pipeline} \label{sec:ci-cd-pipeline}
 
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{./figures/ci-julea-exmaple-full.png}
-    \label{fig:ci-cd-julea-example-full}
     \caption{CI/CD-Pipeline von JULEA. \newline
-        Siehe: https://github.com/parcio/julea/actions/runs/8318540808}
+        Siehe: \url{https://github.com/parcio/julea/actions/runs/8318540808}}
+    \label{fig:ci-cd-julea-example-full}
 \end{figure}
 
 CI/CD ist die Kombination von Continuous Integration (CI) und Continuous Deployment/Continuous Delivery (CD). Eine CI/CD-Pipeline ist eine automatisierte Ausführung der CI- und CD-Prozesse. Dies ist üblicherweise das automatisierte Testen von Applikationskomponenten, Kompilieren der Applikation, das Bereitstellen und Ausrollen von Artefakten. 
@@ -157,8 +157,6 @@ Oftmals sind solche CI/CD-Pipeline-Funktionalitäten direkt Teil einer modernen 
 
 In \cref{fig:ci-cd-julea-example-full} ist eine Visualisierung der bereits existierenden CI/CD-Pipeline von JULEA zu sehen. Man sieht mehrere Schritte, welche aufeinander aufbauen. Die Abhängigkeiten untereinander werden durch die Kanten, welche die einzelnen Schritte (Knoten) verbinden, dargestellt.
 
-
-\pagebreak
 
 \subsection{Continuous Integration (CI)}
 
@@ -171,7 +169,7 @@ Im gezeigten Beispiel gehören alle bis auf den letzten Schritt "Publish" zur Co
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{julea-ci-cd-ci-focus.png}
     \caption{CI/CD-Pipeline von JULEA. \newline
-        Siehe: https://github.com/parcio/julea/actions/runs/8318540808}
+        Siehe: \url{https://github.com/parcio/julea/actions/runs/8318540808}}
 \end{figure}
 
 \pagebreak
@@ -189,9 +187,11 @@ Eine Continuous-Delivery-Pipeline – wie sie in diesem Abschnitt beschrieben is
 \begin{figure}[H]
     \includegraphics[width=\textwidth]{julea-ci-cd-cd-focus.png}
     \caption{CI/CD-Pipeline von JULEA. \newline
-        Siehe: https://github.com/parcio/julea/actions/runs/8318540808}
+        Siehe: \url{https://github.com/parcio/julea/actions/runs/8318540808}}
     \label{fig:julea-ci-cd-cd-focus}
 \end{figure}
+
+\pagebreak
 
 \subsection{Continuous Deployment}
 
@@ -251,25 +251,32 @@ Seien:
     g(n) &= \prod_{i=0}^{|f(n)|} f(n)
 \end{align*}
 
-Dann stellt $g(n)$ die Anzahl der unterschiedlichen Umgebungen für $n$ Abhängigkeiten mit jeweils 3 akzeptierten Variationen je Abhängigkeit dar:
+\pagebreak
 
-\begin{tikzpicture}
-    \begin{axis}[
-        axis lines = left,
-        xlabel = \(n\),
-        ylabel = {\(g(n)\)},
-    ]
-    %Below the red parabola is defined
-    \addplot [
-        domain=0:6,
-        samples=100, 
-        color=red,
-    ]
-    {3^x};
-    \addlegendentry{\(\prod_{i=0}^{|f(n)|} f(n)\)}
-    
-    \end{axis}
-\end{tikzpicture}
+Dann stellt $g(n)$ die Anzahl der unterschiedlichen Umgebungen für $n$ Abhängigkeiten mit jeweils 3 akzeptierten Variationen je Abhängigkeit dar. Die Funktion $g(n)$ ist in \cref{fig:dependency-complexity} dargestellt.
+
+\begin{figure}[H]
+    \begin{tikzpicture}
+        \begin{axis}[
+            axis lines = left,
+            xlabel = \(n\),
+            ylabel = {\(g(n)\)},
+        ]
+        %Below the red parabola is defined
+        \addplot [
+            domain=0:6,
+            samples=100, 
+            color=red,
+        ]
+        {3^x};
+        \addlegendentry{\(\prod_{i=0}^{|f(n)|} f(n)\)}
+        
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Anzahl der unterschiedlichen Umgebungen in Abhängigkeit von der Anzahl der Abhängigkeiten}
+    \label{fig:dependency-complexity}
+\end{figure}
+
 
 Es wird ersichtlich, dass die Anzahl der unterschiedlichen Umgebungen exponentiell mit der Anzahl der akzeptierten Abhängigkeiten (Variationen) wächst. 
 

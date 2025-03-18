@@ -4,7 +4,7 @@
 \section{Motivation}
 Im Jahr 2022 überstieg der erste Supercomputer – "Frontier" – die 1-ExaFLOP-Marke \cite[Vgl. S. 567ff]{rajaramanFrontierWorldsFirst2023}. Dies ist ein Meilenstein der HPC-Entwicklung und bringt neue Möglichkeiten für die Forschung und Wissenschaft.
 
-Die immer steigende Rechenleistung in fast allen Bereichen der Informationstechnologie – nicht nur im HPC-Bereich – ermöglicht es, Applikationen mit immer steigenden Anforderungen und Komplexität zu entwickeln. Dies ermöglicht die Lösung immer komplexerer Probleme. Ein Indiz für die steigende Komplexität von Applikationen kann die Anzahl verwendeter Abhängigkeiten sein, welche die Komplexität der Applikation auf Code Dritter auslagern \cite[Vgl. Abbildung 2.4]{2024StateSoftware}. Die Verwendung von Abhängigkeiten birgt einige logistische Probleme. Eines dieser logistischen Probleme ist das Ausrollen von Applikationen in heterogenen Umgebungen, das mit steigender Anzahl von Abhängigkeiten weiter erschwert wird. Um das Problem zu minimieren, können Virtualisierungstechnologien immens helfen. Virtualisierungstechnologien ermöglichen es auf heterogenen Systemen eine homogene Umgebung zu schaffen. Diese kann dann als Basis für die Applikation dienen und eine einfach replizierbare Ausrollung schaffen. Davon profitieren nicht nur die Systemadministratoren und die Endanwender, sondern auch die Entwickler, welche die virtualisierte Umgebung für die Entwicklung nutzen können. Das erspart den Entwicklern das Aufsetzen einer eigenen Entwicklungsumgebung, was durchaus zeitintensiv sein kann. Bei der Virtualisierung gibt es zweierlei populäre Technologien: Containervirtualisierung und Hardwarevirtualisierung.
+Die immer steigende Rechenleistung in fast allen Bereichen der Informationstechnologie – nicht nur im HPC-Bereich – ermöglicht es, Applikationen mit immer steigenden Anforderungen und Komplexität zu entwickeln. Dies ermöglicht die Lösung immer komplexerer Probleme. Ein Indiz für die steigende Komplexität von Applikationen kann die Anzahl verwendeter Abhängigkeiten sein, welche die Komplexität der Applikation auf Code Dritter auslagern \cite[Vgl. Abbildung 2.4]{sonatype2024StateSoftware}. Die Verwendung von Abhängigkeiten birgt einige logistische Probleme. Eines dieser logistischen Probleme ist das Ausrollen von Applikationen in heterogenen Umgebungen, das mit steigender Anzahl von Abhängigkeiten weiter erschwert wird. Um das Problem zu minimieren, können Virtualisierungstechnologien immens helfen. Virtualisierungstechnologien ermöglichen es auf heterogenen Systemen eine homogene Umgebung zu schaffen. Diese kann dann als Basis für die Applikation dienen und eine einfach replizierbare Ausrollung schaffen. Davon profitieren nicht nur die Systemadministratoren und die Endanwender, sondern auch die Entwickler, welche die virtualisierte Umgebung für die Entwicklung nutzen können. Das erspart den Entwicklern das Aufsetzen einer eigenen Entwicklungsumgebung, was durchaus zeitintensiv sein kann. Bei der Virtualisierung gibt es zweierlei populäre Technologien: Containervirtualisierung und Hardwarevirtualisierung.
 
 \section{Ziel der Arbeit}
 
@@ -14,9 +14,9 @@ Das Ziel dieser Arbeit ist es, die Containervirtualisierung einer komplexeren Ap
 
 Die Arbeit wird folgendermaßen strukturiert sein:
 
-\paragraph{Technischer Hintergrund}
+\paragraph{Hintergrund}
 
-Im technischen Hintergrund (\cref{cha:background}) werden alle verwendeten Technologien und Konzepte, welche für das Verständnis der Arbeit notwendig sind, erläutert.
+Im Hintergrund (\cref{cha:background}) werden alle verwendeten Technologien und Konzepte, welche für das Verständnis der Arbeit notwendig sind, erläutert.
 
 \paragraph{Implementierung und Design}
 

@@ -26,13 +26,13 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Q76Fd9BzPuOe0DSTBZtt-0" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;Stage 0: Basis&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="210" width="270" height="110" as="geometry" />
+          <mxGeometry x="205" width="270" height="110" as="geometry" />
         </mxCell>
         <mxCell id="Q76Fd9BzPuOe0DSTBZtt-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Q76Fd9BzPuOe0DSTBZtt-1" target="Q76Fd9BzPuOe0DSTBZtt-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Q76Fd9BzPuOe0DSTBZtt-1" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;Stage 1: Spack runtime Abhängigkeit installieren (Python)&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=1;fontSize=21;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="207" y="170" width="276" height="120" as="geometry" />
+          <mxGeometry x="202" y="170" width="276" height="120" as="geometry" />
         </mxCell>
         <mxCell id="Q76Fd9BzPuOe0DSTBZtt-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Q76Fd9BzPuOe0DSTBZtt-3" target="Q76Fd9BzPuOe0DSTBZtt-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
@@ -48,19 +48,19 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="Q76Fd9BzPuOe0DSTBZtt-3" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;Stage 2: Spack Compiletime Abhängigkeiten installieren &amp;amp; Compiletime mit Spack kompilieren&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=1;fontSize=21;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="207" y="340" width="276" height="120" as="geometry" />
+          <mxGeometry x="202" y="340" width="276" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="Q76Fd9BzPuOe0DSTBZtt-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;dashed=1;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Q76Fd9BzPuOe0DSTBZtt-5" target="Q76Fd9BzPuOe0DSTBZtt-9" edge="1">
+        <mxCell id="Q76Fd9BzPuOe0DSTBZtt-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.343;entryY=0.015;entryDx=0;entryDy=0;dashed=1;entryPerimeter=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="Q76Fd9BzPuOe0DSTBZtt-5" target="Q76Fd9BzPuOe0DSTBZtt-9" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="Q76Fd9BzPuOe0DSTBZtt-5" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;Stage 3: JULEA Konfigurieren &amp;amp; Kompilieren&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=1;fontSize=21;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="205" y="510" width="280" height="130" as="geometry" />
+          <mxGeometry x="200" y="510" width="280" height="130" as="geometry" />
         </mxCell>
         <mxCell id="Q76Fd9BzPuOe0DSTBZtt-7" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;Stage 4a: Entwicklungs-abhängigkeiten installieren&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=1;fontSize=21;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry y="680" width="270" height="130" as="geometry" />
         </mxCell>
         <mxCell id="Q76Fd9BzPuOe0DSTBZtt-9" value="&lt;font style=&quot;font-size: 21px;&quot;&gt;Stage 4b: Kompilat installieren&lt;/font&gt;" style="whiteSpace=wrap;html=1;rounded=1;fontSize=21;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="440" y="680" width="280" height="130" as="geometry" />
+          <mxGeometry x="410" y="680" width="280" height="130" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

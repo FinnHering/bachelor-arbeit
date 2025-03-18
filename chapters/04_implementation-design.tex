@@ -128,7 +128,7 @@ Die in \cref{fig:containerfile-stage-graph} dargestellten Stages werden nachfolg
 \subsection{Stage 0: Basis} \label{sec:generic-stage-0}
 
 Diese Stage dient als Grundlage. Hier wird ausgewählt, welches Image als Basis verwendet wird, welche Argumente es geben soll und anderweitige grundlegende Konfigurationen. \
-Besonders wichtig ist es hier, die Argumente zu definieren, da Argumente, welche nicht in dieser Basis-Stage definiert werden, auch nicht in den anderen Stages verfügbar sind \cite[Vgl. "Understand how ARG and FROM interact"]{DockerfileReference0100}. Würde man die Argumente nicht in dieser Stage definieren, müsste man die Argumente in jeder Stage – wo sie benötigt werden – erneut definieren, was zu Redundanz und dadurch zu Fehleranfälligkeit führen kann.
+Besonders wichtig ist es hier, die Argumente zu definieren, da Argumente, welche nicht in dieser Basis-Stage definiert werden, auch nicht in den anderen Stages verfügbar sind \cite[Vgl. "Understand how ARG and FROM interact"]{dockerDockerfileReference0100}. Würde man die Argumente nicht in dieser Stage definieren, müsste man die Argumente in jeder Stage – wo sie benötigt werden – erneut definieren, was zu Redundanz und dadurch zu Fehleranfälligkeit führen kann.
 
 \subsection{Stage 1: Runtime-Abhängigkeiten installieren} \label{sec:generic-stage-1}
 
@@ -390,7 +390,7 @@ Die beiden Containerfiles können nun also alle nötigen Containerimages erstell
 
 Das Erstellen mehrerer Containerimages aus Containerfiles ohne einen Automatismus kann sehr aufwendig werden, da man jedes Image einzeln erstellen lassen muss. Insbesondere bei der Erstellung einer großen Menge von Containerimages, wie es hier der Fall ist, wäre das manuelle Erstellen der Containerimages mit einem zu hohen Aufwand verbunden. 
 
-Es gibt eine große Anzahl an Build-Automatisierungs-Tools. Ein sehr bekanntes Programm ist GNU-Make \cite{GNUMake}. Eine weitere Möglichkeit wäre auch ein einfaches Shell-Skript, welche die Erstellung automatisiert. Das Erstellen kann außerdem mithilfe von CI-Pipelines vereinfacht werden. GitHub-Actions hat explizite Aktionen, um Containerimages zu erstellen. Mithilfe einer Matrix könnte man somit bei GitHub-Actions alle Containerimages unkompliziert erstellen. Eine weitere Option ist das Benutzen eines "Bakefile". Dies ist ein spezieller Dialekt der Hashicorp-Configuration-Language (HCL). Bakefiles sind ein Feature von Docker Buildx, um mehrere Containerimages vordefiniert zu erstellen. Es löst also genau das oben beschriebene Problem auf eine standardisierte und einfache Weise. Außerdem hat GitHub-Actions auch eine Action für Docker-Bakefiles, somit lässt es sich auch in die existierende CI/CD-Pipeline integrieren. 
+Es gibt eine große Anzahl an Build-Automatisierungs-Tools. Ein sehr bekanntes Programm ist GNU-Make \cite{gnuGNUMake}. Eine weitere Möglichkeit wäre auch ein einfaches Shell-Skript, welche die Erstellung automatisiert. Das Erstellen kann außerdem mithilfe von CI-Pipelines vereinfacht werden. GitHub-Actions hat explizite Aktionen, um Containerimages zu erstellen. Mithilfe einer Matrix könnte man somit bei GitHub-Actions alle Containerimages unkompliziert erstellen. Eine weitere Option ist das Benutzen eines "Bakefile". Dies ist ein spezieller Dialekt der Hashicorp-Configuration-Language (HCL). Bakefiles sind ein Feature von Docker Buildx, um mehrere Containerimages vordefiniert zu erstellen. Es löst also genau das oben beschriebene Problem auf eine standardisierte und einfache Weise. Außerdem hat GitHub-Actions auch eine Action für Docker-Bakefiles, somit lässt es sich auch in die existierende CI/CD-Pipeline integrieren. 
 
 Die Bakefile – welche die in \cref{sec:namensschema} definierten Containerimages erstellt – kann in fünf Teile unterteilt werden.
 
@@ -415,6 +415,8 @@ Diese Variable macht es einfach, von außen dynamisch festzulegen, wo das Image 
 "COMMIT\_SHA" wird genutzt, um von außen (üblicherweise von einer CI-Pipeline) den Commit-Hash zu übergeben. Dieser wird dann benutzt, um Containerimates für spezifische Commits zu erstellen. Diese können dann für das einfache Debugging vonbspezifischen tommits verwendet werden.
 
 Zuletzt gibt es die Gruppe "ubuntu". Dem Namen braucht man keine weitere Bedeutung zuzuweisen. Diese Gruppe ist lediglich dafür da, um alle folgenden Targets in einem Docker Buildx-Befehl zu erstellen. Gruppen können von Docker Buildx Bake Build wie ein Target angesprochen werden. Das heißt, dass man anstelle von mehreren Docker Buildx-Befehlen nur einen Befehl ausführen muss, um mehrere Targets zu erstellen.
+
+\pagebreak
 
 \subsection{Bakefile Target "ubuntu-spack"} \label{ubuntu-spack-target}
 

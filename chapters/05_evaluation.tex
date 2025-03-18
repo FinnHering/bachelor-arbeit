@@ -35,6 +35,8 @@ Hier gibt es keine Unterschiede zwischen den beiden Ausführungsarten, und somit
 
 Abschließend lässt sich sagen, dass die Benchmarkergebnisse sehr wahrscheinlich nicht durch unterschiedliche Benchmarkumgebungen verzerrt werden, da die Benchmarkumgebungen in den relevanten Komponenten (Hardware, Betriebssystem, Betriebssystemkomponenten und andere Prozesse) identisch sind.   
 
+\pagebreak
+
 \section{Ausführung des Benchmarks} \label{sec:benchmark-execution}
 
 Für die Ausführung des Benchmarks auf dem HPC-Cluster müssen die Ressourcen allokiert und die Ausführung der Programme geschedult werden. Auf dem HPC-Cluster der OvGU wird das über das SLURM-System realisiert. Die ausführlichen SLURM-Skripte sind im Anhang zu finden (siehe \cref{cha:appendix-benchmarkskripts}).
@@ -163,7 +165,7 @@ Entweder wird das Image mit dem Kernel-SquashFS-Treiber eingehängt, was privile
 
 \begin{figure}[H]
     \centering
-    \includesvg[width=0.7\linewidth]{benchmark/vis/compressed/differences/kv/difference_operations.svg}
+    \includesvg[width=0.8\linewidth]{benchmark/vis/compressed/differences/kv/difference_operations.svg}
     \caption{Speedup der Benchmarkergebnisse für Key-Value}
     \label{fig:speedup_kv}
 \end{figure}
@@ -265,6 +267,8 @@ Dies ist ein weiteres Beispiel dafür, wie ähnlich die beiden Benchmarkergebnis
 Für "/db/schema\{create, delete\}" ist in \cref{fig:mdist_db_schema_create} und \cref{fig:mdist_db_schema_delete} ebenfalls ersichtlich, dass bei Betrachtung der Messwertverteilung kein signifikanter Speedup festgestellt werden kann. Die Ergebnisse liegen so nah beieinander, dass nicht ausgeschlossen werden kann, dass es sich um Messungenauigkeiten handelt.
 
 \FloatBarrier
+
+\pagebreak
 
 \subsection{Fazit der Benchmarkergebnisse}
 
