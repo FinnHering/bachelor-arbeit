@@ -4,23 +4,27 @@ In diesem Kapitel werden die Erkenntnisse sowie Ergebnisse der Arbeit zusammenge
 
 \section{Zusammenfassung}
 
-Wie in Kaptiel \cref{cha:evaluation} erwähnt ist die Containerisierung von komplexeren Applikationen oder Applikationen, welche eine lange Zeit benötigen Kompiliert zu werden von vorteil für den Endnutzer der Applikation, da er die Applikation nicht selbst kompilieren muss und mithilfe des Containers auch eine reproduzierbare Umgebung erhält. 
+Wie in \cref{cha:evaluation} erwähnt ist die Containerisierung von komplexeren Applikationen oder Applikationen, welche eine lange Zeit benötigen, um kompiliert zu werden von Vorteil für den Endnutzer der Applikation. Die Containerisierung ist hierbei von vorteil, da der Endnutzer die Applikation nicht selbst kompilieren muss und mithilfe des Containers auch eine reproduzierbare Umgebung erhält. 
 
-Mithilfe von Dockerfiles, den Docker-Bake-Dateien und Docker Buildx konnte der Erstellprozess der Containerimages standardisiert und auch einfach ausführbar gemacht werden. Die anschließende definition des CI-Workflows hat dann anschließend das Erstellen automatisiert, somit der Entwickler nun nicht mehr die Containerimages manuell erstellen und veröffentlichen muss. 
+Mithilfe von Containerfiles, den Docker-Bake-Dateien und Docker Buildx konnte der Erstellprozess der Containerimages standardisiert und auch einfach ausführbar für den Entwickler gemacht werden. Die anschließende Definition der CI/CD-Pipeline hat dann anschließend das Erstellen automatisiert, was zur Folge hat, dass der Entwickler nun nicht mehr die Containerimages manuell erstellen und veröffentlichen muss. 
 
-In der Evaluation konnte des Weiteren kein starker Performanceverlust durch die Containerisierung festgestellt werden. In den meisten fällen waren beide Installationen (Container und native Installation) gleich schnell. In einigen Fällen könnten vereinzelt minimale Performanceverluste festgestellt werden, welche für die meisten Anwendungsfälle wahrscheinlich nicht relevant sind.      
+In der Evaluation konnte des Weiteren keine starken Performanceverluste oder Performancezunahmen durch die Containerisierung festgestellt werden. In den meisten Fällen waren beide Ausführungsarten (containerisiert und nativ) gleich schnell. Es gab einige Fälle, wo vereinzelt minimale Performanceverluste festgestellt werden konnten (siehe z. B. \cref{sec:object-speedup}). Diese Performanceverluste waren unterhalb von $3\%$, was in vielen Anwendungsfällen als worst-case akzeptabel ist, wenn man es in relation zu den Vorteilen der Containerisierung setzt.
 
 \section{Zukünftige Arbeit}
 
 \subsection{Vertiefung der Benchmarks}
 
-In dieser Arbeit wurde eine erste Evaluation der Performance von Containerimages durchgeführt. Allerdings wurde keine genauere Betrachtung der Konfidenz der Ergebnisse durchgeführt. Die Zehnfache ausführung der Benchmarks erzeugt zwar für den Großteil der Benchmarks aussagekräftige Ergebnisse, allerdings gibt es immernoch einige Ergebnisse wo die Standardabweichung sehr hoch ist, was eine Aussage über die Performance bei diesen Benchmarkmetriken schwierig macht und diese Ergebnisse somit in dieser Arbeit nicht berücksichtigt wurden.
+In dieser Arbeit wurde in \cref{cha:evaluation} eine erste Evaluation der Performance von Containertechnologien mithilfe von JULEAs Benchmarks durchgeführt. 
+
+Allerdings wurde keine genauere Betrachtung der Konfidenz der Ergebnisse durchgeführt. Außerdem erzeugt die zehnfache Ausführung der Benchmarks zwar für den Großteil der Benchmarkmetriken aussagekräftige Ergebnisse, allerdings gibt es immer noch einige Benchmarkmetriken, wo die Standardabweichung sehr hoch ist, was eine Aussage über die Performance bei diesen Benchmarkmetriken schwierig macht.
+
+In einer zukünftigen Arbeit wäre es sinnvoll, die Benchmarks mehr als 10x auszuführen und die Konfidenz der Ergebnisse zu berechnen, um eine genauere Aussage über die Performance von Containertechnologien in HPC-Szenarien zu machen.
 
 \subsection{Automatisierte Konvertierung von OCI-Images zu Apptainer-Images}
 
-In der Implementierung wurde das Erstellen von OCI-Containerimages automatisiert unter der Begründung, dass Apptainer die Möglichkeit anbietet OCI-Images zu Apptainer-Images zu konvertieren und, dass Docker (und somit auch OCI-Containerimages) der de-facto Standard für Containerisierung ist, somit auch über ein größeres Ökosystem verfügt und somit auch in mehr Umgebungen bereits integriert ist, was die "Developer Experience" verbessert.
+Es wurde das Erstellen von OCI-Containerimages, sowie das automatisierte Erstellen von OCI-Containerimages in dieser Arbeit implementiert. Unter der Begründung in \cref{sec:allgemeiner-aufbau-der-dockerfiles}, dass Apptainer die Möglichkeit anbietet OCI-Images zu Apptainer-Images zu konvertieren und, dass Docker (und somit auch OCI-Containerimages) der de-facto Standard für Containerisierung ist, wurde davon abgesehen automatisiert Apptainer-Container zu erstellen.
 
-Allerdings findet Apptainer eine Nische in der Containerisierung von Applikationen, welche auf HPC-Systemen laufen. JULEA ist ein Beispiel für eine solche Applikation. Somit wäre es Sinnvoll, sich in der Zukunft darüber Gedanken zu machen, wie man OCI-Containerimages automatisiert in Apptainer-Images konvertieren kann (idealerweise mithilfe von CI), um auch das vollautomatisierte Ausrollen von Apptainer-Images auf HPC-Systemen zu ermöglichen (CD).
+Allerdings findet Apptainer eine Nische in der Containerisierung von Applikationen, welche auf HPC-Systemen laufen. JULEA ist ein Beispiel für eine solche Applikation. Somit wäre es sinnvoll, sich in der Zukunft darüber Gedanken zu machen, wie man OCI-Containerimages automatisiert in Apptainer-Images konvertieren kann (idealerweise mithilfe von CI) oder wie man parallel zu dem OCI-Containerimages auch Apptainer-Containerimages erzeugen kann. Das würde es Ermöglichen mithilfe einer CD-Pipeline die Apptainer-Containerimages direkt auf einem HPC-Cluster auszurollen. 
 
 
 

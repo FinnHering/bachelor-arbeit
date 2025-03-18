@@ -2,135 +2,142 @@
 
 \section{Benchmarkumgebung}
 
-Eines der möglichen Variablen, welches das Benchmarkergebnis substantiell beeinflussen kann,  ist die Benchmarkumgebung. Die Benchmarkumgebung wird hier als drei verschiedene Komponenten betrachtet. Das eine ist die Hardware, auf welcher der Benchmark ausgeführt wird. Das zweite ist das unterliegende Betriebssystem und dessen Komponenten auf welchen der Benchmark ausgeführt wird und das dritte sind die anderen Prozesse, welche sich auf dem System ressourcen mit den Benchmarkprozesse\(n\) teilen. Bevor detailierter auf den eigentlichen Benchmark eingegangen wird, werden die drei Komponenten der Benchmarkumgebung genauer betrachtet.
+Eines der möglichen Variablen, welches das Benchmarkergebnis substantiell beeinflussen kann, ist die Benchmarkumgebung. Die Benchmarkumgebung lässt sich als drei verschiedene Komponenten betrachten. Das eine ist die Hardware, auf welcher der Benchmark ausgeführt wird. Das zweite ist das unterliegende Betriebssystem und dessen Komponenten auf welchen der Benchmark ausgeführt wird und das dritte sind die anderen Prozesse, welche sich auf dem System Ressourcen mit den Benchmarkprozesse(n) teilen. Bevor detaillierter auf den eigentlichen Benchmark eingegangen wird, werden die drei Komponenten der Benchmarkumgebung genauer betrachtet.
 
 \subsection{Hardware}
 
-Der Benchmark wurde auf dem HPC-Cluster der Otto-von-Guericke-Universität Magdeburg ausgeführt. Das Cluster selber besteht aus mehreren "Knoten" (engl. Nodes), welche wie eigenständige Computer agieren. Es gibt Knoten mit verschiedenen Hardware-Spezifikationen. Der Benchmark wurde stets auf einem Knoten mit folgender Hardware-Spezifikation ausgeführt:
+Der Benchmark wurde auf einem HPC-Cluster der Otto-von-Guericke-Universität Magdeburg ausgeführt. Das Cluster selber besteht aus mehreren "Knoten" (engl. Nodes), welche wie eigenständige Computer agieren. Es gibt Knoten mit verschiedenen Hardware-Spezifikationen. Der Benchmark wurde stets auf einem Knoten mit folgender Hardware-Spezifikation ausgeführt:
 
 \begin{itemize}
     \item CPU: 1x AMD Epyc 7443 @ $2,85\text{GHz}$
-    \item RAM: 16GB DDR4
+    \item RAM: 128GB DDR4
     \item /home, /data, /opt/spack: CephFS
     \item /\*\* (auch /tmp): $1\text{TB}$ SATA-SSD  
 \end{itemize}
 
-In beiden Fällen lag das Kompilat im /home Verzeichnis, währenddessen die Speicherorte von JULEA auf /tmp definiert waren. Insbesondere ist zu beachten, dass für Apptainer das /tmp Verzeichnis des "Host" Systems mit einem Bind-Mount in den Container eingebunden wurde. Somit ist hier die Umgebung beider Ausführungsarten, so weit wie möglich, identisch.
+In beiden Fällen liegt das Kompilat im /home Verzeichnis, währenddessen die Speicherorte von JULEA unter /tmp liegen. Insbesondere ist zu beachten, dass für Apptainer das /tmp Verzeichnis des "Host" Systems mit einem Bind-Mount in den Container eingebunden wurde. Somit ist hier die Umgebung beider Ausführungsarten, so weit wie möglich, identisch.
 
 Zusammenfassend lässt sich sagen, dass die Hardware in beiden Fällen identisch ist und es somit zu keiner Verzerrung der Benchmarkergebnisse durch unterschiedliche Hardwarekonfigurationen geben sollte. 
 
 \subsection{Betriebssystem und Betriebssystemkomponenten}
 
-Das Betriebssystem, auf welchem der Benchmark ausgeführt wurde, ist CentOS 8. Die Betriebssystemversion im Container ist im gegensatz dazu Ubuntu 24.04. Dieser Unterschied ist allerdings nicht relevant. Der größte unterschied zwischen den beiden Betriebssystemen würden die unterschiedlichen Library-Versionen sein, da in beiden fällen der CentOS 8 Linux-Kernel verwendet wird. Die unterschiedlichen Library-Versionen spielen allerdings keine Rolle, da hier die libraries mit Spack (gcc) kompiliert wurden. Somit gibt es hierbei auch keine Unterschiede. Es wurde in beiden fällen GCC 12 verwendet. Unterschiede in der Performance durch einen deutlich neueren Kompilierer sind somit auch ausgeschlossen. 
+Das Betriebssystem, auf welchem der Benchmark ausgeführt wurde, ist CentOS 8. Die Betriebssystemversion im Container ist im gegensatz dazu Ubuntu 24.04. Dieser Unterschied ist allerdings nicht relevant. Der größte Unterschied zwischen den beiden Betriebssystemen würden die unterschiedlichen Library-Versionen sein. Die unterschiedlichen Library-Versionen spielen allerdings keine Rolle, da hier die libraries mit Spack (gcc) kompiliert wurden. Somit gibt es hierbei auch keine Unterschiede. Es wurde in beiden fällen GCC 12 verwendet. Unterschiede in der Performance durch einen deutlich neueren Kompilierer sind somit auch ausgeschlossen. In beiden fällen wird der CentOS 8 Linux-Kernel des Host-Systems verwendet, da in einer Container-Umgebung kein separater Kernel gebootet wird.
 
 Hier sind die beiden Umgebungen somit auch in den relevanten Komponenten identisch. Somit sollte hier auch keine Verzerrungen der Benchmarkergebnisse durch unterschiedliche Betriebssystem-Konfigurationen geben.
 
 \subsection{Andere Prozesse}
 
-Der Benchmark musste sich die Umgebung nur mit dem Betriebssystem und dessen Prozessen teilen. Somit ist es unwahrscheinlich, dass das System durch andere Prozesse stark beeinflusst wurde und es dadurch zu Milderungen der Benchmarkergebnissen kam.
+Der Benchmark musste sich die Umgebung nur mit dem Betriebssystem und dessen Prozessen teilen. Somit ist es unwahrscheinlich, dass das System durch andere Prozesse stark beeinflusst wurde und es dadurch zu Milderungen der Benchmarkergebnissen kam. Der Benchmark-Prozess muss sich mit keinen anderen Programmen anderer Nutzer die Ressourcen teilen, da der Benchmark auf einem dedizierten Knoten ausgeführt wurde. Näheres dazu wird in \cref{sec:benchmark-execution} erläutert.
 
 Hier gibt es keine Unterschiede zwischen den beiden Ausführungsarten und somit sollten sich die Benchmarkergebnisse nicht durch andere Prozesse auf dem System unterschiedlich verhalten.
 
+Abschließend lässt sich sagen, dass die Benchmarkergebnisse sehr wahrscheinlich nicht durch unterschiedliche Benchmarkumgebungen verzerrt werden können, da die Benchmarkumgebungen in den relevanten Komponenten (Hardware, Betriebssystem, Betriebssystemkomponenten und anderer Prozesse) identisch sind.   
 
-Abschließend lässt sich sagen, dass die Benchmarkergebnisse sehr wahrscheinlich nicht durch unterschiedliche Benchmarkumgebungen verzerrt werden können, da die Benchmarkumgebungen in den relevanten Komponenten (Hardware, Betriebssystem und Betriebssystemkomponenten und Andere Prozesse) identisch sind.   
+\section{Ausführung des Benchmarks} \label{sec:benchmark-execution}
 
-\section{Ausführung des Benchmarks}
+Für die Ausführung des Benchmarks auf dem HPC-Cluster müssen die Ressourcen allokiert und die Ausführung der Programme geschedult werden. Auf dem HPC-Cluster der OvGU wird das über das SLURM-System realisiert. Die ausführlichen SLURM-Skripte sind im Anhang zu finden (\cref{cha:appendix-benchmarkskripts}).
 
-Für die Ausführung des Benchmarks auf dem HPC-Cluster müssen die Ressourcen allokiert und die Ausführung der Programme gescheduled werden. Auf dem HPC-Cluster der OvGU wird das über das Slurm-System realisiert. Die ausführlichen SLURM-Skripte sind im Anhang zu finden.
-
-Für das SLURM-Skript wurde folgende Parameter gesetzt
+Für das SLURM-Skript wurden folgende Parameter gesetzt
 
 \begin{itemize}
     \item --constraint=epyc3: Begrenzt die Allokation von Nodes auf den oben genannten CPU
     \item --exclusive: Node wird exklusiv für den Benchmark reserviert
-    \item --time=0-2:30:00: Maximale ausführungsdauer von $2,5h$
+    \item --time=0-2:30:00: Maximale ausführungsdauer von $2,5\text{h}$
     \item --mem=16GB: 16GB RAM auf dem Node werden reserviert
     \item --array=1-10: zehnfache Ausführung des Benchmarks
     \item --output=./res/apptainer/benchmark-\%a.out: Datei in welches das STDOUT geschrieben wird
     \item --error=./res/apptainer/benchmark-\%a.err: Datei in welches das STDERR geschrieben wird 
 \end{itemize}
 
-Die SLURM-Skripte, welche für die Ausführung des Benchmarks verwendet wurden, sind im Anhang in \cref{cha:appendix-benchmarkskripts} vorhanden.
-
-\section{Erörterung der Benchmarkarkmetriken}
+\section{Erörterung der Benchmarkmetriken}
 
 Um genauer zu verstehen, welche Faktoren einen Einfluss auf die Benchmarkergebnisse haben, ist es wichtig die Bedeutung der Benchmarkmetriken, sowie dessen unterliegende Technologien zu verstehen. 
 Die hier verwendeten Benchmarks sind in JULEA integriert und in verschiedene Kategorien unterteilt.
 
-Diese Kategorien (Benchmarkmetriken) sind stets in einem spezifischen Format angegeben, dieses Format ist einem POSIX-Pfad ähnlich. Die Benchmarkmetriken sind in verschiedene (Unter-)Kategorien unterteilt. Die Struktur einer Benchmarkmetrik ist somit /Kategorie/Unterkategorie-0/../Unterkategorie-n-1/Unterkategorie-n.
+Diese Kategorien (Benchmarkmetriken) sind stets in einem spezifischen Format angegeben, dieses Format ist einem POSIX-Pfad ähnlich. Die Benchmarkmetriken sind in verschiedene (Unter-)Kategorien unterteilt. Die Struktur einer Benchmarkmetrik ist somit in folgender Form: /Kategorie/Unterkategorie-0/../Unterkategorie-n-1/Unterkategorie-n.
 
-Die von JULEA erstellten Benchmarkergebnisse liefern ein Paar Kennzahlen. Die aussagekräftigste Kennzahl, um die Performance zweier Systeme zu vergleichen ist die Anzahl der Operationen pro Sekunde (operations/s). Eine Operation ist eine Ausführung der beschriebenen Benchmarkmetrik. So ist "/kv/get" eine "get" anfrage an das KV-Backend von JULEA. 
+JULEAs Benchmarkergebnisse liefern einige Kennzahlen. Die aussagekräftigste Kennzahl, um die Performance zweier Systeme zu vergleichen ist die Anzahl der Operationen pro Sekunde (operations). Eine Operation ist eine Ausführung der beschriebenen Benchmarkmetrik. So ist z. B. "/kv/get" eine "get" anfrage an das KV-Backend von JULEA. 
 
 Folgend werden die Benchmarkmetriken nach ihren Kategorien unterteilt und erläutert.
 
 \subsection{Objektspeicher}
 
-Objektspeicher wird unter den Benchmarkmetriken, welche "/object" als Präfix besitzen, gebenchmarkt.
+JULEAs Objektspeicher-Backends werden unter den Benchmarkmetriken, welche "/object" als Präfix besitzen, gebenchmarkt.
 
-Dabei gibt es eine Differenzierung zwischen "/object/object" und "/object/distributed-object". "/object/object" repräsentiert die Operationen auf Objekten, welche auf dem lokalen Dateisystem gespeichert sind. "/object/distributed-object" repräsentiert die Operationen auf Objekten, welche auf einem verteilten Dateisystem gespeichert sind. 
+Dabei gibt es eine Differenzierung zwischen "/object/object" und "/object/distributed-object". "/object/object" repräsentiert die Operationen auf Objekten, welche an einem einzelnen Dateisystem gespeichert sind. "/object/distributed-object" repräsentiert die Operationen auf Objekten, welche verteilt gespeichert sind \cite[Vgl. S. 718]{kuhnJULEAFlexibleStorage2017}
 
 \subsection{Key-Value}
 
 Die Benchmark zu der Key-Value-Komponente von JULEA haben "/kv" als Prefix. 
 
-Hierbei werden alle üblichen Operationen einer Key-Value-Datenbank gebenchmarkt. Dazu gehören das Einfügen, Aktualisiere, Löschen, sowie Lesen von Key-Value-Paaren.
+Hierbei werden alle üblichen Operationen einer Key-Value-Datenbank gebenchmarkt. Dazu gehören das Einfügen, Aktualisiere, Löschen, sowie Lesen von Key-Value-Paaren \cite[Vgl. S. 718]{kuhnJULEAFlexibleStorage2017}.
 
 \subsection{Item-Store}
 
-Der Item-Store – alle Benchmarkmetriken, welche mit "/item" beginnen – repräsentieren die von JULEA unterstützten Operationen auf dem Item-Store.
+Der Item-Store – alle Benchmarkmetriken, welche mit "/item" beginnen – repräsentieren die von JULEA unterstützten Operationen auf dem Item-Store. Dieser soll ein cloud-ähnliches Interface bereitstellen und nutzt den Key-Value-Store sowie den Objektspeicher um das zu erzielen \cite[Vgl. 718]{kuhnJULEAFlexibleStorage2017}.
 
 \subsection{Datenbank}
 
-Die Datenbank-Benchmarkmetriken haben "/db" als Präfix. Hier werden übliche Datenbankoperationen wie das Einfügen, Löschen, Aktualisieren von Einträgen, sowie das Erstellen und Löschen von Schemas gebenchmarkt.
+Die Datenbank-Benchmarkmetriken haben "/db" als Präfix. Hier werden übliche Datenbankoperationen wie das Einfügen, Löschen, Aktualisieren von Einträgen, sowie das Erstellen und Löschen von Schemas gebenchmarkt \cite[Vgl. 718]{kuhnJULEAFlexibleStorage2017}.
 
 \subsection{Ausgeschlossene Benchmarkmetriken}
 
-Die Benchmarkmetriken Message ("/message"), Cache ("/cache") und Background Operation ("/background") wurden in dieser Auswertung nicht berücksichtigt. Die Benchmarkmetriken Message und Background wiesen eine sehr hohe Varianz auf, was eine Aussage mit Konfidenz nicht möglich macht. Die Cache Benchmarkmetrik ist für den Vergleich beider Lösungsansätze nicht relevant, da Apptainer keine Virtualisierung des System-Memories vornimmt. Es wird transparent auf den Zwischenspeicher des Hostsystems zugegriffen.   
+Die Benchmarkmetriken Message ("/message"), Cache ("/cache") und Background Operation ("/background") wurden in dieser Auswertung nicht berücksichtigt. Die Benchmarkmetriken Message und Background wiesen eine sehr hohe Varianz auf, was eine Aussage mit hoher Sicherheit nicht möglich macht. Die Cache-Benchmarkmetrik ist für den Vergleich beider Lösungsansätze nicht relevant, da Apptainer keine Virtualisierung des System-Memories vornimmt. Es wird transparent auf den Zwischenspeicher des Hostsystems zugegriffen.   
 
 \section{Vor-Auswertung der Benchmarkergenisse}
 
-Um die Benchmarkergebinsse effektiv auswerten zu können ist im ersten Schritt wichtig sich die Verteilung der Messwerte anzusehen. Ein Boxplot, ist eine populäre Möglichkeit Verteilungen zu analysieren \cite[Vgl. 1]{majawExploringDataDistributions2023}. Nachfolgend werden die Verteilungen der nativen sowie containerisierten Benchmarkergebnisse an einem Beispiel betrachtet. Ein vollumfängliche Betrachtung aller Verteilungen wird nicht vorgenommen, da die Verteilungen sich alle ähnlich verhalten.
+Um die Benchmarkergebnisse effektiv auswerten zu können ist im ersten Schritt wichtig sich die Verteilung der Messwerte anzusehen. Ein Boxplot, ist eine populäre Möglichkeit Verteilungen zu analysieren \cite[Vgl. 1]{majawExploringDataDistributions2023}. Nachfolgend werden die Verteilungen der nativen sowie containerisierten Benchmarkergebnisse an einem Beispiel betrachtet. Eine vollumfängliche Betrachtung aller Verteilungen wird nicht vorgenommen, da die Verteilungen sich alle ähnlich verhalten.
 
-Die gesammten Benchmarkergebnisse sind im Anhang in \cref{cha:appendix-benchmarkdaten} vorhanden.
+Die gesamten Benchmarkergebnisse sind im Anhang in \cref{cha:appendix-benchmarkdaten} vorhanden.
 
 \pagebreak
 
 \subsection{Native}
 
-Die Verteilungen der Messwerte des Benchmarks, welche Nativ auf dem Host-System ausgeführt wurden, lassen sich aus der folgenden Grafiken entnehmen:
+Die Verteilungen der Messwerte des Benchmarks, welche Nativ auf dem Host-System ausgeführt wurden, lassen sich aus der Grafik in \cref{fig:boxplot_object} entnehmen.
 
-\includesvg[width=1\linewidth]{benchmark/vis/compressed/boxplots/system/object/boxplot.svg}
+\begin{figure}[H]
+    \includesvg[width=1\linewidth]{benchmark/vis/compressed/boxplots/system/object/boxplot.svg}
+    \caption{Verteilung der Benchmarkergebnisse für den Objektspeicher (Nativ)}
+    \label{fig:boxplot_object}
+\end{figure}
 \FloatBarrier
 
 Es ist erkenntlich, dass die Verteilungen der Messwerte oftmals verzerrt sind, und es einige Ausreißer gibt. Bei dieser Benchmarkbetrachtung soll keine genauere Betrachtung der Extremwerte stattfinden. Darum ist die Betrachtung des Medianwertes als statistisches Mittel hier Sinnvoller \cite[Vgl. 15f.]{stengelStatistikUndAufbereitung2011}. 
 
-Des Weiteren liegen die gemittelten Messwerte der einzelnen Benchmarkmetriken zum Teil weit auseinander, was zur Folge hat, dass der grafische Vergleich zwischen den verschiedenen Ausführungsarten des Benchmarks mit absoluten Werten nicht sehr aussagekräftig ist. Darum wird der Vergleich der verschiedenen Ausführungsarten des Benchmarks mithilfe des "Speedups" berechnet. Dieser betrachtet die relative Verbesserung zwischen zwei Messwerten: 
+Des Weiteren liegen die gemittelten Messwerte der einzelnen Benchmarkmetriken zum Teil weit auseinander, was zur Folge hat, dass der grafische Vergleich zwischen den verschiedenen Ausführungsarten des Benchmarks mit absoluten Werten nicht sehr aussagekräftig ist. Darum wird der Vergleich der verschiedenen Ausführungsarten des Benchmarks mithilfe des "Speedups" berechnet. Dieser betrachtet die relative Verbesserung zwischen zwei Messwerten. Die Formel für den Speedup kann man \cref{eq:speedup} entnehmen.
 
 
-\begin{equation}
+\begin{equation} \label{eq:speedup}
 S_{\frac{\text{ops}}{\text{s}}} = \frac{O_{\text{containerized}}}{O_{\text{native}}}
 \end{equation}
 
 
-\subsection{Containerized}
+\subsection{Containerisiert}
 
-Die Schlüsse, welche bei der Betrachtung der nativen Ausführung des Benchmarks gezogen wurden, lassen sich auch auf die Containerized-Ausführung des Benchmarks übertragen. Die Messergebnisse des Benchmarks, welche in einem Apptainer-Container ausgeführt wurden, lassen sich aus der folgenden Grafik entnehmen:
-
-\includesvg[width=1\linewidth]{benchmark/vis/compressed/boxplots/apptainer/object/boxplot.svg}
+Die Schlüsse, welche bei der Betrachtung der nativen Ausführung des Benchmarks gezogen wurden, lassen sich auch auf die containerisierte Ausführung des Benchmarks übertragen. Die Messergebnisse des Benchmarks, welche in einem Apptainer-Container ausgeführt wurden, lassen sich aus der Grafik in \cref{fig:boxplot_object_apptainer} entnehmen.
 
 
-Es ist bereits bei Betrachtung der Boxplots ersichtlich, dass beide Ergebnisse größtenteils ähnlich sind. Um noch genauer die Performance-Unterschiede zu erkennen, wird im nächsten Schritt der Speedup $S_(\text{system}, \text{apptainer})$ für die einzelnen Benchmarkmetriken betrachtet.
+\begin{figure}[H]
+    \includesvg[width=1\linewidth]{benchmark/vis/compressed/boxplots/apptainer/object/boxplot.svg}
+    \caption{Verteilung der Benchmarkergebnisse für den Objektspeicher (Apptainer)}
+    \label{fig:boxplot_object_apptainer}
+\end{figure}
+
+
+Es ist bereits bei Betrachtung beider Boxplots ersichtlich, dass beide Ergebnisse größtenteils ähnlich sind. Um noch genauer die Performance-Unterschiede zu erkennen, wird im nächsten Schritt der Speedup für die einzelnen Benchmarkmetriken betrachtet.
+
 
 \pagebreak
 
 \section{Vergleich der Benchmarkergebnisse}
 
 Um einen besseren Überblick über den Unterschied zwischen beiden Benchmarkergebnissen zu erhalten, wird der errechnete Speedup um -1 verschoben. Das hat zur Folge, dass anstelle vom Wert 1, nun der Wert 0 identische Performance bedeutet. 
-Negative Werte bedeuten, dass die containerisierte Ausführung des Benchmarks schlechter ist als die Native Ausführung. Positive Werte bedeuten, dass die containerisierte Ausführung des Benchmarks besser ist als die Native Ausführung. 
+Negative Werte bedeuten, dass die containerisierte Ausführung des Benchmarks schlechter ist als die native Ausführung. Positive Werte bedeuten, dass die containerisierte Ausführung des Benchmarks besser ist als die native Ausführung. 
 
 Die übergeordneten Kategorien der Benchmarkmetriken, werden nachfolgend einzeln betrachtet.
 
-\subsection{Objektspeicher}
+\subsection{Objektspeicher (POSIX)} \label{sec:object-speedup}
 
 \begin{figure}[H]
     \centering
@@ -141,16 +148,16 @@ Die übergeordneten Kategorien der Benchmarkmetriken, werden nachfolgend einzeln
 
 \FloatBarrier
 
-Als Erstes wird der Speedup der Benchmarkmetrik "object" betrachtet. Hier ist zu erkennen, dass die Containerisierte ausführung des Benchmarks stets zwischen $1\%$ bis $3\%$ langsamer ist. Die Benchmarkmetrik "object" misst dabei die Performance der Objektverwaltung. Diese Objektverwaltung läuft bei diesem Benchmark über das Dateisystem. Somit ist es naheliegend, dass, in diesem Fall, das Dateisystem ein Bottleneck sein könnte. Allerdings ist diese sehr konsistente Performance-Verschlechterung im Vergleich zur nativen Ausführung auf den ersten Blick nicht erklärbar, da beide Ausführungsweisen auf das gleiche Verzeichnis im Host-Dateisystem zugegriffen haben (/tmp). 
+Als Erstes wird der Speedup der Benchmarkmetrik "object" betrachtet. Hier ist zu erkennen, dass die containerisierte Ausführung des Benchmarks stets zwischen $1\%$ bis $3\%$ langsamer ist. Die Benchmarkmetrik "object" misst dabei die Performance der Objektverwaltung. Diese Objektverwaltung läuft bei diesem Benchmark über das Dateisystem ("POSIX"-Backend) \cite[Vgl. S. 719]{kuhnJULEAFlexibleStorage2017}. Somit ist es naheliegend, dass, in diesem Fall, das Dateisystem ein Bottleneck sein könnte. Allerdings ist diese sehr konsistente Performance-Verschlechterung im Vergleich zur nativen Ausführung auf den ersten Blick nicht erklärbar, da beide Ausführungsweisen auf das gleiche Verzeichnis im Host-Dateisystem zugegriffen haben (/tmp). 
 
 Im Fall von Apptainer wurde das Verzeichnis mithilfe eines bind-mounts in den Container eingebunden. Für die Containertechnologie Docker gab es bereits eine Performance-Analyse von bind-mounts und es konnte keine Signifikaten Performance-Einbußen festgestellt werden \cite[Vgl. 4]{dordevicFileSystemPerformance2022}. 
 
 Somit lässt sich darauf schließen, dass die bind-mounts nicht die Ursache für die Performance-Einbußen sind. Bei Apptainer besteht jedoch noch die Besonderheit, dass die Container-Images ein SquashFS-Dateisystem verwenden. Dieses Dateisystem wird beim Start des Containers in das Host-Dateisystem eingehängt. 
 
-Hier gibt es bei Apptainer zwei möglichkeiten, wie dieses Containerimage eingehangen wird. \\
-Entweder wird das Image mit dem Kernel-SquashFS-Treiber eingehangen, was priviligierte Rechte benötigt, oder es wird mithilfe des SquashFS-FUSE-Treibers eingehangen. Hierfür werden keine privilegierten Rechte benötigt. Allerdings ist laut eigenen aussagen von Apptainer die Performance des FUSE-Treibers schlechter als die des Kernel-Treibers. Somit könnte dies eine mögliche Ursache für die Performance-Einbußen sein \cite{apptainerSecurityApptainerApptainer}.  
+Hier gibt es bei Apptainer zwei Möglichkeiten, wie dieses Containerimage eingehangen wird. \\
+Entweder wird das Image mit dem Kernel-SquashFS-Treiber eingehangen, was privilegierte Rechte benötigt, oder es wird mithilfe des SquashFS-FUSE-Treibers eingehangen. Hierfür werden keine privilegierten Rechte benötigt. Allerdings ist laut eigenen aussagen von Apptainer die Performance des FUSE-Treibers schlechter als die des Kernel-Treibers. Somit könnte dies eine mögliche Ursache für die Performance-Einbußen sein \cite{apptainerSecurityApptainerApptainer}.  
 
-\subsection{Key-Value (lmdb)}
+\subsection{Key-Value (lmdb)} \label{sec:kv-speedup}
 
 \begin{figure}[H]
     \centering
@@ -161,7 +168,7 @@ Entweder wird das Image mit dem Kernel-SquashFS-Treiber eingehangen, was privili
 
 \FloatBarrier
 
-Die Key-Value-Komponente von Julea ("kv"), hingegen weist kaum eine Veränderung der Performance zwischen der nativen und containerisierten Ausführung auf. Die Performance geht zwar leicht zurück, allerdings ist der rückgang deutlich unter $1\%$ uns es kann nicht ausgeschlossen werden, dass dies nur eine Messungenauigkeit ist. Eine Metrik, sticht jedoch heraus. Die Metrik "kv/get" weist eine Performance-Senkung von mehr als $1,7\%$ auf. Diese Metrik weißt auf die Performance des lesend innerhalb der Key-Value-Datenbank hin. In diesem fall wird LMDB als lösung im hintergrund verwendet. Die Datenbank selber nutzt memory-mapping, um lese und schreibzugriffe möglichst performant zu machen. Hierbei sollte es zu keinem signifikanten Overhead kommen, da das Memory-Mapping durch den Kernel verwaltet wird und die Datenbank-Datei(en) selber direkt auf dem Host-Dateisystem liegen. Somit wird der SquashFS-FUSE-Treiber während der Ausführung des Benchmarks umgangen und es kann zu keinem Performance-Verlust kommen. Desweiteren würde ein solcher Performance-Verlust – sollte es ihn dennoch geben – auch bei der "put"-Benchmarkmetrik zu erkennen sein. Da dies nicht der Fall ist, kann davon ausgegangen werden, dass die Performance-Einbußen bei der "kv/get"-Metrik nicht durch das Dateisystem verursacht werden. Es könnte sein, dass die Julea-Spezifische implementierung der interaktion mit der Datenbank, in der Containerisierten Umgebung, hier zu Performance-Einbußen führt. 
+Die Key-Value-Komponente von JULEA ("kv"), hingegen weist kaum eine Veränderung der Performance zwischen der nativen und containerisierten Ausführung auf. Die Performance schwankt innerhalb von $\pm 1\%$ und es kann nicht ausgeschlossen werden, dass dies – aufgrund der geringen Abweichung – nur eine Messungenauigkeit ist. Somit ist es wahrscheinlich, dass die Performance der Key-Value-Komponente von JULEA nicht durch die Containerisierung beeinflusst wird.
 
 \subsection{Item-Store}
 
@@ -174,18 +181,23 @@ Die Key-Value-Komponente von Julea ("kv"), hingegen weist kaum eine Veränderung
 
 \FloatBarrier
 
-Der Item-Store ist im vergleich zu den vorherigen Benchmarkmetriken anders. Er baut auf beiden Implementierungen auf.
+Der Item-Store ist im Vergleich zu den vorherigen Benchmarkmetriken anders. Er baut auf den Implementierungen des Objektspeichers (\cref{sec:object-speedup}) und Key-Value-Stores (\cref{sec:kv-speedup}) auf.
 
 \subsubsection{Item}
 
-Zum einen wird für die Operationen "/item/\{item, collection\}/create", sowie "/item/\{item, collection\}/delete" auf die mechanisem "/kv/put", "/kv/delete" aufgebaut, was den ähnlich insignifikanten Speedup zu den beiden "kv"-Metriken erklärt. 
-Die Operationen "/item/item/read" und "/item/item/write" hingegen, bauen auf den Objekt-Mechanismen "/object/object/read" und "/object/object/write" auf. Bei "/item/item/write"
+Zum einen wird für die Operationen "/item/\{item, collection\}/create", sowie "/item/\{item, collection\}/delete" auf die Mechanismen "/kv/put", "/kv/delete" aufgebaut. Das begründet den insignifikanten Speedup für die Operationen "/item/item/create" und "/item/\{item, collection\}/delete". 
 
-Bei den befehlen "/item/item/read" und "/item/item/write" ist wie zu erwarten auch ein Performance-Verlust – wie bei den object-read/write Ergebnissen – zu erkennen. Bei "/item/item/read" ist der Performance-Verlust um etwas mehr als $1\%$ geringer als bei "/object/object/read". Bei "/item/item/write" ist der Performance-Verlust um etwa $0.5\%$ geringer als bei "/object/object/write". Da es sich hierbei um geringe Unterschiede handelt, ist davon auszugehen, dass dies Messungenauigkeiten sind. 
+Die Operationen "/item/item/read" und "/item/item/write" hingegen, bauen auf den Objekt-Mechanismen "/object/distributed-object/read" und "/object/distributed-object/write" auf.
 
-Die Metrik "/item/item/delete" hat einen positiven Speedup. Dieser ist jedoch sehr gering ($<0.25\%$). Diese Metrik baut auf den "/kv/delete" Mechanismus auf. "/kv/delete" hat einen geringen Performance-Verlust aufgewiesen. Der Unterschied zwischen den beiden Metriken ist sehr gering. Er liegt unterhalb von $0.5\%$. Da es sich hierbei um geringe Unterschiede handelt, ist davon auszugehen, dass dies Messungenauigkeiten sind. Das gleiche gilt auch für "/item/collection/delete".
+Bei den Benchmarkmetriken "/item/item/read" und "/item/item/write" ist wie zu erwarten auch ein Performance-Verlust – wie bei den object-read/write Ergebnissen – zu erkennen. 
 
-Wesentlich auffälliger ist hingegen die Metrik "/item/collection/create". Diese hat Performance-Zunahmen von fast $2\%$. Um dieses Ergebnis besser zu verstehen werden nachstehend die Messwertverteilungen der beiden Benchmarkergenisse analysiert. 
+Bei "/item/item/read" ist der Performance-Verlust ca. $0.5\%$. Das ist ein um etwa $1,2\%$ höherer Speedup im Vergleich zu ca. $1,7\%$ Performance-Verlust bei "/object/distributed-object/read". 
+
+Bei "/item/item/write" ist der Performance-Verlust etwa $2\%$. Das ist etwas höher als bei "/object/distributed-object/write", welcher ein Performance-Verlust von ca. $1,5\%$ aufweist. Da es sich hierbei um geringe Unterschiede handelt, ist davon auszugehen, dass dies Messungenauigkeiten sind. 
+
+Die Metrik "/item/item/delete" und "/item/collection/delete" haben einen Speedup, welcher unterhalb von $0,3\%$ liegt. Es wird hierbei davon ausgegangen, dass dies Messungenauigkeiten sind.
+
+Wesentlich auffälliger ist hingegen die Metrik "/item/collection/create". Diese hat Performance-Zunahmen von ca. $1,5\%$. Um dieses Ergebnis besser zu verstehen werden nachstehend die Messwertverteilungen der beiden Benchmarkergenisse analysiert. 
 
 \begin{figure}[H]
     \centering
@@ -196,11 +208,11 @@ Wesentlich auffälliger ist hingegen die Metrik "/item/collection/create". Diese
 
 \FloatBarrier
 
-Es ist ersichtlich, dass die Benchmark-Ergebnisse von der nativen Ausführung deutlich konsistenter sind als die der containerisierten Ausführung. Mehr als die Hälfte der nativen Ergebnisse liegen hier zwischen 5200 und 5300 Operationen/s. Allerdings ist die Streumenge der nativen Ergebnisse deutlich größer. 
+Es ist ersichtlich, dass die Benchmarkergebnisse von der nativen Ausführung deutlich konsistenter sind als die der containerisierten Ausführung. Mehr als die Hälfte der nativen Ergebnisse liegen hier zwischen 5200 und 5300 Operationen/s. Allerdings ist die Streumenge der nativen Ergebnisse deutlich größer. 
 
-Die containerisierten Ergebnisse sind wie bereits angemerkt deutlich inkonsistenter und die Streumenge ist hier deutlich geringer. Die Verteilung der Messwerte ist – im Vergleich zur nativen Ausführung – in die positive Richtung verzerrt.  
+Die containerisierten Ergebnisse sind wie bereits angemerkt deutlich inkonsistenter, allerdings ist die Streumenge hier deutlich geringer. Die Verteilung der Messwerte ist – im Vergleich zur nativen Ausführung – in die positive Richtung verzerrt.  
 
-Trotz dieser Unterschiede sieht man allerdings hier auch wie identisch die beiden Benchmarkergebnisse im Kern sind. Während bei der nativen Ausführung die meisten Ergebnisse zwischen 5200 und 5300 Operationen/s liegen, liegen die meisten containerisierten Ergebnisse zwischen 5200 und ca. 5325 Operationen/s. Das ist in Anbetracht der Insgesammt 10 Iterationen des Benchmarks pro Ausführungsweise nicht signifikant genug um von einer signifikanten Performance-Änderung zu sprechen. Es handelt sich hierbei sehr wahrscheinlich um Messungenauigkeiten. 
+Trotz dieser Unterschiede sieht man allerdings hier auch wie identisch die beiden Benchmarkergebnisse im Kern sind. Während bei der nativen Ausführung die meisten Ergebnisse zwischen 5200 und 5300 Operationen/s liegen, liegen die meisten containerisierten Ergebnisse zwischen 5200 und ca. 5325 Operationen/s. Das ist in Anbetracht der Insgesamt 10 Iterationen des Benchmarks pro Ausführungsweise nicht signifikant genug um von einer signifikanten Performance-Änderung zu sprechen. Es handelt sich hierbei sehr wahrscheinlich um Messungenauigkeiten. 
 
 
 \subsection{Datenbank (SQLite)}
@@ -214,7 +226,7 @@ Trotz dieser Unterschiede sieht man allerdings hier auch wie identisch die beide
 
 \FloatBarrier
 
-Die Speedups der Datenbank-Benchmarkergebnisse für die Metriken "/db/entry/delete", "/db/entry/insert" und "/db/iterator/get-simple" sind deutlich unterhalb von $1\%$, die werte sind zu gering um von einer signifikanten Performance-Änderung zu sprechen. 
+Die Speedups der Datenbank-Benchmarkergebnisse – welche aus \cref{fig:speedup_db} zu entnehmen sind – für die Metriken "/db/entry/delete", "/db/entry/insert" und "/db/iterator/get-simple" sind deutlich innerhalb von $\pm 1\%$. Die Werte sind zu gering um von einer signifikanten Performance-Änderung zu sprechen. Es wird also davon ausgegangen, dass es keine signifikanten Performance-Änderungen bei den benannten Benchmarkmetriken gibt.
 
 Die Metrik "/db/entry/update" hingegen ist beinahe $3\%$ performanter. Um hier eine genauere Aussage zu treffen, wird im nächsten Schritt die Verteilung der Messwerte der Benchmarkergebnisse analysiert.
 
@@ -227,10 +239,10 @@ Die Metrik "/db/entry/update" hingegen ist beinahe $3\%$ performanter. Um hier e
 
 \FloatBarrier
 
-Es ist ersichtlich, dass die containerisierte Ausführung wesentlich konsistentere Ergebnisse erzieht hat. 
-Die nativen Ergebnisse sind etwas inkonsitenter und haben einen Ausreißer nach unten. 
+Aus \cref{fig:mdist_db_entry_update} ist ersichtlich, dass die containerisierte Ausführung wesentlich konsistentere Ergebnisse erzieht hat. 
+Die nativen Ergebnisse sind etwas inkonsistenter und haben einen Ausreißer nach unten. 
 
-Allerdings sieht man auch hier, dass sich die Ergebnisse von der containierisierten und nativen Lösung zwischen ca. 5100 und 5250 Operationen/s mehrheitlich befinden. 
+Allerdings sieht man auch hier, dass sich die Ergebnisse von der containerisierten und nativen Lösung zwischen ca. 5100 und 5250 Operationen/s mehrheitlich befinden. 
 
 Dies ist ein weiteres Beispiel dafür, wie ähnlich die beiden Benchmarkergebnisse sind. Die Messwerte liegen so weit bei einander, dass man in Anbetracht der geringen Messwertanzahl keinen Signifikanten Speedup feststellen kann.
 
@@ -248,15 +260,15 @@ Dies ist ein weiteres Beispiel dafür, wie ähnlich die beiden Benchmarkergebnis
     \label{fig:mdist_db_schema_delete}
 \end{figure}
 
-Für "/db/schema\{create, delete\}" ist anschließend auch ersichtlich, dass sich bei betrachtung der Messwertvertilung kein signifikanter Speedup festgestellt werden kann. Die Ergebnisse liegen soweit beieinander, dass nicht auszuschließen ist, dass es sich um Messungenauigkeiten handelt.
+Für "/db/schema\{create, delete\}" ist in \cref{fig:mdist_db_schema_create} und \cref{fig:mdist_db_schema_delete} anschließend auch ersichtlich, dass bei Betrachtung der Messwertverteilung kein signifikanter Speedup festgestellt werden kann. Die Ergebnisse liegen so weit beieinander, dass nicht auszuschließen ist, dass es sich um Messungenauigkeiten handelt.
 
 \FloatBarrier
 
 \subsection{Fazit der Benchmarkergebnisse}
 
-Insgesammt lässt sich ein deutlichen Bild erkennen. Die Benchmarkergebnisse unterscheiden sich nur sehr geringfügig. Selbst da wo es zu Performance-Verlusten kommt, sind diese sehr gering und liegen unterhalb von $3\%$. \
-Viele der Benchmarkergebnisse sind effektiv – unter berücksichtigung der Messungenaugikeiten – identisch.
+Insgesamt lässt sich eine deutliche Bild erkennen. Die Benchmarkergebnisse unterscheiden sich nur sehr geringfügig. Selbst da wo es zu Performance-Verlusten kommt, sind diese sehr gering und liegen unterhalb von $3\%$. \
+Viele der Benchmarkergebnisse sind effektiv – unter Berücksichtigung der Messungenauigkeiten – identisch.
 
-Dies ist kein Überraschendes Ergebniss, es wurde bereits in vielen anderen Publikationen ein Ähnlichen verhalten wie hier festgestellt.  \todo{Zitat}
+Dies ist kein überraschendes Ergebnis, es wurde bereits in vielen anderen Publikationen ein ähnliches Verhalten wie hier festgestellt \cite[Vgl. S. 2589ff]{huExploringPerformanceSingularity2019}
 
-Sollte man starken Gebrauch von Dateisystemfunktionen machen, so kann es zu Performance-Einbußen kommen. Allerdings ist in den meisten Fällen ein Performance-Verlust von unter $3\%$ akzeptabel. 
+Sollte man starken Gebrauch von Dateisystemfunktionen machen, so kann es zu Performance-Einbußen kommen. Allerdings ist in vielen Fällen ein Performance-Verlust von unter $3\%$ akzeptabel. 

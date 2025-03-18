@@ -1,0 +1,4 @@
+{
+    "name": "Julea Dev Container",
+    "image": "JULEA-dev:latest",
+}
