@@ -6,9 +6,15 @@ Im Jahr 2022 überstieg der erste Supercomputer – "Frontier" – die 1-ExaFLOP
 
 Die immer steigende Rechenleistung in fast allen Bereichen der Informationstechnologie – nicht nur im HPC-Bereich – ermöglicht es, Applikationen mit immer steigenden Anforderungen und Komplexität zu entwickeln. Dies ermöglicht die Lösung immer komplexerer Probleme. Ein Indiz für die steigende Komplexität von Applikationen kann die Anzahl verwendeter Abhängigkeiten sein, welche die Komplexität der Applikation auf Code Dritter auslagern \cite[Vgl. Abbildung 2.4]{sonatype2024StateSoftware}. Die Verwendung von Abhängigkeiten birgt einige logistische Probleme. Eines dieser logistischen Probleme ist das Ausrollen von Applikationen in heterogenen Umgebungen, das mit steigender Anzahl von Abhängigkeiten weiter erschwert wird. Um das Problem zu minimieren, können Virtualisierungstechnologien immens helfen. Virtualisierungstechnologien ermöglichen es auf heterogenen Systemen eine homogene Umgebung zu schaffen. Diese kann dann als Basis für die Applikation dienen und eine einfach replizierbare Ausrollung schaffen. Davon profitieren nicht nur die Systemadministratoren und die Endanwender, sondern auch die Entwickler, welche die virtualisierte Umgebung für die Entwicklung nutzen können. Das erspart den Entwicklern das Aufsetzen einer eigenen Entwicklungsumgebung, was durchaus zeitintensiv sein kann. Bei der Virtualisierung gibt es zweierlei populäre Technologien: Containervirtualisierung und Hardwarevirtualisierung.
 
-\section{Ziel der Arbeit}
+\section{Ziel der Arbeit} \label{sec:ziel-der-arbeit}
 
 Das Ziel dieser Arbeit ist es, die Containervirtualisierung einer komplexeren Applikation – JULEA – zu implementieren und zu untersuchen. JULEA \cite{kuhnJULEAFlexibleStorage2017} ist ein Framework, das arbiträre Client-Schnittstellen und eine hohe Flexibilität bietet, um das Evaluieren verschiedener Speicher-Lösungen und Ansätze zu beschleunigen \cite[Vgl. S. 1]{kuhnJULEAFlexibleStorage2017}. JULEA ist eine Applikation, die viele Abhängigkeiten hat und eignet sich daher gut für die Untersuchung der Containervirtualisierung.
+
+Die drei zentralen Fragen, welche mit dieser Arbeit beantwortet werden sollen, sind:
+
+Kann die Containerisierung von JULEA die Performance von JULEA beeinflussen? \\
+Ist es möglich HPC-Anwendungen – wie JULEA – zu Containerisieren? \\
+Ist es möglich für JULEA Entwicklungscontainer mit bereits kompilierten Abhängigkeiten zu erstellen?
 
 \section{Struktur der Arbeit}
 

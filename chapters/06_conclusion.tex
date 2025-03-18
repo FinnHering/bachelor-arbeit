@@ -10,6 +10,28 @@ Mithilfe von Containerfiles, den Docker-Bake-Dateien und Docker Buildx konnte de
 
 In der Evaluation konnte des Weiteren keine starken Performanceverluste oder Performancezunahmen durch die Containerisierung festgestellt werden. In den meisten Fällen waren beide Ausführungsarten (containerisiert und nativ) gleich schnell. Es gab einige Fälle, wo vereinzelt minimale Performanceverluste festgestellt werden konnten (siehe z. B. \cref{sec:object-speedup}). Diese Performanceverluste waren unterhalb von $3\%$, was in vielen Anwendungsfällen als worst-case akzeptabel ist, wenn man es in relation zu den Vorteilen der Containerisierung setzt.
 
+Abschließend lassen sich die drei zentralen Fragen, welche in \cref{sec:ziel-der-arbeit} gestellt wurden, wie folgt beantworten.
+
+\subsection{Kann die Containerisierung von JULEA die Performance von JULEA beeinflussen?}
+
+Wie bereits erwähnt konnte in der Evaluation keine signifikante Performanceveränderung durch die Containerisierung von JULEA festgestellt werden. In den meisten Fällen war die Performance von JULEA in der containerisierten Variante gleich schnell oder minimal langsamer als in der nativen Variante. 
+
+Die Frage lässt sich also mit einem "Ja" beantworten, allerdings mit dem Vermerkt, dass die Performanceveränderung vernachlässigbar ist. Es kann nur in speziellen Fällen zu minimalen Performanceverlusten kommen.
+
+\subsection{Ist es möglich HPC-Anwendungen – wie JULEA – zu Containerisieren?}
+
+Es ist definitiv möglich HPC-Anwendungen wie JULEA zu containerisieren. Die Containerisierung von JULEA hat den Vorteil, dass die Installation von JULEA auf einem HPC-System vereinfacht und reproduzierbarer wird. Die Containerisierung von HPC Anwendungen ist insbesondere durch spezialisierte Containertechnologien wie Apptainer unkompliziert möglich.  
+
+Die Frage lässt sich also mit einem "Ja" beantworten.
+
+\subsection{Ist es möglich für JULEA Entwicklungscontainer mit bereits kompilierten Abhängigkeiten zu erstellen?}
+
+Es ist möglich für JULEA Entwicklungscontainer mit bereits kompilierten Abhängigkeiten zu erstellen. Mithilfe von Docker Buildx Bakefiles (\cref{sec:docker-bake}) und der CI/CD-Pipeline (\cref{sec:ci-cd-impl}) können für JULEA diese Entwicklungscontainer automatisiert erstellt und veröffentlicht werden. 
+
+Mit der Entwicklungscontainer-Konfiguration (\cref{sec:dev-container-impl}) ist das Einbinden von den bereitgestellten Entwicklungscontainern unkompliziert in kompatible Editoren/IDEs möglich. 
+
+Die Frage lässt sich also mit einem "Ja" beantworten.
+
 \section{Zukünftige Arbeit}
 
 \subsection{Vertiefung der Benchmarks}

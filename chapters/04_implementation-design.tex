@@ -606,7 +606,7 @@ Anschließend wird QEMU initialisiert. Dies ist eine indirekte Abhängigkeit von
 
 Nach der Initialisierung erfolgt nun das Erstellen der Containerimages in \cref{lst:containers-ci-50-60}. Es werden mit dem "env"-Schlüssel die Variablen "COMMIT\_SHA" und "BASE\_IMAGE\_NAME" der Docker-Bakefile gesetzt. Danach werden die Docker-Bakefile-Argumente in Zeile 55 bis 59 gesetzt. Es wird das Target aus der Matrixstrategie gesetzt, das Veröffentlichen der erstellten Containerimages aktiviert und die Docker-Bake-File definiert.
 
-\section{Entwicklungscontainer}
+\section{Entwicklungscontainer-Konfiguration} \label{sec:dev-container-impl}
 
 Die in \cref{sec:namensschema} erwähnten Entwicklungscontainer werden – wie in \cref{sec:docker-bake} beschrieben – mithilfe der Docker-Bakefiles erstellt und wie in \cref{sec:ci-cd-impl} beschrieben automatisiert veröffentlicht. Allerdings fehlt noch die nötige Konfiguration, um die Entwicklungscontainer – wie in \cref{sec:bg-dev-container} erläutert – in kompatible Editoren und IDEs zu integrieren. 
 
